@@ -1,0 +1,157 @@
+Chapter 0: basics
+docs are saved as .html
+html stands for hyper-text-markup-language
+it is used to structure web-pages. 
+!DOCTYPE html> defines the document as a HTML body of work. 
+<html>is the root of the code. everything needs to go in these parts. </html>
+<head>this contains any meta info about the page</head>
+<title>element gives the html page the title. </title>
+<body>element which identifies teh contence of the page</body>
+<h1>element defining a large heading</h1>
+<h2>is the same but you add in a second one. it goes up to 6. </h2>
+<p>element defines a paragraph</p>
+<p>you don't have to do the same with headings here. </p>
+basic stuff
+- <img src="source of the file" alt="alternative text", width="how wide", height="how high">
+    the above is how an image is formatted. 
+- <br>is a line break and doesn't need another one to close it. 
+
+html elements:
+- elements are stuff that goes inside other stuff. 
+
+
+html atributes:
+- The stuff that goes in a tag is an atrribute. 
+- <a href="website">visit website</a>
+    h ref stands for hyper link. 
+- <img src="imag.jpeg", width="wide", height="hiehgt", alt="girl">
+    src stands for source. and it is the soruce of wher the image is kept. 
+    width and hieght are measured in pixels. 
+    if src can't be shown, then teh pic will default ot alt text. 
+- <p style="color:red;">This is a red paragrph</p>"
+    style lets you add features to the text by putting it inside the tag. 
+- <html lang="en">this is english</html>
+    the lang atribute lets you define the language of the doc. 
+- <p title="test"> cool</p>
+    title lets you display text your mouse hovers over. 
+
+headings:
+- headers are important. 
+    search engines use them to search for content on web pages. 
+    headings for the page should go h1 then h2 and so on. 
+    you can make headings bigger with the style attribute. 
+
+paragraphs:
+- HTML docs will auto size text depending on where they are being viewed from. 
+    the <hr> tag is used to define a horizontal tag. 
+    it is also used to seperate content. 
+- <br> is used as a line break
+- <pre> this tag uses preformmated text so you can add line breaks in it. </pre>
+
+Chapter 2:
+
+
+Chapter 10:
+
+HTTP methods
+- HTTP is hypertext transfer protocal, it is used to enable communications between clients and servers. 
+    HTTP works as a reqeust-response protocal between a client and server. 
+    so the client machine will send out a request to the server and the server will return it. 
+There are loads of different methods: 
+- GET
+    this is used to request data from a specific source. 
+    think of it like view. 
+    GET request is set out in a query string in (name/value pairs) which is set in the URL of the request. 
+
+- POST
+    POST is used to send data to a server and create/update a resource. 
+    think of this as add or update. 
+
+- PUT  
+    PUT is used to send data to a server to create/update resource. 
+    PUT only allows you to create the new update once though where as post allows you to contineuously update. 
+
+- HEAD 
+    HEAD is nearly the same as get apart from the fact it won't actually return the reuqest. 
+    it is mostly used to check to make sure the GET reqeust is working correctly. 
+    Kinda like when you want to see what you are downloading before you get it to make sure it isn't too big. 
+
+- DELETE
+    DELETE literally just says "the DELETE method deletes the specified resouce"???
+
+- PATCH 
+
+- OPTIONS
+
+- CONNECT
+
+- TRACE
+
+html forms:
+
+HTML forms allow you to take user inputs. 
+<form action="/view" target="_blank">
+    <lable for="fname">first name</lable>
+    <input type="text">this takes a text input
+    <input type="radio">this is many buttons but you can only choose one.  
+    <input type="checkbox"> this input makes a checkbox. 
+    <input type="submit"> this displays a submit button. 
+    <input type="button"> this displaces buttons with one choice.  
+    <input type="submit" value="submit"> 
+</form>
+
+lables allow you to add lables ot teh inputs. lable is also in the hit box of any buttons/text boxes
+the for attribut needs to be the same as the id attribute. 
+checkboxes allow you to check zero or more options. 
+
+submit is for for submitting values. 
+id specifies the value that is inputted. 
+name is the same as ID. 
+for needs to be the same of ID. 
+value is text that will appread in the box or button. 
+action is the place where the data will be sent once it is inputted. 
+    it needs to be inputted as a form attricbute at the top.
+the target attribute says what should happen after the action. 
+    _blank - response is displayed in a new tab. 
+    _self - response is displayed in current window. 
+    _parent - response is displayed in different frame. 
+    _top - response is displayed in teh full body of the window. 
+Method attribute specifies teh http method to be use wehn submitting the form data. 
+    <form action="/view" target="_blank" method="get"></form>
+    the get will allow you to send from data as URL variables. 
+    post allows you to use http post transaction. 
+Autocomplate atrribute allows the form to be completed if you have it on. 
+novalidate attriute is a boolean attribute.
+it means the data should not be validated when submitted. 
+there are lots more form attibutes here: https://www.w3schools.com/html/html_forms_attributes.asp
+
+HTML Form Elements:
+<input>input is used to take inputs
+<label>defines a label for several form elements. 
+    they are used to save values and vairables. 
+    for should be the same as id. 
+    for example: 
+</label>
+<label for="cars">Choose a car:</label>
+<select id="cars" name="cars">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="fiat">Fiat</option>
+    <option value="audi">Audi</option>
+</select>
+<select> allows you to choose a drop down menu as see above. </select>
+<option>lets you choose an element that can be selected. </option>
+<select size="3"> size lets you specific the number of values visible in a drop down</select>
+
+<textarea name="message" rows="10" cols="30">this lets you take a multiple line inpute. </textarea>
+
+<button type="button" onclick="alert('hellow world')"> lets you define what kind of putton you want </button>
+
+<fieldset>will wrap the form in a box</fieldset>
+<legend> contains the title for the box. </legend>
+<datalist>lets you specifie specific options for the user to choose from</datalist>
+<output> this lets you display the ouput of a calculation. </output>
+
+
+HTML has alot of input types. 
+They are all pretty self explantitory. 

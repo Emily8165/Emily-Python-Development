@@ -1,0 +1,34 @@
+Chapter 0 
+
+CSS is a language you can use to style a HTML document. 
+stands for Cascading Style Sheets
+controls the layout of pages. 
+external style sheets are kept in CSS files 
+Css is good because it saves us alot of work. 
+
+CHAPTER 1 SYNTAX: 
+- p {color:blue; front-size:12px;}
+- p is the sector
+- color is property
+- blue is the value of the property
+css selectors:
+- a selector is what is used to find or point to the HTML elements that need to be styled. 
+  - simple selectors are simple elements such as name, id or class. 
+    - para1 {color:blue;} would mean that the first paragraph is blue. 
+  - combinator selectors selectslements from a specific relationship between them. 
+    - .center {text-align:center; color:blue;} will move all the text defined into the center and color it blue. 
+  - psuedo-class selectors select element in a sertain state. 
+  - psudo-element selectors select and sytle parts of an elements. 
+  - atrribute selectors select elemetns based on an attribute or attribute value. 
+- this means that all the p's in the example above will be coloured blue. 
+-  * is a universal selector so it selects the whole document. 
+-  you can group selectors together to save youself sometime like this:
+   -  h1, h2, p {
+        text-align: center;
+        color: red;
+        }
+
+Display property:
+the display property defines if/how an element is displayed. 
+<div> means devided or block level element. 
+elements such as <span> are inline. which shows they can go in a paragraph. 

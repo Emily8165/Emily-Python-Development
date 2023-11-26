@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <li><a href="/view"> View Tasks</a></li>
+    <li><a href="/add"> Add new tasks </a> </li>
+    <li><a href="/delete"> Delete tasks </a>  </li>
+    <li><a href='/update'> Update tasks </a>  </li>
+    <title>
+        Update Task
+    </title>
+    
+<form action={% url 'update_specific_task' %} method="POST">
+    {% csrf_token %}
+    <table>
+        {% for i in titles %}
+                <th>
+                    {{i}}
+                </th>
+        {% endfor %}
+        <th>
+            Choice
+        </th>
+        {% for x in mytask %}
+            <tr>
+                <td>{{x.id}}</td>
+                <td>{{x.title}}</td>
+                <td>{{x.discr}}</td>
+                <td>{{x.rag}}</td>
+                <td>{{x.status}}</td>
+                <td><input type="checkbox" id="chosen" name="chosen" value={{x.id}}></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <label for='submit'> Submit Choice<input type="submit" value="submit_choice"><br><br>
+</form>
+</html>

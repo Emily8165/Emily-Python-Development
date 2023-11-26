@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="{% static 'mainstatic.css'%}">
+<h1>View tasks</h1>
+<body>
+<p>Welcome to views, this is where you can find all the tasks!</p>
+<p>and for more actions look below<p>
+<li><a href="/view"> View Tasks</a></li>
+    <li><a href="/add"> Add new tasks </a> </li>
+    <li><a href="/delete"> Delete tasks </a>  </li>
+    <li><a href='/update'> Update tasks </a>  </li>
+
+<p>this is the test table</p>
+<table>
+    {% for i in titles %}
+    <th>
+        {{i}}
+    </th>
+    {% endfor %}
+    {% for x in mytask %}
+        <tr>
+            <td>{{x.id}}</td>
+            <td>{{x.title}}</td>
+            <td>{{x.discr}}</td>
+            <td>{{x.rag}}</td>
+            <td>{{x.status}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<p>this is the table that works</p>
+<table>
+
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Discription</th>
+        <th>RAG</th>
+        <th>Status</th>
+    </tr>
+    {% for x in mytask %}
+        <tr>
+            <td>{{x.id}}</td>
+            <td>{{x.title}}</td>
+            <td>{{x.discr}}</td>
+            <td>{{x.rag}}</td>
+            <td>{{x.status}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+</body>
+</html>

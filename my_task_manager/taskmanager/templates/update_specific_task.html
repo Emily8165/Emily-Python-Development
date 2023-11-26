@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <title>update specific task</title>
+    <h1>update {{x.id}}</h1>
+    <li><a href="/view"> View Tasks</a></li>
+    <li><a href="/add"> Add new tasks </a> </li>
+    <li><a href="/delete"> Delete tasks </a>  </li>
+    <li><a href='/update'> Update tasks </a>  </li>
+    <p>{{chosen}}</p>
+    <tr>
+    {% csrf_token %}
+    <table>
+        {% for i in titles %}
+                <th>
+                    {{i}}
+                </th>
+        {% endfor %}
+    {% for x in mytask %}
+    <tr>
+        <td>{{x.id}}</td>
+        <td>{{x.title}}</td>
+        <td>{{x.discr}}</td>
+        <td>{{x.rag}}</td>
+        <td>{{x.status}}</td>
+    </tr>
+    <select id="ops">
+        <option value="none">test</option>
+        <option value="title">title</option>
+        <option value="discr">discr</option>
+        <option value="rag">rag</option>
+        <option value="status">status</option>
+    </select>
+    {% endfor %}
+    <form action="{% url 'update_specific_task' %}" method="POST">
+        {% csrf_token %}
+        <textarea name="message" rows="10" cols="30" id="updated">type message here</textarea>
+        <br>
+        <label for='submit'>Submit <input type="submit" value="Submit Update">
+        </form>
+
+</html>

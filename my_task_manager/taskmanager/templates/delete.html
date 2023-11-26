@@ -1,0 +1,29 @@
+<!DOCTYPE>
+<title>Delete_tasks</title>
+<h1>This is where you can delete things </h1>
+
+<li><a href="/view"> View Tasks</a></li>
+    <li><a href="/add"> Add new tasks </a> </li>
+    <li><a href="/delete"> Delete tasks </a>  </li>
+    <li><a href='/update'> Update tasks </a>  </li>
+<p>Pick which task you want to delete</p>
+
+<form action="{% url 'delete_tasks' %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {% for i in titles|slice:":2" %}
+                <th>
+                    {{i}}
+                </th>
+        {% endfor %}
+        <th>check</th>
+        {% for x in mytask %}
+            <tr>
+                <td>{{x.id}}</td>
+                <td>{{x.title}}</td>
+                <td><input type="checkbox" id="chosen_task_{{x.id}}" name="chosen_task" value="{{ x.id }}"></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <label for='submit'>Submit <input type="submit" value="Delete Selected Task"><br><br>
+</form>

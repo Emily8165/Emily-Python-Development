@@ -1,0 +1,344 @@
+Django notes: 
+
+"""
+CHAPTER 0:
+- to create a file go cd, then desktop then mkdir to create a file directory. 
+
+
+CHAPTER 1
+this is a place for my useful django and big projects notes 
+
+django, you need to restart/activate your vertal enviroment every time. 
+CREATE VENV: python -m venv (the venv is the name of your enviroment)
+ACTIVATE VENV: source myvenv/bin/activate
+DEACTIVATE VENV: type DEACTIVATE
+DELETE VENV: rm -r venv
+
+setting up a django project: 
+1 - set up vertual enviroment by running the relivent above commands. 
+2 - activate said venv 
+3 - upgrade pip 
+4 - pip install django
+5 - django-admin start project <my_project_name>
+6 - type project name into the terminal to make sure you are working form it
+7 - python manage.py runserver - if this isnt working then go to cd, then desktop, the the project folder, then the django project folder, then the file with the manage.py file in it. 
+
+
+APP stuff:
+- starting an APP
+1 - python manage.py startapp <app_name>. this will create a new file in your project file. 
+
+Views: 
+- Views are where you store code that does things. 
+- They are stored in views.py normally and a file like this is gnerated automatically when you create the app. 
+- You will want to return a HTTPs reposen so from django.http import HttpResponse
+- Views need to be saved as functions and classes so they can be called specifically in other files such as URLs. 
+
+URLS:
+- urls are where the links to various parts of your site are generated. 
+- You need to create this file when you start the app.  
+- 
+
+Models:
+- Models are data tables that exist in a sql server that is autocreated when you start the django proejct. 
+- You can create a new tables by adding them as a class to the models file that is auto generated. 
+class <name>(models.Model):
+  var1 = models.charfield(max_length=255)
+  var2 = models.charfield(max_length=255)
+- The charfield defines what the type of data in the field/colum is. In this instance it is charactures. which will be a string value.  
+- the var are teh variables you are adding into the table. Like columns. 
+- Hit python manage.py makemigrations <model_name> to creat the model. 
+  - this then creates a stand along file called 0001_initial.py that can be used to track the changes. 
+- to create the model type this into the terminal: python manage.py migrate
+- to view the sql statement: python manage.py sqlmigrate members 0001
+
+Adding data to the table:
+- you need to first of all open up the shell by using python manage.py shell. 
+- then you need to import the table to say which one you ar editing: from <name-of-file>.models import <name_of_class_in_models>
+- you can view the query table by hitting: <name_of_class>.objects.all()
+- to add a new object you need to define it first: object = <class_name>(var1="data1", var2="data2")
+- then hit <object>.save()
+- then to see the values: <class>.objects.all().values()
+
+Updating data:
+- first make sure you have alled teh correct table from <file>.models import <class>
+- then call the specific row you want to end. with x = <class>.objects.all()[4]
+- then you can return the various columns associated with the row by calling them out x.colum name. 
+- to redefine the data in the cell, you need need to write it out again, e.g x.column = <new data>, then hit x.save()
+
+deleting records:
+- first make sure you have alled teh correct table from <file>.models import <class>
+- then call the specific row you want to end. with x = <class>.objects.all()[5]
+- then you can return the various columns associated with the row by calling them out x.colum name.
+- then just hit x.delete()
+
+adding fields to the model:
+- this part is a bit trickier. 
+- you need to open up the the models folder to add the new fields. 
+- add in your chnages and then run the python manage.py makemigrations <class_name> to save it. 
+- if you run into a problem with you data limits not beind defined just add null=true to them to get round it for now. 
+
+CHAPTER 2
+Django templates:
+- templates are held as html files typically.
+- when djano sees {%%} that means that it is looking for some logic inside the brackets. like an f string. 
+  they are called tags.
+- as we have added a new template we need to add a new view as well. 
+- in this view we need to specify:
+  - that the object in the new view has the values associated with that in the models file. So import them. 
+  - load the html template you created ("file_name.html")
+
+Add link to details:
+- this part will tell you how to add hyper links to you django doc. 
+- First define what you want to link to go to. 
+  open up a new html doc in templates and put in the content you want. 
+- Second add a link to the new doc in your home page doc. 
+  this id done by using the <li><a>href="linked_doc.html" </a></li> with text in the middle. 
+- Third create a view, for the new page so you can view it. 
+  make sure teh loader.get_template has "linked_page.html" in it. 
+- Forth add in a new url
+  add in the path so path('admin/mainfile/smallfile', views.linked_file.html, name="linked_file")
+
+adding a master template:
+- this is a way of creating a parent template which others will link to/ from. 
+- first create another html template by name it master. 
+- then we need to link the other pages to this by using {%extends%} tags as well as title and content blocks. 
+- just make sure you have the links in and you'll be fine. 
+- use the extend tags to allow your templates to be tracked and possibly controlled from one logcaiton. 
+
+
+adding a main index page:
+- we first need to define our main page, which people will be directed to once they click the link to our website. 
+  call this one main. 
+- then you need to create a new view which just returns the main.html page. 
+- then add in a URl. It is the main page so just needs path("", views.main, name="main")
+- and then you need to link the other pages back to the main one if you feel like it. 
+  just put in a <a href="/"> home </a> for this one. 
+
+editing 404 page:
+- 404 page is what you get when there is an error and you are not debuging
+  the debugging option is in your setting file on your main project file. 
+  The allowed admins part need to be filled in wiht ["*"] and the debug needs to be set to false.
+- create a 404.html template doc to edit it. 
+
+Adding in a test view:
+- add a view in teh views file for testing called testing. 
+- add a template.html file which the testing file will route too. 
+- add in a url for testing at teh end.
+- hsould all work.  
+
+CHAPTER 3
+Django admin:
+- admin allows you to use a crud interface, Create Read Update Delete. 
+- admin comes free and ready to use with django as well. 
+- by running the server with /admin/ at the end you can see the admin portal
+  requests go to the admin first and then it directs them onto other parts of the site. 
+
+Django admin create a user:
+- to create a user run python manage.py createsuperuser in the terminal
+- it will then ask you for a username, email address (doesn't have to be real) and a password. 
+- then run the server again to see it working. 
+- from this site you can create new users/groups 
+
+Django admin - include memeber:
+- you first of all need to define an amin interficae. 
+  which is done in the admin file that is automatically generated. 
+- you need to register the model you are running from here,
+  import the model you are using from models. 
+  then add - admin.site.register(model)
+- this allows you to see the objects that you have created. 
+
+Django Admin - set fields to display:
+- on the record object each object is recorded as a string. 
+  - We can change this in two ways to make it a bit more reader friendly. 
+- change the string representation to a string as __str__() for each object in the models:
+  - in models, add def __str__(self):
+    return f'{self.column1} {self.colum2}''
+    which will call out the columns you want to identify the data as. 
+- set the list _details property of the objects model. 
+  - we need to go to admin folder and add a new class to help list the display. 
+  - class <object>.Admin(admin.ModelAdmin):
+    list_display = ("firstname", "lastname", "joined_date",)
+
+Django Admin - update/add/delete new objects:
+- you can add details through the front end to each object you have specified. 
+- you can add new objects through the front end as well, just not new fields. 
+- to delete memebers, just select then delete. 
+
+CHAPTER 4 - Django Syntax
+Django Variables:
+    You render variables differently in different files,  
+  Template vairables: you can render variables in the template inside of the {{}}, 
+    bare in mind you need to include the html tags if you want it to show up on the site. 
+  Variables in view: 
+    you can find where the variables are in the proejct and edit them there. 
+  Creating a variable in template:
+    You can re-define variables with the {% with var="var" %} {%endwith%} tags
+  Data from a model: 
+    most data comes from a model 
+    to get data from a model you just need to make sure that it is defined in the model section
+    and then called in the template html doc. 
+Django Template tags:
+  you can use template tags to exect commands such as if statements and forloops. 
+  you just need to make sure theya re in the tags so like this - 
+  '{% if num == 1 %}'
+    <h1>hello</h>
+  '{% else %}'
+    <h1>bye</h>
+  '{% endif %}''
+- the django tags are specifically to tell django that there is some logic there other then html
+  it allows us to program before we push the html to the client server
+- there are lots of tags you can use, you can find more here:
+https://www.w3schools.com/django/django_template_tags.php
+
+- for loops are similer so like this:
+{% for x in fruits %}
+  <h1>{{ x }}</h1>
+{% endfor %}
+
+Empty: 
+  important to note that if you want to iterate over an empty cell specify with empty. 
+
+Also make sure your html doc has this:
+  <!DOCTYPE html>
+  <html>
+  <body>
+  </body>
+  </html>
+or it wont work. 
+
+if in a html doc you can add {% comment %} comments like that
+and in the views you can do it normally with #
+
+{% include 'content' %} is useful for bringing repeated text over from other files. kinda like import. 
+This can also be used to bring variables from other docs. 
+
+CHAPTER 5:
+Django query set:
+- A query set is a collection of data from a database. 
+- A QuerySet is built up as a list of objects
+- A Query set allows you to filter data and is easier to get data you actually need. 
+- We can use the testing view in views.py to test different queries. 
+
+Django queryset - get data:
+- values allows you to return each object in a python dictionary
+  this comes back as key/values pairs. 
+- view_list() allows you to return the column headings specified. 
+  model.objects.values_list('firstname')
+  so that is how to get some columns
+- to get some rows you need to use filter().
+  this is written like this model.objects.filter(firstname='Emily').values()
+
+Django queryset - filter:
+- the filter takes two arguments, colum and term to serach for, lke this - 
+  model.objects.filter(firstname='Emily').values()
+  this will return all the rows in colum firstname that have 'emily'
+- if you don't know an extact cell to look for. you can use the AND to narrow down teh search. 
+  models.objects.filter(lastname='lastname', id=2).values()
+  this says find in models all objects in column lastname and have and ID of two, and retrun thier values. 
+- to get an OR working, you will need to define the search term agaign. 
+  model.objects.filter(firstname='Emily').values()|model.objects.filter(firstname='Alex').values()
+  note the '|' as it is weird and you don't use it often.
+- to similify things you can use Q expressions. 
+  model.objects.filter(Q(firstname='Emily').values()| Q(firstname='Alex')).values()
+- feild look ups can be used to find bits of data within cells.
+  they are written like this - model.objects.filter(firstname__startswith='E').values()
+  this can help find peices of data which you don't know the full information for. 
+- there are loads of other field look ups that are like SQL and can be found here: https://www.w3schools.com/django/django_queryset_filter.php
+
+Django QuerySet - order by:
+- this is how to order data in django. 
+  model.objects.all().order_by('firstname').values()
+  which puts everythign in alphabetical order. 
+- to change to decending just put in a minus:
+  model.objects.all().order_by('-firstname').values()
+- to add in multiple orders, just add them in as a kwag into the order_by method.
+  model.objects.all().order_by('firstname', '-id).values()
+
+CHAPTER 6
+Django - Add a static file:
+- this is where we can add css and images.
+Create a static folder:
+- create a folder named static in the same folder as wehre you cretead you template folders.
+- tehn create a css file by doing <name>.css
+- next you need to add this to the html template. by adding {% load <foldername> %} at the top. 
+  and add the link to this css as well <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+
+Actually getting css to work in django
+- turns out django doesn't acutally have a built in method for handling static files <cooooooool>
+  you will need to import a third party libary called whitenoise. get it in pip import whitenoise. 
+- once you have whitenoise, go to middelware in the settings.py file. 
+  then go to middle ware and add this to the list of middlewares: 'whitenoise.middleware.WhiteNoiseMiddleware',
+- you now need to make sure that all the static files are being collected. 
+  to do this you need to go to settings and add this above the STATIC_URL, STATIC_ROOT = BASE_DIR / "productionfiles"
+- after this you need to collect the static files by running python manage.py collectstatic in the terminal. 
+  this will copy across all static files to the productionfiles in settings. 
+- this will finally make the thing work. 
+- also worth noting that the productionfiles folder will appear in your main project folder as well. 
+
+adding global static files:
+- global static files are static files that can be used across a number of files. 
+- in this instance we need to tell django where to look for the static files. 
+- first step is to create a root folder for this in the main project. 
+- create a css file in it and give it an aciton to do (like tunring the page blue)
+- then go to settings and add this under your STATIC_URL line:
+  STATICFILES_DIRS = [
+    BASE_DIR / 'mystaticfiles'
+  ]
+    - the STATICFILES_DIRS is the list where django will go to look for all static files. 
+    - the BASE_DIR is a keyword that represents the root of the directory in the project
+    - the mystaticfiles is the folder in the root directory which will hold our static files. 
+  every time you make a change to a static file you will need to run the collectstatic command. 
+
+Chapter 7: PostGreSQL
+- Django uses SQLite as a standard but is only really good at testing and debugging. 
+  There for we need another database engine for production such as:
+  - PostgreSQL
+  - MariaDB
+  - MySQL
+  - Oracle
+- PostgreSQL is best as it is an opensource relational databse. 
+- To install PostgreSQL you need to install the package:
+  pip install psycopg2-binary
+  This is the package driver for PostgreSQL and is key to making it work in python. 
+
+- AWS:
+- Amazon Web Services (AWS) is where we will host our databases. 
+- First go to AWS.amazon.com and create an account
+- next you want to add an RDS service - which is a type of database. 
+
+- Now we will create a postgresql database. 
+- choose to create a database and select either standard or easy creation. 
+  - Standard creation:
+    - choose postgresql
+    - choose free tier
+    - name database (EH-DB), username (EHpostgreSQL) and password (same one as laptop). Doesn't matter what these are. 
+    - keep the defualt instance config -> probably burstable classes. 
+    - turn off auto scrolling (just not nessersary here)
+    - Grant public access (Don't connect to EC2) (public access yes), and create new security group. 
+    - keep default db authentications 
+    - keep default monitoring
+    - then click create
+
+- connect to the database:
+  - you need to make sure django can connect to a database by specifcying it in DATABASES tuple in the settings.py file. 
+  to do this go to the database tuple and add in the relivent details from you db for it to identify it. 
+
+- postgresql - add members
+  - first you need to create a super user by running python manage.py createsuperuser
+  - follow the advise and then go to admin and log in using the credencials you added in. 
+
+CHAPTER 8: deploying
+- to deploy to prod you need to have a server to host things on. This is the AWS thing. 
+- log into AWS. 
+- search for elastic beanstalk, we will use this to deploy projects. 
+- now we need to lock down the dependencies and get our django project all ready. 
+
+
+usefulvin ~/.zshrc ~/ means home and rc is the file. 
+i is instert 
+alius emily ='echo emily'
+save with esc:wq
+
+click run and debug
+"""
