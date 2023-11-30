@@ -1,35 +1,43 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-    <li><a href="/view"> View Tasks</a></li>
-    <li><a href="/add"> Add new tasks </a> </li>
-    <li><a href="/delete"> Delete tasks </a>  </li>
-    <li><a href='/update'> Update tasks </a>  </li>
-    <title>
-        Update Task
-    </title>
-    
-<form action={% url 'update_specific_task' %} method="POST">
-    {% csrf_token %}
-    <table>
-        {% for i in titles %}
-                <th>
-                    {{i}}
-                </th>
-        {% endfor %}
-        <th>
-            Choice
-        </th>
-        {% for x in mytask %}
+    <link rel="stylesheet" href="{% static 'mainstatic.css'%}">
+<title>
+    Update Task
+</title>
+<table>
+    {% for i in titles %}
+            <th>
+                {{i}}
+            </th>
+    {% endfor %}
+    {% for x in mytask %}
+        {% if x == myupdate %}
             <tr>
                 <td>{{x.id}}</td>
                 <td>{{x.title}}</td>
                 <td>{{x.discr}}</td>
                 <td>{{x.rag}}</td>
                 <td>{{x.status}}</td>
-                <td><input type="checkbox" id="chosen" name="chosen" value={{x.id}}></td>
-        </tr>
-        {% endfor %}
-    </table>
-    <label for='submit'> Submit Choice<input type="submit" value="submit_choice"><br><br>
-</form>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+<form action="updaterecord/{{myupdate.id}}" method="POST">
+    {% csrf_token %}
+    <p>Which field do you want to update? </p>
+    <select id="cars" name="cars">
+        <option value="title">title</option>
+        <option value="discr">discr</option>
+        <option value="rag">rag</option>
+        <option value="status">status</option>
+    </select>
+    <br>
+    <br>
+    <p>What you you want the message to be? </p>
+    <textarea name="message" rows="10" cols="30"></textarea><br>
+    <input type="submit" name="message" value="submit">
+
+
 </html>

@@ -8,7 +8,6 @@
 <p>and for more actions look below<p>
 <li><a href="/view"> View Tasks</a></li>
     <li><a href="/add"> Add new tasks </a> </li>
-    <li><a href="/delete"> Delete tasks </a>  </li>
     <li><a href='/update'> Update tasks </a>  </li>
 
 <p>this is the test table</p>
@@ -20,36 +19,14 @@
     {% endfor %}
     {% for x in mytask %}
         <tr>
-            <td>{{x.id}}</td>
+            <td><a href="update/{{x.id}}">{{x.id}}</a></td>
             <td>{{x.title}}</td>
             <td>{{x.discr}}</td>
             <td>{{x.rag}}</td>
             <td>{{x.status}}</td>
+            <td><a href="delete/{{x.id}}">delete</a></td>
         </tr>
     {% endfor %}
 </table>
-
-<p>this is the table that works</p>
-<table>
-
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Discription</th>
-        <th>RAG</th>
-        <th>Status</th>
-    </tr>
-    {% for x in mytask %}
-        <tr>
-            <td>{{x.id}}</td>
-            <td>{{x.title}}</td>
-            <td>{{x.discr}}</td>
-            <td>{{x.rag}}</td>
-            <td>{{x.status}}</td>
-        </tr>
-    {% endfor %}
-</table>
-
-
 </body>
 </html>
