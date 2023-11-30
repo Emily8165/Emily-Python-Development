@@ -1,0 +1,401 @@
+Javascript
+
+Chapter 0: what is javascript
+- it is the most popular language in the world. 
+- it is used in web programming. 
+- it is easy to learn, apparently. 
+- javascript is mostly run through html template, so they will come up in browers as appose to the terminal. 
+- javascript is used as logic in html files. 
+- Javascript files are saved as .js
+- java script doesn't require any specific stuff. it will already be running on your browsers. 
+- JS is free for everyone to use. 
+
+JS can change HTML content through the use of methods. 
+one example is getElementById()
+JS can also change HTML Attribute values such as the src value of an image tag. 
+
+Chapter 1: How to do stuff.
+Where: 
+    <script> script tags are where Javascript code is written</script>
+    functions are written as blocks such as 
+    <script>
+        fuction myFuntion() {}
+    </script>
+    - It is actioned when it is called for usually at an event. 
+    - JavaScript can be in the head or the body and it will effect each part if done so. 
+    - JS can also be in the external file and imported in. This is brought in by the src tag e.g <script scr="myscript.js"></script>
+    - There are several advantages ot using JS from an external source. 
+      - it seperates html and code. 
+      - it makes html easier to read. 
+      - cached JS file to speed up upload speeds. 
+    - it can be imported in 3 ways:
+      - with a full URL
+      - with a file path
+      - without any path
+  - JS output:
+    - JS displays data in several ways:
+      - writing into a HTML element using innerHTML() the inner html identifies the type of HTML content. the id identified the html attirbute. 
+      - writing it to the HTML output using document.write() for testing purposes it si good to use write()
+      - writing to the alert box using window.alert() this allows you to use the alert box to display data. 
+      - writing to the browser console.log()
+      - this is data that is displayed when de-bugging. 
+    - a window object is a global scope object. 
+  - JS statements:
+  - a JS statement is composed of values, operators, expressions, keywords and comments. 
+  - to call your statements and files, you need to debug and run the file. 
+  - semicolons sperate JS statements. 
+  - let defines the blockscope. variables used after let need to be decleared in it. and they cannot be re-declared. 
+  - JS ingores mutliple uses of whitespace. 
+  - functions are defined by the word 'function'followed by the function name. 
+  - JS keywords:
+    - var declares a variable. 
+    - let declares a block variable. 
+    - const declares a block constant. 
+    - if is a normal if statement
+    - switch marks a block of statements to be exectured in different cases. 
+    - for is a regualar for loop. 
+    - function declares a function
+    - return is regular return
+    - try is a regular try block
+  - JS syntax:
+    - JS has two types of values, fixed values which are literals and variables values called variables. 
+    - literals are something like numbers and strings. 
+    - variables can be redefined. 
+    - operators also allow us to do things. 
+    - expressions are a companation of values, variables and operators which compute to a value. thinks of it like an equation. 
+    - let tells teh browser to create certain valiables, it is pretty much the same as teh var one. 
+    - // is used to exclude things. 
+    - /* is used to comment out alot of lines */ kinda like """"""
+    - hifends are not allowed in javascropt. 
+  - Variables in detail:
+    - JS use variables in 4 ways:
+      - automatically
+      - using var
+        - var x = 9;
+        - var is for old browsers
+      - using let
+        - let x = 9;
+        - use let if you can't use const
+      - using const
+        - const x = 9;
+        - const should be used if the value or type is not to be changed. 
+      - you can declare many vaiables in one let statement like this: let person = 'john doe', carname = 'volvo', price = 200;
+      - it can also span mulitple lines. 
+      - you can redeclar variables later as well. 
+      - do maths like this: let x = 5 + 3
+      - do strings like this: let x = "string" + "thing";
+      - $ is used to select elements in a jQuery like this: $('p') which means select all p elements
+      - _ can be added into variable as well, although it is often used in hidden path. 
+    let
+    - before 2015 JS did not have blockscope, it only had global scope and function scope. But now we have let and const. 
+    - {let x = 2} means you cannot access anyitng in the {} so you won't be able to access the x. 
+    - values withe a let cannot be re-declared. 
+    - var allows you to redeclare values. 
+    - don't redeclare values to often though. 
+    - variables with var are hoisted to the top and can be initialised at any time. 
+    const
+  - const cannot be redeclared, or reassigned and they have block scope. 
+  - key word of const is misleading as it does not define a constant value. 
+    - you cannot reassign a constant value, array or object. but you can change the elements of constant array and properties of a constant object. 
+  - constant arrays:
+    - const cars = ["1", "2", "3"]; this is an aray
+    - cars[0] = "4"; changes element 0
+    - cars.push('5') adds in the number 5. 
+  - contant objects:
+    - const car = {type:'fiat', model:'500', color:"white"}; defines an object
+    - car.colour = "red"; changes a property
+    - car.owner = "johnson"; adds a property
+  - const blockscope:
+    - const x = 10; this one carries over the one below it. 
+    - {const x = 2};
+    - var is hoisted to the top and can be initialised at any time. 
+    JS operators:
+    - all the same as python. 
+    - && is logical and something 
+    - || is logical or something
+    - ! is logical not something
+  - JS arythmatic:
+    - all the operators are the same but here are a few cool ones:
+    - ** is exponentiation which pulitplies teh first number to the power of the second in an equation e.g let x = 5; let z = x ** 2 returns 25. Basically it is just x to the power of second number. you can also just use math.pow()
+    - ++ is increment which means it adds one to it
+    - -- is decrement which mean it takes one away from it
+  - JS assignment:
+    - you can use 
+  - JS data types:
+    - JS takes 8 different data types:
+      - string, text
+        - JS will interprit ints as numbers when added together. 
+        - JS will also read left to right. 
+        - JS strings are just quotes. 
+      - number, small number
+        - JS number are ints. 
+        - e5 will add 5 zeros onto the end. 
+        - e-5 will move it to teh right by 5 decimal points. 
+      - bigint, big number
+        - bigint is sued to store integer values taht are too big to be represented by the standard js number notation.  
+      - boolean, true or false
+        - this is the same as in python, it is true or false. 
+      - undefined, absense of value. 
+        - undefined values simply return undefined. 
+        - dont get confused with an empty string, that value is an empty string. 
+      - null
+      - symbol
+      - object
+    - object datatypes:
+      - an object
+        - const person = {firstname:"john", lastname:"doe", age:50, eyecolor:"blue"}
+        - this is basically a dictionary in python. 
+      - an array, same a list
+        - these are like lists in pythons 
+        - const test = ["test1", "test2", "test3"]
+      - a data
+    - JS types are dynamic, which means that variables and dataypes can change. 
+    - typeof indicates the type of object. 
+      - typeof "type" // returns sting.
+  - JS functions:
+    - function looks like this:
+      - function myfunc(p1, p2) {
+        return b1 * p2;
+      }
+      - this is almost the same as in python. 
+    - it can be called at three points:
+      - when an event occurs. 
+      - when it is envoked. 
+      - automatically (self envoked)
+    - return is used to return the value after a funciton has been complete. 
+    - the '()' is used to put in the peramiter that was taken into the function:
+      - function func(p1) {
+        let x = "only in scope"
+        return (1/2) * (p1-32)
+      }
+      let value = endfunc(2)
+      // this will return 15. 
+    - functions variablees also have scope, so x is only in the scope of the function. 
+  - JS objects:
+    - All objects have properties, which discript the object, and methods which tell the object what to do. 
+      - const person = {
+          firstName: "John",
+          lastName: "Doe",
+          age: 50,
+          eyeColor: "blue"
+        };
+      - the person is the object and the bits in it are the properties. 
+      - there are two ways to get object properties:
+        - objectname.propertyname or objectname["propertyname"]
+        person.firstname;
+    - there are also object methods:
+      - const person = {
+          firstName: "John",
+          lastName : "Doe",
+          id       : 5566,
+          fullName : function() {
+            return this.firstName + " " + this.lastName;
+          }
+        };
+      - the this is a method. which refrers to the property in the object. 
+      - so it is saying this.keyword. 
+      - this is refers to an object, is global even in a function. 
+    - Keywords can also be used which is an example of this. 
+      name = person.fullname() which looks liek this. 
+
+  - JS events:
+    - HTML events are thing that happen to HTML elements. JS then reacts to these events. 
+    - events can be done by a browser or by a user. 
+    - examples include:
+      - HTML webpage has finished loading
+      - HTML input field was changed. 
+      - HTML button clicked. 
+    - JS lets you execute code to be added to HTML elements. 
+      - like this <element event="some JS">
+      - <button onclick="document.getElementById('demo').innerHTML = Date()">The time is</button>
+      - this will mean the element with the id "demo"
+    - common elements include:
+      - onchange - executed when a html element has been changed. 
+      - onclick - executed in the case of a user clicking an element. 
+      - onmouseover - moves mouse over a HTML element. 
+      - onmouseout - moves mouse away from HTML element
+      - onkeydown - user pushes a keyboard key down. 
+      - onload - browser has finished the loading page. 
+    - Event headers can be used to handle and verify user input. 
+  - JS strings:
+    define a string through this - 
+    - let text = "test";
+    then define built in functions like this - 
+    - let length = text.length;
+    Escape Character - 
+    - \ this turns special charactures into string charactures. 
+    do it like this: let text = "test1"\"test\"test"
+    \\ this inserts a backslash in. 
+    Breaking long lines of code.
+    - you can break lines with \ on it. 
+    JS strings as objects
+    - let x = "John";
+    - let y = new String("john");
+    - this lets you define a string as an object. 
+  - string methods, these are all the methods you can use in JS. 
+    let name = "john"
+    - name.length; returns length of an object. 
+    - name.slice(1, 2); this returns the charactures between the defined peramiters so "oh"
+      - if only one peramiter given it will be everything after the peramiter so name.slice(1) is "ohn"
+      - can also take negative nubmers name.slice(-1) is "j"
+    - name.substring(2, 3); is basically the same as slice, but any values less then 0 is treated as 0. 
+    - name.substr(2, 3); specifies the length of the extracted part. 
+    - name.replace("john", "thing"); this replaces the first string with the second. 
+      - it will only replace the first match though. 
+      - to make it case sensetive, addn in /i like this name.replace(/JOHN/i, "name")
+      - to replace all add in /g like this, name.replace(/john/g, "name")
+    - text = name.replaceall("cat", "dog");
+      - the difference here is that replaceall can be used to specify a regular expression. 
+    - let text1 = name.toUpperCase(); makes a sting uppercase
+    - let text2 = name.toLowerCase(); makes a string lower case. 
+    - let text3 = text1.concat("", text2); joines two strings together. 
+    - let text4 = text3.trim(); removes all white space from the string. 
+    - let text5 = text3.trimStart(); removes white space from the start of a string. 
+    - let text6 = text3.trimEnd(); removes whitespace from the end of a string. 
+    - let text7 = text3.padStart(4, "0"); this will add a string with "0" until it reaches 4. 
+     - you need to convert to a string first using let text = numb.toString();
+    - let text7 = text3.padEnd(4, "0"); pads the end. 
+    - let char = text.charAt(0); this returns a characture at a specified index. 
+    - let char = text.charCodeAt(0); this gives the unit code of the specified characture. 
+    - let char = text[0]; this also returns the characture position
+    - text.split(""); splits all charactures with blank space. 
+  - string seach:
+    - string indexOf()
+      - let text = "please locate where 'locate' occurs";
+      - let index = text.indexOf("locate"); this returns the index of the first isntance of a string. 
+    - string lastIndexOf()
+      - let index = text.lastIndexOf("locate"); this returns the final meantion of the meantioned one. 
+      - you can put a starting position to search from let index = text.indexOf("locate", 15);
+    - String search()
+      - text.search("locate");
+      - this then returns the position of a match. 
+      - text.search(/locate/); this works as well. 
+    - these are very similer but not the same. 
+      - seach() method cannot take a second positional argument
+      - indexOf() method cannot take power search values in cases of regular expressions. 
+  - String Match:
+    - this returns an array containing the results matching the string inputted against the target string or regular expression. 
+    - let text = "rain in SPAIN stays plain";
+    - text.match("ain");
+      - you can put in g for global and ig for case sesetive. 
+    - const iterator = text.matchAll("cats");
+      - this returns all strings taht match the target value. 
+      - you can also add in global for g and case sensitive for gi. 
+    - text.includes("rain");
+      - returns a true value is the string is in the target and false if not. 
+      - it can also take positional starting points like this text.includes("rain", 12);
+    - text.startsWith("hello");
+      - if a string starts with this then it will return true. 
+      - it can also be specified with a position. 
+    - text.endsWith("hello");
+      - will return true if the string ends with the string. 
+      - can be specified with a position. 
+    - template_literals:
+      - template literals use back-ticks (``) rather then quotes. 
+      - template literals are not supported in internet exploreer. 
+      - these template literals allow us to use text across multiple strings. 
+      - this allows interpolate variables and expressions into strings. 
+    - variable_subsititutes:
+      - template litearls allow variables in strings. 
+        - let price = 10;
+        - let VAT = 0.25;
+    - Expression_subsittusion:
+      - let total = `Total: ${(price * (1 + VAT)).toFixed(2)}`;
+        - lets you addexpresssions in. 
+    - HTML_templates:
+  - JS_numbers:
+    - it only has one number type. 
+    - it has floating point 64 digit
+    - NaN is not a number. 
+      - it is what happens when you try to add an int to a string that is not a number.
+      - let x = 100 / "10" will come out as 10 though. 
+      - isNan(x); can be use to find out if an input is a number of not. 
+    - Infinity will return a number to the greatest possible denominator up to infinity. 
+    - deviding my 0 gets infinity as well. 
+    - JS can also interprit hexedecimal letters. 
+    - you can save a number as an object like this, 
+      - let y = new number(123);
+  - JS_BigInt:
+    - ints are only accurate up to 15 digits. 
+    - let y = BigInt(123456789012345)
+    - let type = typeof y; is BigInt
+    - operators can also use bigint
+    - dont use decimals with them. 
+    - you can test big ints using the === thing. 
+    - to find min and max safe numbers use, let x = Number.MAX_SAFE_INTEGER;
+    - Number.isInteger() gives us true or false if it is a whole number of not. 
+    - Number.isSafeInteger() gives true or false if it is a small enough number. 
+  -  JS_Number_Methods:
+    - these methods can be used on all JS numbers. 
+    - toString():
+      - this returns a number as a string. 
+      - let x = 123;
+      - x.toString();
+      - (123).toString();
+      - (100 + 23).toString();
+    - toExponential():
+      - let x = 9.656;
+      - x.toExponential(2); this does somthing weird with numbesr. 
+    - toFixed():
+      - let x = 9.656;
+      - x.toFixed(2) expands to set number of decimals. 
+    - toPrecision():
+      - x.toPrecision(2); responves to 2 decimal places. 
+    - valueOf():
+      - (100 + 23).valueOf(); returns the value of 100 and 23. 
+    you can convert a variable to a number, 
+    - Number() returns a number converted from its argument
+    - parseFloat() parses its argument and returns a floating point number
+    - parseInt() Parses its argument and returns a whole number. 
+    there are not number methods theya re global JS methods. 
+    number methods cannot be used on variables.
+  - JS_Number_Properties:
+    - let x = Number.EPSILON; this returns 1 and teh smallest float greater then 1. 
+    - let x = Number.MAX_VALUE; this is a constant representing the largest possible number in JS> 
+    - let x = Number.MIN_VALUE; returns the lowest possible number in JS. 
+    - let x = Number.MAX_SAFE_INTEGER; returns the maximum safe integer in JS. 
+    - let x = Number.MIN_SAFE_INTEGER; returns the lower safe integer in JS. 
+    - let x = Number.POSITIVE_INFINITY; give infinity 
+    - let x = Number.NEGATIVE_INFINITY; gives -infinity
+    - let x = Number.NaN; gives not a number. 
+    - number methods cannot be used on variables. 
+  - JS_Arrays:
+    - an array is like a list in python, 
+    - const cars = ["Saab", "Volvo", "BMW"];
+    - identify elements like this cars[0];
+    - changing elements, cars[0] = "new_car"; 
+    - to convert it to a string use the cars.toString() method. 
+    - Arrays as objects are like dictionaries. 
+    - const person = {FirstName:"John", LastName:"Doe", age:46};
+    - array elements can also be objects, liek this MyArray[0] = Date.now;
+    - array properites and methods are also similer to python. 
+    - cars.length, cars.sort()
+    - to call last methods use let cars = cars[cars.length - 1];
+    - you can use the Cars.forEach() method to iterate through a loop. 
+    FOR LOOPS using forEach():
+      let text = "<ul";
+      fruit.forEach(myFunction);
+      text += "</ul>";
+
+      function myFunction(value) {
+        text += "<li>" + value + "</li>"
+      }
+    FOR LOOPS using traditional methods
+      const cars = ["Saab", "Volvo", "BMW"];
+      let fLen = cars.length;
+
+      let text = "<ul>";
+      for (let i = 0; i < fLen; i++) {
+        text += "<li>" + cars[i] + '</li>';
+      }
+      text += "</ul>";
+    to add in elements, 
+    cars.push("new_car")
+    arrays use numbered indexes
+    objects use named indexes. 
+    
+26/68
+
+
+
+

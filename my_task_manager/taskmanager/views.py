@@ -1,8 +1,9 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
+from django.urls import reverse
 
-from .forms import TaskForm, TaskUpdateForm
+from .forms import TaskForm
 from .models import Task
 
 
@@ -32,60 +33,39 @@ def add_tasks(request):
         return render(request, "add.html", {"form": form})
 
 
-def delete_tasks(request):
-    mytask = Task.objects.all()
-    model_fields = Task._meta.get_fields()
-    column_headers = [field.name for field in model_fields if field.concrete]
-    context = {"mytask": mytask, "titles": column_headers}
-    template = loader.get_template("delete.html")
-    selected_tasks = request.POST.getlist("chosen_task")
-    try:
-        if request.method == "POST":
-            for task_id in selected_tasks:
-                taskdel = get_object_or_404(Task, pk=task_id)
-                taskdel.delete()
-                return redirect("/view")
-    except:
-        return render(request, "delete.html")
-    return HttpResponse(template.render(context, request))
+def delete(request, id):
+    mytaskid = Task.objects.get(id=id)
+    mytaskid.delete()
+    return HttpResponseRedirect(reverse("view_tasks"))
 
 
-def update_tasks(request):
+def update(request, id):
+    myupdate = Task.objects.get(id=id)
     template = loader.get_template("update.html")
     mytask = Task.objects.all()
     model_fields = Task._meta.get_fields()
     column_headers = [field.name for field in model_fields if field.concrete]
-    myform = TaskUpdateForm()
-    context = {"mytask": mytask, "titles": column_headers, "myform": myform}
-    try:
-        if request.method == "POST":
-            return redirect("/update_specific_task")
-    except:
-        return redirect("/errorpage")
+    context = {"myupdate": myupdate, "titles": column_headers, "mytask": mytask}
     return HttpResponse(template.render(context, request))
 
 
-def update_specific_task(request):
-    template = loader.get_template("update_specific_task.html")
-    mytask = Task.objects.all()
-    model_fields = Task._meta.get_fields()
-    selected_task = request.POST.get("submit_choice")
-    column_headers = [field.name for field in model_fields if field.concrete]
-    myform = TaskUpdateForm()
-    context = {
-        "mytask": mytask,
-        "titles": column_headers,
-        "myform": myform,
-        "chosen": selected_task,
-    }
-    """
-    try:
-        if request.method == "POST":
-            return redirect("/view")
-    except:
-        return render(request, "update.html")
-    """
-    return HttpResponse(template.render(context, request))
+def updaterecord(request, id):
+    title = request.POST["title"]
+    discr = request.POST["discr"]
+    rag = request.POST["rag"]
+    status = request.POST["status"]
+    myupdate = Task.objects.get(id=id)
+    myupdate.title = title
+    myupdate.discr = discr
+    myupdate.rag = rag
+    myupdate.status = rag
+    myupdate.save()
+    return HttpResponseRedirect(reverse("view_tasks"))
+
+
+def error_page(request):
+    template = loader.get_template("errorpage.html")
+    return HttpResponse(template.render())
 
 
 # Create your views here.

@@ -6,9 +6,12 @@ urlpatterns = [
     path("", views.taskmanager, name="main"),
     path("view/", views.view_tasks, name="view_tasks"),
     path("add/", views.add_tasks, name="add_task"),
-    path("delete/", views.delete_tasks, name="delete_tasks"),
-    path("update/", views.update_tasks, name="update_tasks"),
+    path("view/delete/<int:id>/", views.delete, name="delete"),
+    path("view/update/<int:id>/", views.update, name="update"),
     path(
-        "update_specific_task/", views.update_specific_task, name="update_specific_task"
+        "view/updaterecord/<int:id>",
+        views.updaterecord,
+        name="updaterecord",
     ),
+    path("errorpage/", views.error_page, name="error_page"),
 ]
