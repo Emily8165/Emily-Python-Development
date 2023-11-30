@@ -8,12 +8,26 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/my_task_manager/manage.py",
+            "program": "${workspaceFolder}/manage.py",
             "args": [
                 "runserver"
             ],
             "django": true,
             "justMyCode": true
+        },
+        {
+            "name": "Python: Django Emily",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/my_task_manager/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "django": true,
+            "justMyCode": true,
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "my_task_manager.settings"
+            }
         }
     ]
 }
