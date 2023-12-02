@@ -1,4 +1,5 @@
 from typing import Any
+
 from django.db import models
 from django.db.models.query import QuerySet
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -24,24 +25,29 @@ class TaskDetailView(generic.DetailView):
     template_name = "task_detail.html"
     context_object_name = "task"
 
+
 class TaskDeleteView(generic.DeleteView):
-    
+    model = Task
+    template_name = "delete.html"
+    context_object_name = "task"
+    success_url = "/view"
+
+
 class TaskUpdateView(generic.UpdateView):
-    
-    
-    
+    model = Task
+    context_object_name = "task"
+    fields = ["title", "discr", "rag", "status"]
+    template_name = "update.html"
+    success_url = "/view"
+
+
+class TaskCreateView(generic.CreateView):
+    pass
+
+
 def taskmanager(request):
     template = loader.get_template("main.html")
     return HttpResponse(template.render())
-
-
-def view_tasks(request):
-    mytask = Task.objects.all()
-    model_fields = Task._meta.get_fields()
-    column_headers = [field.name for field in model_fields if field.concrete]
-    context = {"mytask": mytask, "titles": column_headers}
-    template = loader.get_template("view.html")
-    return HttpResponse(template.render(context, request))
 
 
 def add_tasks(request):
@@ -54,36 +60,6 @@ def add_tasks(request):
     else:
         form = TaskForm()
         return render(request, "add.html", {"form": form})
-
-
-def delete(request, id):
-    mytaskid = Task.objects.get(id=id)
-    mytaskid.delete()
-    return HttpResponseRedirect(reverse("view_tasks"))
-
-
-def update(request, id):
-    myupdate = Task.objects.get(id=id)
-    template = loader.get_template("update.html")
-    mytask = Task.objects.all()
-    model_fields = Task._meta.get_fields()
-    column_headers = [field.name for field in model_fields if field.concrete]
-    context = {"myupdate": myupdate, "titles": column_headers, "mytask": mytask}
-    return HttpResponse(template.render(context, request))
-
-
-def updaterecord(request, id):
-    title = request.POST["title"]
-    discr = request.POST["discr"]
-    rag = request.POST["rag"]
-    status = request.POST["status"]
-    myupdate = Task.objects.get(id=id)
-    myupdate.title = title
-    myupdate.discr = discr
-    myupdate.rag = rag
-    myupdate.status = rag
-    myupdate.save()
-    return HttpResponseRedirect(reverse("view_tasks"))
 
 
 def error_page(request):

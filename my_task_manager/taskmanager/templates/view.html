@@ -12,9 +12,6 @@
         <li>
             <a href="/add">Add new tasks</a>
         </li>
-        <li>
-            <a href='/update'>Update tasks</a>
-        </li>
         <p>this is the test table</p>
         <table>
             {% for i in titles %}<th>{{ i }}</th>{% endfor %}
@@ -27,9 +24,8 @@
                     <td>{{ x.discr }}</td>
                     <td>{{ x.rag }}</td>
                     <td>{{ x.status }}</td>
-                    <td>
-                        <a href="delete/{{ x.id }}">delete</a>
-                    </td>
+                    <td><a href="{% url 'delete' x.id %}">delete</a></td>
+                    <td><a href="{% url 'update' x.id %}">update</a></td>
                 </tr>
             {% endfor %}
         </table>
