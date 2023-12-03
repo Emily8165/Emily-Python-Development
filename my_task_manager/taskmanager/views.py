@@ -42,24 +42,15 @@ class TaskUpdateView(generic.UpdateView):
 
 
 class TaskCreateView(generic.CreateView):
-    pass
+    model = Task
+    template_name = "add.html"
+    fields = ["title", "discr", "rag", "status"]
+    success_url = "/view"
 
 
 def taskmanager(request):
     template = loader.get_template("main.html")
     return HttpResponse(template.render())
-
-
-def add_tasks(request):
-    template = loader.get_template("add.html")
-    if request.method == "POST":
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("/view")
-    else:
-        form = TaskForm()
-        return render(request, "add.html", {"form": form})
 
 
 def error_page(request):

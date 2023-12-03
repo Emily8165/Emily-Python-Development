@@ -6,12 +6,8 @@
     <body>
         <p>Welcome to views, this is where you can find all the tasks!</p>
         <p>and for more actions look below</p>
-        <li>
-            <a href="/view">View Tasks</a>
-        </li>
-        <li>
-            <a href="/add">Add new tasks</a>
-        </li>
+        <a href="/view">View Tasks</a><br>
+        <a href="create">Add new tasks</a>
         <p>this is the test table</p>
         <table>
             {% for i in titles %}<th>{{ i }}</th>{% endfor %}
