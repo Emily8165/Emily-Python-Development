@@ -6,38 +6,26 @@
     Update Task
 </title>
 <table>
-    {% for i in titles %}
-            <th>
-                {{i}}
-            </th>
-    {% endfor %}
-    {% for x in mytask %}
-        {% if x == myupdate %}
-            <tr>
-                <td>{{x.id}}</td>
-                <td>{{x.title}}</td>
-                <td>{{x.discr}}</td>
-                <td>{{x.rag}}</td>
-                <td>{{x.status}}</td>
-            </tr>
-        {% endif %}
-    {% endfor %}
+    <th>ID</th>
+    <th>Title</th>
+    <th>Discr</th>
+    <th>Rag</th>
+    <th>Status</th>
+    <tr>
+        <td>{{task.id}}</td>
+        <td>{{task.title}}</td>
+        <td>{{task.discr}}</td>
+        <td>{{task.rag}}</td>
+        <td>{{task.status}}</td>
+    </tr>
 </table>
 
-<form action="updaterecord/{{myupdate.id}}" method="POST">
+<form method="POST">
     {% csrf_token %}
-    <p>Which field do you want to update? </p>
-    <select id="cars" name="cars">
-        <option value="title">title</option>
-        <option value="discr">discr</option>
-        <option value="rag">rag</option>
-        <option value="status">status</option>
-    </select>
-    <br>
-    <br>
     <p>What you you want the message to be? </p>
+    {{ form.as_p }}
     <textarea name="message" rows="10" cols="30"></textarea><br>
-    <input type="submit" name="message" value="submit">
-
-
+    <input type="submit" value="save">
+</form>
+<p><a href="/view">View Tasks</a></p>
 </html>

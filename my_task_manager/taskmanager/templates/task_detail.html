@@ -2,15 +2,17 @@
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
-    <h1>View task</h1>
+    <h1>View task in detail</h1>
     <table>
         <tr>
+            <th>ID</th>
             <th>Task</th>
             <th>Priority</th>
             <th>Due date</th>
             <th>Completed</th>
         </tr>
         <tr>
+            <td>{{ task.id}}</td>
             <td>{{ task.title }}</td>
             <td>{{ task.discr }}</td>
             <td>{{ task.rag }}</td>
