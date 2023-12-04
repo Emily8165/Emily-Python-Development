@@ -341,4 +341,131 @@ alius emily ='echo emily'
 save with esc:wq
 
 click run and debug
+
+DJANGO_CLASS_BASED_VIEWS: 
+  This is a more efficient way of saving the Django views and getting logic to work in different templates as they are faster and already created for you. The four we looked at were crud based:
+
+  Create: this is CreateView and allows you to add more data to your models. Call it as a class in djanog like this:
+
+  class TaskCreateView(generic.CreateView):
+      model = Task
+      template_name = “template_name.html"
+      fields = [fields]
+      success_url = "/view"
+
+  Make sure you put the form in the submission like this {{form.as_p}}. This will give you an option to submit all the fields. 
+  You only need to put the method as “POST” and submit and the class will take care of everything else for you. 
+
+  Update: use the UpdateView class in views and allows you to update records in your data. Make sure your class looks like this:
+
+  class TaskUpdateView(generic.UpdateView):
+      model = Model
+      context_object_name = “name_of_peice_of_data
+      fields = [“fields”]
+      template_name = “name_of_template.html"
+      success_url = "/view"
+
+  Make sure you put the form in the submission like this {{form.as_p}}. This will give you an option to submit all the fields. 
+  You only need to put the method as “POST” and submit and the class will take care of everything else for you. 
+
+  Delete: DeleteView:
+
+  class TaskDeleteView(generic.DeleteView):
+      model = Task
+      template_name = "delete.html"
+      context_object_name = "task"
+      success_url = "/view"
+
+  The context object is the specific value you are looking to update. You can pass the record id through the URL as a <pk> (primary key value). You like the others only need to do a post method and the class takes care of the rest. 
+
+  Listview: this lists everything out in the Model as a list view. 
+
+  class TaskListView(generic.ListView):
+      model = Task
+      template_name = "view.html"
+      context_object_name = "mytask"
+      paginate_by = 10
+      ordering = ["id"]
+
+  The paginate_by object says how many rows of the model are called in each instance. So there it will be 10. The ordering is based off the id, and is saying this will order the records by ID in depending order. 
+
+  Detailed view: this helps with looking at a specific record in more detail. 
+
+  class TaskDetailView(generic.DetailView):
+      model = Task
+      template_name = "task_detail.html"
+      context_object_name = "task"
+
+  The specific record is passed to the class which remembers it as the context_object_name and then renders it in the template. 
+
+
+  Read more here: https://www.geeksforgeeks.org/class-based-generic-views-django-create-retrieve-update-delete/
+
+DJANGO_ADMIN:
+  Django automatically sets this up as an admin interface, you can access this by going ot local/admin. 
+  The admin reads the meta data from the models and provides an overview of all the models you have. 
+  it works for creating some front end as a beginner but is better to use a different front end engine to build your site around. 
+  it is also very customizable. 
+
+  - First you need to create a super user by running:
+      python manage.py createsuperuser in the terminal. 
+      this will allow you to view all your groups and users. 
+  - Second we need to add in the models that we want to be seen from the admin interface. 
+    This is done by importing it form .models liek this:
+      from .models import mymodel
+      then add this: admin.site.register(mymodel) which registers the models. 
+  - to make this more reable in the front end, drop this into the end of your models 
+      def __str__(self):
+        return f"{field1} {field2}"
+  - or you can change it to a list view like this:
+      class ModelnameAdmin(admin.ModelAdmin):
+        list_display = ("field1", "field2")
+      admin.site.register(ModelName, ModelNameAdmin)
+  - you can add users and groups through the interface on the home page. 
+  it is good to use a test account here which you can use to give and take permissions away. 
+  - to control users access once they're accounts are created. 
+  we need to create a login page for them. this is not the same page for admin. 
+  - add this to the project urls (it's the same one with admin in it')
+      path("accounts/", include("django.contrib.auth.urls")),
+      it specifies the accounts pathway and the django class which will allow it to function. 
+    from here we need to make templates and add them to the path. 
+  - to do this, create a registration folder in the templates folder, import os at the top of the settigs file and add the dir path to the templates:
+    TEMPLATES = [
+      {
+       # …
+       'DIRS': [os.path.join(BASE_DIR, 'templates')],
+       'APP_DIRS': True,
+      }]
+  - next you can create the template which will fucntion as the login page for your website. 
+  - you should use the {% extends %} tag to get the structure from teh base django tempalte 
+    - djanog has a bunch of templates you can pull from. 
+    - the path is, virtual_enviroment/lib/django/contrib/admin/templates/admin 
+    - generic user name is:
+      newtestdummy - username
+      newthing123 - password
+  - once you have done this you will be re-directed to the title page if the form submission is sucessful. 
+    - this comes from the command that you need to put in teh settings file. 
+    LOGIN_REDIRECT_URL = '/'
+  - now we need the log out option. 
+    - you just need to add this as a template, there is a url saved in the djanog.contrib.auth.urls file. 
+  - do the same with password and email resets. however with this you will need to support email which is a topic for later. 
+
+  once you have done this admin part you can start restricting the website. 
+  - if you are using templates to restring:
+    - add in an if/else block to see if there is a login part to the urls. 
+      if there isn't one and there needs to be.' simiply add a redirect to the login page. 
+  - if you are using functions:
+    you can use the login_required wrapper like this, 
+    from djanog.contrib.auth.decorators import login_required
+    @login_required
+    def my_view(request):
+  - if you are using views:
+    from django.contrib.auth.mixins import LoginReuiredMixin. 
+    class myview(LoginReuiredMixin, view):
+    login_url = '/login/'
+    LOGIN_REDIRECT_URL = 'redirect_to'
+
+    the login url lets you say which template is your login page. 
+    LOGIN_REDIRECT_URL is used to redirect if needed. 
+
 """

@@ -19,6 +19,7 @@ class TaskUpdateForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ["title", "discr", "rag", "status"]
-        Chosen_Task = forms.ChoiceField()
-        Chosen_Column = forms.ChoiceField()
-        Message = forms.CharField()
+
+    chosen_Task = forms.ChoiceField()
+    chosen_Column = forms.ChoiceField()
+    message = forms.CharField()
