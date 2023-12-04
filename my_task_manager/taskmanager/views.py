@@ -1,5 +1,7 @@
 from typing import Any
 
+from django.contrib import admin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.db.models.query import QuerySet
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -26,14 +28,14 @@ class TaskDetailView(generic.DetailView):
     context_object_name = "task"
 
 
-class TaskDeleteView(generic.DeleteView):
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     template_name = "delete.html"
     context_object_name = "task"
     success_url = "/view"
 
 
-class TaskUpdateView(generic.UpdateView):
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     context_object_name = "task"
     fields = ["title", "discr", "rag", "status"]
@@ -41,7 +43,7 @@ class TaskUpdateView(generic.UpdateView):
     success_url = "/view"
 
 
-class TaskCreateView(generic.CreateView):
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     template_name = "add.html"
     fields = ["title", "discr", "rag", "status"]
