@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
+    {% extends "base.html" %}
 <head>
 <title>Main Page(view tasks)</title>
-
 </head>
+{% block content %}
+    {% block logins %}
+    {% if user.is_authenticated %}
+                <p>You're logged in, click here to <a href='accounts/logout/'>logout</a></p>
+            {% else %}
+                <p>You're logged out, click here to <a href="accounts/login/">login</a></p>
+            {% endif %}
+    {% endblock %}
 <body>
-
 <h1>Welcome to Emily's task managing site</h1>
 
 <p>This web-app's primary goal is to:<br>
-    <a href="/view">View</a>, add, delete and update tasks</p>
+    <a href="/view">Go to my tasks</a>, add, delete and update tasks</p>
 <p>Later you will be able to:
 <ul>
     <li>View the change record</li>
@@ -20,7 +27,7 @@
     <li>Be able to see the actions assigned to you through a deadicated account</li>
 
 </ul>
+{% endblock %}
 
-<p><a href="accounts/login"> login</a></p>
 </body>
 </html>
