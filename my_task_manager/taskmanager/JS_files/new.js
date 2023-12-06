@@ -1,4 +1,8 @@
-function myFunction() {
-    const fruits = ["Banana", "Orange", "Apple", "Mango"];
-    document.getElementById("demo").innerHTML = fruits.toString(); 
+function hide() {
+    var x = document.getElementById("HideThis");
+    if (x.style.display == "none"){
+        x.style.display = "block";
+    } else {
+        x.style.display = "none"
+    }
 }

@@ -1,8 +1,12 @@
+{% extends "admin/base.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html>
+    {% block content %}
+    <head>
+    {% block title %} <h1>View tasks</h1> {% endblock %}
+    </head>
     <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
-    <h1>View tasks</h1>
     <body>
         <p>Welcome to views, this is where you can find all the tasks!</p>
         <p>and for more actions look below</p>
@@ -25,5 +29,8 @@
                 </tr>
             {% endfor %}
         </table>
+        <br>
+        <p><a href="{% url 'main' %}">Back to title page</p>
+        {% endblock %}
     </body>
 </html>
