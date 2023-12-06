@@ -50,7 +50,7 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = "/view"
 
 
-def taskmanager(request):
+def main(request):
     template = loader.get_template("main.html")
     return HttpResponse(template.render())
 

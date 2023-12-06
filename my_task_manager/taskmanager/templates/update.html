@@ -1,3 +1,4 @@
+{% extends 'admin/base.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -5,6 +6,8 @@
 <title>
     Update Task
 </title>
+<h1>{% block content_title %}Update: {{task.title}} {% endblock %}</h1>
+{% block content %}
 <table>
     <th>ID</th>
     <th>Title</th>
@@ -27,5 +30,6 @@
     <br>
     <input type="submit" value="save">
 </form>
-<p><a href="/view">View Tasks</a></p>
+<p><a href="/view">Back to view tasks</a></p>
+{% endblock %}
 </html>

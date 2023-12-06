@@ -1,6 +1,8 @@
+{% extends 'admin/base.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html>
+    {% block content %}
     <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
     <h1>View task in detail</h1>
     <table>
@@ -19,4 +21,5 @@
             <td>{{ task.status }}</td>
         </tr>
     </table>
+    {% endblock %}
 </html>

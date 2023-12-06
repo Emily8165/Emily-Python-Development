@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-    {% extends "base.html" %}
+    {% extends "/Users/emilyharris/Desktop/task_manager/task_env/lib/python3.11/site-packages/django/contrib/admin/templates/admin/base.html" %}
 <head>
 <title>Main Page(view tasks)</title>
 </head>
 {% block content %}
     {% block logins %}
-    {% if user.is_authenticated %}
-                <p>You're logged in, click here to <a href='accounts/logout/'>logout</a></p>
-            {% else %}
-                <p>You're logged out, click here to <a href="accounts/login/">login</a></p>
-            {% endif %}
+        {% if user.is_authenticated %}
+            <p>You're logged in, click here to <a href='accounts/logout/'>logout</a></p>
+        {% else %}
+            <p>You're logged out, click here to <a href="accounts/login/">login</a></p>
+        {% endif %}
     {% endblock %}
 <body>
 <h1>Welcome to Emily's task managing site</h1>
