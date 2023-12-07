@@ -5,3 +5,11 @@ table, th, td {
 p {
     line-height: 1;
 }
+
+body {
+    background-color: aquamarine;
+}
+li {
+    display: inline;
+    padding: 8px;
+}

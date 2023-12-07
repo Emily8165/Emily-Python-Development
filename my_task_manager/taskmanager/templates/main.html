@@ -1,29 +1,14 @@
+{% extends "base_layout.html" %}{% load static %}
 <!DOCTYPE html>
-<html>
-    {% extends "admin/base.html" %}
-<head>
-<title>Main Page(view tasks)</title>
-{% block logins %}
-        {{ block.super }}
-    {% endblock %}
-</head>
+
+{% block logins %}{{ block.super }}{% endblock %}
+
 {% block content %}
 
-<body>
 <h1>Welcome to Emily's task managing site</h1>
 
 <p>This web-app's primary goal is to:<br>
     <a href="/view">Go to my tasks</a>, add, delete and update tasks</p>
-<p>Later you will be able to:
-<ul>
-    <li>View the change record</li>
-    <li>Recover deleted tasks</li>
-    <li>Group tasks together</li>
-    <li>Be able to see what state tasks are in from the home page</li>
-    <li>Add new fields</li>
-    <li>Be able to see the actions assigned to you through a deadicated account</li>
-
-</ul>
 {% endblock %}
 
 </body>
