@@ -255,6 +255,21 @@ Django QuerySet - order by:
 - to add in multiple orders, just add them in as a kwag into the order_by method.
   model.objects.all().order_by('firstname', '-id).values()
 
+Django models in templates:
+- to get a model into a template, you need to define it in a view. 
+- using class based views you need to define the overall model like this
+  model = model_name
+- then you need to use a def function in the class to get any additional detail. like this;
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+      # this calls the parent context data of the parent class which is super(). it basically pulls in any contextual data form the parent class. 
+        context = super().get_context_data(**kwargs)
+        context["fields"] = Task._meta.fields this adds a dictionary value against the task fields which are pulled form teh meta. 
+        return context
+    to describe this in more detail, line by line. 
+    def get_context_data is the name of the fuction which is a method that is standard in djanog. 
+
+
+
 CHAPTER 6
 Django - Add a static file:
 - this is where we can add css and images.

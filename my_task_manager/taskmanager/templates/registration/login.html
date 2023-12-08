@@ -1,3 +1,5 @@
+{% extends "base_layout.html" %}
+{% block content %}
 {% if form.errors %}
     <p>your username and password didn't match, please try again</p>
 {% endif %}
@@ -25,3 +27,4 @@
     <input type="hidden" name="next" value="{{ next }}">
   </form>
   <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{% endblock %}

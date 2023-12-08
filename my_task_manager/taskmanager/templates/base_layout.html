@@ -1,12 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+{% block head %}
 <head>
     <style>
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
+        body {
+            background-color:aquamarine;
+            text-align:center;
         }
     </style>
     <meta charset="urtf-8">
@@ -14,14 +14,20 @@
     <link rel="stylesheet" href={% static "mainstatic.css" %}>
     <ul>
         <li><a href="{% url 'main' %}">Home page</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="/view">View</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
     </ul>
 <div id="logins">
 </div>
 </head>
+{% endblock %}
 <body>
     {% block content %}
     {% endblock %}
+
 </body>
 </html>
