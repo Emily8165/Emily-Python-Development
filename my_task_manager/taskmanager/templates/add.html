@@ -1,16 +1,13 @@
 {% extends "base_layout.html" %}
 <!DOCTYPE html>
 <html>
-    <li><a href="/view"> View Tasks</a></li>
-    <li><a href="/add"> Add new tasks </a> </li>
-    <li><a href="/delete"> Delete tasks </a>  </li>
-    <li><a href='/update'> Update tasks </a>  </li>
+    {% block content %}
     <title>
         Add Task
     </title>
 <head>
     <h1>
-        Follow the instructions below to add a task to the backlog:
+        Add Task
     </h1>
 </head>
     <form method="POST" action >
@@ -18,4 +15,6 @@
         {{ form.as_p }}
     <lable><input type="submit" value="save"></label>
     </form>
+    <p><a href="/view">Back to view tasks</a></p>
+    {% endblock %}
 </html>

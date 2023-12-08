@@ -1,10 +1,10 @@
-{% extends 'view.html' %}
+{% extends 'base_layout.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="{% static 'mainstatic.css'%}">
 {% block content %}
-<h1>{{title}}</h1>
+<h1>Update Tasks </h1>
 <form method="POST">
     {% csrf_token %}
     <p>What you you want the message to be? </p>
@@ -12,6 +12,4 @@
     <br>
     <input type="submit" value="save">
 </form>
-<p><a href="/view">Back to view tasks</a></p>
 {% endblock %}
-</html>

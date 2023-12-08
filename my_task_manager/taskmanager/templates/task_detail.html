@@ -7,14 +7,10 @@
     <h1>View task in detail</h1>
     <table>
         <tr>
-            <th>ID</th>
-            <th>Task</th>
-            <th>Priority</th>
-            <th>Due date</th>
-            <th>Completed</th>
+            {% for field in fields %}{{field.verbose_name}}{%endfor%}
         </tr>
         <tr>
-            <td>{{ task.id}}</td>
+            <td><b>{{ task.id }}</b></td>
             <td>{{ task.title }}</td>
             <td>{{ task.discr }}</td>
             <td>{{ task.rag }}</td>

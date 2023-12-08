@@ -31,3 +31,7 @@ li a {
 h1, body {
     text-align: center;
 }
+h2 {
+    text-align: center;
+    size: 1;
+}
