@@ -16,7 +16,7 @@
         <li><a href="{% url 'main' %}">Home page</a></li>
         <li><a href="/view">View</a></li>
         {% if user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'logout.html' %}">Logout</a></li>
         {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
@@ -25,9 +25,23 @@
 </div>
 </head>
 {% endblock %}
-<body>
-    {% block content %}
-    {% endblock %}
 
-</body>
+    {% block content %}
+    <body>
+        </body>
+    {% endblock %}
+{% block table %}
+<h2>{{title}}</h2>
+<table class="center">
+<tr>{% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}</tr>
+<tr>
+    <td><b>{{ task.id }}</b></td>
+    <td>{{ task.title }}</td>
+    <td>{{ task.discr }}</td>
+    <td>{{ task.rag }}</td>
+    <td>{{ task.status }}</td>
+</tr>
+</table>
+<p><a href="/view">Back to view tasks</a></p>
+{% endblock %}
 </html>

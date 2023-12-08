@@ -15,44 +15,57 @@ from .forms import TaskForm
 from .models import Task
 
 
-class TaskListView(generic.ListView):
+class ContextDataMixim:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["fields"] = Task._meta.fields
+        return context
+
+
+class Basic_layout(ContextDataMixim, generic.ListView):
     model = Task
+    template_name = "base_layout"
+    context_object_name = "model"
+
+
+class TaskListView(ContextDataMixim, generic.ListView):
+    model = Task
+    title = "View"
     template_name = "view.html"
     context_object_name = "model"
     paginate_by = 10
     ordering = ["id"]
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["fields"] = Task._meta.fields
-        context["title"] = "View Tasks"
-        return context
 
-
-class TaskDetailView(generic.DetailView):
+class TaskDetailView(ContextDataMixim, generic.DetailView):
     model = Task
+    title = "Detailed"
     template_name = "task_detail.html"
     context_object_name = "task"
+    fields = ["title", "discr", "rag", "status"]
 
 
-class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
+class TaskDeleteView(ContextDataMixim, LoginRequiredMixin, generic.DeleteView):
     model = Task
+    title = "Delete"
     template_name = "delete.html"
     context_object_name = "task"
+    fields = ["title", "discr", "rag", "status"]
     success_url = "/view"
 
 
-class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
+class TaskUpdateView(ContextDataMixim, LoginRequiredMixin, generic.UpdateView):
     model = Task
-    title = "Update Task"
+    title = "Update"
+    template_name = "update.html"
     context_object_name = "task"
     fields = ["title", "discr", "rag", "status"]
-    template_name = "update.html"
     success_url = "/view"
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
+    title = "Add"
     template_name = "add.html"
     fields = ["title", "discr", "rag", "status"]
     success_url = "/view"
@@ -60,8 +73,8 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
 
 class MainView(generic.TemplateView):
     model = Task
+    title = "Home"
     template_name = "main.html"
-    context = {"model": model}
 
 
 def error_page(request):
