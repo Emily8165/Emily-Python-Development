@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
+from django.views.generic.base import View
 
 from .forms import TaskForm
 from .models import Task
@@ -17,9 +18,15 @@ from .models import Task
 class TaskListView(generic.ListView):
     model = Task
     template_name = "view.html"
-    context_object_name = "mytask"
+    context_object_name = "model"
     paginate_by = 10
     ordering = ["id"]
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["fields"] = Task._meta.fields
+        context["title"] = "View Tasks"
+        return context
 
 
 class TaskDetailView(generic.DetailView):
@@ -37,6 +44,7 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
+    title = "Update Task"
     context_object_name = "task"
     fields = ["title", "discr", "rag", "status"]
     template_name = "update.html"
@@ -50,9 +58,10 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = "/view"
 
 
-def main(request):
-    template = loader.get_template("main.html")
-    return HttpResponse(template.render())
+class MainView(generic.TemplateView):
+    model = Task
+    template_name = "main.html"
+    context = {"model": model}
 
 
 def error_page(request):

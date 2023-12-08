@@ -1,28 +1,10 @@
-{% extends 'admin/base.html' %}
+{% extends 'view.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="{% static 'mainstatic.css'%}">
-<title>
-    Update Task
-</title>
-<h1>{% block content_title %}Update: {{task.title}} {% endblock %}</h1>
 {% block content %}
-<table>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Discr</th>
-    <th>Rag</th>
-    <th>Status</th>
-    <tr>
-        <td>{{task.id}}</td>
-        <td>{{task.title}}</td>
-        <td>{{task.discr}}</td>
-        <td>{{task.rag}}</td>
-        <td>{{task.status}}</td>
-    </tr>
-</table>
-
+<h1>{{title}}</h1>
 <form method="POST">
     {% csrf_token %}
     <p>What you you want the message to be? </p>

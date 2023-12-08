@@ -5,35 +5,38 @@
     {% block logins %}
         {{ block.super }}
     {% endblock %}
-    {% block content %}
     <head>
-    {% block title %} <h1>View tasks</h1> {% endblock %}
+        <title>View</title>
+        <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
     </head>
-    <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
     <body>
+        {% block content %}
+        {% block title%}<h1>{{title}}</h1>{% endblock %}
         <p>Welcome to views, this is where you can find all the tasks!</p>
         <p>and for more actions look below</p>
         <a href="/view">View Tasks</a><br>
         <a href="create">Add new tasks</a>
         <p>this is the test table</p>
-        <table>
-            {% for i in titles %}<th>{{ i }}</th>{% endfor %}
-            {% for x in mytask %}
-                <tr>
-                    <td>
-                        <a href="{% url 'detail' x.id %}">{{ x.id }}</a>
-                    </td>
-                    <td>{{ x.title }}</td>
-                    <td>{{ x.discr }}</td>
-                    <td>{{ x.rag }}</td>
-                    <td>{{ x.status }}</td>
-                    <td><a href="{% url 'delete' x.id %}">delete</a></td>
-                    <td><a href="{% url 'update' x.id %}">update</a></td>
-                </tr>
-            {% endfor %}
-        </table>
+                <table class="center">
+                {% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}
+                <th>Delete</th>
+                <th>Update</th>
+                {% for task in model %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'detail' task.id %}">{{ task.id }}</a>
+                        </td>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.discr }}</td>
+                        <td>{{ task.rag }}</td>
+                        <td>{{ task.status }}</td>
+                        <td><a href="{% url 'delete' task.id %}">delete</a></td>
+                        <td><a href="{% url 'update' task.id %}">update</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
         <br>
         <p><a href="{% url 'main' %}">Back to title page</p>
-        {% endblock %}
     </body>
+    {% endblock %}
 </html>

@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "base_layout.html" %}
 {% block content %}
 <form method="post"> {% csrf_token %}
     <p>Are you sure you want to delete "{{task.id}}"?</p>
