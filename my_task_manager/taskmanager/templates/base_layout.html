@@ -16,7 +16,7 @@
         <li><a href="{% url 'main' %}">Home page</a></li>
         <li><a href="/view">View</a></li>
         {% if user.is_authenticated %}
-            <li><a href="{% url 'logout.html' %}">Logout</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
