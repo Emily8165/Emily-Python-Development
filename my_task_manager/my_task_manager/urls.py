@@ -19,6 +19,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path("", include("taskmanager.urls")),
-    path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls, name="admin"),
     path("accounts/", include("django.contrib.auth.urls")),
 ]

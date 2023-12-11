@@ -5,17 +5,5 @@
     {% block content %}
     <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
     <h1>View task in detail</h1>
-    <table>
-        <tr>
-            {% for field in fields %}{{field.verbose_name}}{%endfor%}
-        </tr>
-        <tr>
-            <td><b>{{ task.id }}</b></td>
-            <td>{{ task.title }}</td>
-            <td>{{ task.discr }}</td>
-            <td>{{ task.rag }}</td>
-            <td>{{ task.status }}</td>
-        </tr>
-    </table>
     {% endblock %}
 </html>

@@ -483,4 +483,31 @@ DJANGO_ADMIN:
     the login url lets you say which template is your login page. 
     LOGIN_REDIRECT_URL is used to redirect if needed. 
 
+DJANGO_DELETE_HISTORY:
+- The pathway I am taking with this is to send a copy of the task to another model before deleting it. 
+- To make it more fun here are the addtional requirements:
+  - send most recently deleted data to a recenlty_deleted_model
+  - recenlty_deleted_model can only be 10 lines long and then it sends the data to a bigger SQL repo. 
+  - SQL repo will act as a record for recording all tasks. 
+  - Be able to call the SQL repo if need be. 
+  
+  Hit the wall with this one will return to it later. 
+
+UPDATE_FILTERS:
+- This is to make sure the add and update functions only let you update/add things in certain ways. ie text goes in a text field numbers in an int. 
+  - first add in your options for the various parts you want updating to the part of your forms above your meta data like this:
+  class TaskForm(forms.ModelForm):
+    rag_choices = {"option_1": "Red", "option_2": "Amber", "option_3": "Green"}
+    rag = forms.ChoiceField(choices=rag_choices.items())
+    status_choices = {
+        "option_1": "Open",
+        "option_2": "In_progress",
+        "option_3": "In_test",
+    }
+    status = forms.ChoiceField(choices=status_choices.items())
+
+    class Meta:
+        model = Task
+        fields = ["title", "discr", "rag", "status"]
+  
 """
