@@ -1,5 +1,5 @@
 {% extends "base_layout.html" %}
-{% load static %}
+{% load static %} {% load mytags %}
 <!DOCTYPE html>
 <html>
     {% block logins %}
@@ -8,27 +8,29 @@
     <head>
         <title>View</title>
         <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
+        <style>
+            p1{text-align: center;}
+        </style>
     </head>
         {% block content %}
         <body>
         {% block title%}<h1>View Tasks</h1>{% endblock %}
         <p>Welcome to views, this is where you can find all the tasks!</p>
         <p>and for more actions look below</p>
-        <a href="create">Add new tasks</a>
-        <br>
+        <p1><a href="create">Add new tasks</a></p1>
         {% endblock %}
         {% block table %}
-                <table class="center">
+                <table>
                 {% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}
-                <th>Delete</th>
+                <th class=".left-align">Delete</th>
                 <th>Update</th>
                 {% for task in model %}
                     <tr>
                         <td>
                             <a href="{% url 'detail' task.id %}"><b>{{ task.id }}</b></a>
                         </td>
-                        <td>{{ task.title }}</td>
-                        <td>{{ task.discr }}</td>
+                        <td>{{ task.title|add_line_breaks:5 }}</td>
+                        <td>{{ task.discr|add_line_breaks:5 }}</td>
                         <td>{{ task.rag }}</td>
                         <td>{{ task.status }}</td>
                         <td><a href="{% url 'delete' task.id %}">delete</a></td>

@@ -1,10 +1,8 @@
 table, th, td {
     border: 1px solid black;
-    text-align: center;
 }
 table.center {
     margin-left: auto;
-    margin-right: auto;
 }
 p {
     line-height: 1;
@@ -24,14 +22,17 @@ li {
 li a {
     display: block;
     color: black;
-    text-align: center;
+    text-align: left;
     padding: 14px 16px;
     text-decoration: none;
 }
 h1, body {
-    text-align: center;
+    text-align: left;
 }
 h2 {
-    text-align: center;
+    text-align: left;
     size: 1;
+}
+.left-align {
+    text-align: left;
 }
