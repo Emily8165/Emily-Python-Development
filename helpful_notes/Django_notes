@@ -493,21 +493,41 @@ DJANGO_DELETE_HISTORY:
   
   Hit the wall with this one will return to it later. 
 
-UPDATE_FILTERS:
+FORM_FILTERS:
 - This is to make sure the add and update functions only let you update/add things in certain ways. ie text goes in a text field numbers in an int. 
   - first add in your options for the various parts you want updating to the part of your forms above your meta data like this:
   class TaskForm(forms.ModelForm):
-    rag_choices = {"option_1": "Red", "option_2": "Amber", "option_3": "Green"}
-    rag = forms.ChoiceField(choices=rag_choices.items())
-    status_choices = {
-        "option_1": "Open",
-        "option_2": "In_progress",
-        "option_3": "In_test",
-    }
-    status = forms.ChoiceField(choices=status_choices.items())
+    # define choices:
+    rag_choices = [("Red", "Red"), ("Amber", "Amber"), ("Green", "Green")] # the first value is the one red by the database. the second is teh one that is read by the users. 
+    status_choices = [
+        ("Open", "Open"),
+        ("In_Progress", "In_Progress"),
+        ("Closed", "Closed"),
+    ]
+    # define fields:
+    title = forms.CharField(max_length=255)
+    discr = forms.CharField(max_length=255)
+    rag = forms.ChoiceField(choices=rag_choices) # there are lots of different field choices, this one will give you muliple options as specified above. 
+    status = forms.ChoiceField(choices=status_choices)
 
-    class Meta:
-        model = Task
-        fields = ["title", "discr", "rag", "status"]
+    class Meta: # make sure the M is CAPITALISED. the meta lets you hold meta data from the form. 
+        model = Task  # Specify the model associated with this form
+        fields = ["title", "discr", "rag", "status"] # you always need to specifie the fields in the form. 
+  
+        - once you have your form sorted you can change your view:
+    - class TaskUpdateView(ContextDataMixim, LoginRequiredMixin, generic.UpdateView): 
+    model = Task # this defines the db you are pulling from
+    title = "Update" # this titles your view and ties it to the url (I think?)
+    form_class = TaskForm # this defines the form that you are pulling the data from. 
+    template_name = "update.html" # this is the template name that the data is being inputted in. 
+    context_object_name = "task" # this defines the vairables that are being updated. 
+    success_url = "/view"
+    
+ADDING_LINE_BREAKS_TO_THE_DATA_IN_A_MODEL:
+- idk where to start with this one so will take some research. 
+- part of me wants to add an if statmenet like this to the forms;
+    I have created a function which will add line breaks to the 10th part of code when inputted. 
+    I just need to make sure it is being used in the right place. 
+    
   
 """

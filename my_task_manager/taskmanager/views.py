@@ -57,17 +57,17 @@ class TaskDeleteView(ContextDataMixim, LoginRequiredMixin, generic.DeleteView):
 class TaskUpdateView(ContextDataMixim, LoginRequiredMixin, generic.UpdateView):
     model = Task
     title = "Update"
+    form_class = TaskForm
     template_name = "update.html"
     context_object_name = "task"
-    fields = ["title", "discr", "rag", "status"]
     success_url = "/view"
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     title = "Add"
+    form_class = TaskForm
     template_name = "add.html"
-    fields = ["title", "discr", "rag", "status"]
     success_url = "/view"
 
 
