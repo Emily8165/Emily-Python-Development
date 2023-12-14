@@ -77,6 +77,10 @@ class MainView(generic.TemplateView):
     template_name = "main.html"
 
 
+class SearchView(generic.TemplateView):
+    model = Task
+
+
 def error_page(request):
     template = loader.get_template("errorpage.html")
     return HttpResponse(template.render())

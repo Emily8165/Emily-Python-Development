@@ -8,7 +8,7 @@
 <form method="POST" action="{% url 'update' pk=object.pk %}">
     {% csrf_token %}
     <p>What you you want the message to be? </p>
-    {{ form.as_p|linebreaksbr }}
+    {{ form.as_p }}
     <br>
     <input type="submit" value="save">
 </form>

@@ -528,6 +528,14 @@ ADDING_LINE_BREAKS_TO_THE_DATA_IN_A_MODEL:
 - part of me wants to add an if statmenet like this to the forms;
     I have created a function which will add line breaks to the 10th part of code when inputted. 
     I just need to make sure it is being used in the right place. 
-    
+    it is being used in the right place but is not adding in additonal lines dispite working in the terminal. 
+
+ADDING_TESTING:
+- python testing uses the standard python libary unittest which uses classes to make it's tests. 
+- it is best practise to but tests into different files depending on what you are testing:
+  - test_models.py
+  - test_views.py
+  - test_forms.py
+
   
 """
