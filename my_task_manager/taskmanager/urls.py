@@ -11,5 +11,6 @@ urlpatterns = [
     path("view/create", views.TaskCreateView.as_view(), name="create"),
     path("view/delete/<pk>/", views.TaskDeleteView.as_view(), name="delete"),
     path("view/update/<pk>/", views.TaskUpdateView.as_view(), name="update"),
+    path("view/search/", views.SearchView.as_view(), name="search"),
     path("errorpage/", views.error_page, name="error_page"),
 ]
