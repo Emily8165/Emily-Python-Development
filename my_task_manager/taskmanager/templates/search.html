@@ -1,0 +1,9 @@
+{% extends "base_layout.html" %}
+{% block content%}
+    <form method="GET" action="{% url 'search' pk=task.pk %}">
+        {% csrf_token %}
+        <input type="text", name="lookup", value="Search task title">
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
+{% block table %}{% endblock %}

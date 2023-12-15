@@ -19,12 +19,7 @@
         {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
-        <br>
-        <li><form method="POST" action="{% url 'search' %}">
-                {% csrf_token %}
-                <input type="text", name="lookup", value="Search">
-            </form>
-        </li>
+        <li><a href="{% url 'search' %}">Search</a></li>
     </ul>
 <div id="logins">
 </div>
