@@ -10,6 +10,7 @@ from django.template import loader
 from django.urls import reverse
 from django.views import generic
 from django.views.generic.base import View
+from django.views.generic.detail import SingleObjectMixin
 
 from .forms import TaskForm
 from .models import Task
@@ -77,8 +78,21 @@ class MainView(generic.TemplateView):
     template_name = "main.html"
 
 
-class SearchView(generic.TemplateView):
+class SearchView(generic.ListView):
     model = Task
+    template_name = "search.html"
+    context_object_name = "tasks"
+    form_class = TaskForm
+
+    def get_queryset(self) -> QuerySet[Any]:
+        lookup = self.request.GET.get()
+        task = Task.objects.filter(title__icontains=lookup)
+        if task.exists():
+            first_task_id = task.first()
+            task_id = first_task_id.id
+            return redirect("detail", task_id=task_id)
+
+    # the goal here is not to reproduce the searched for object but to direct to the detailed view of it.
 
 
 def error_page(request):
