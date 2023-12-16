@@ -85,12 +85,15 @@ class SearchView(generic.ListView):
     form_class = TaskForm
 
     def get_queryset(self) -> QuerySet[Any]:
-        lookup = self.request.GET.get()
-        task = Task.objects.filter(title__icontains=lookup)
-        if task.exists():
-            first_task_id = task.first()
-            task_id = first_task_id.id
-            return redirect("detail", task_id=task_id)
+        lookup_param = self.request.GET.get("lookup", "")
+        # Filter tasks based on the search parameter
+        matching_tasks = Task.objects.filter(title__icontains=lookup_param)
+        return matching_tasks
+
+    def get(self, request, *args, **kwargs):
+        # Call the parent get method to handle the ListView logic
+        response = super().get(request, *args, **kwargs)
+        return response
 
     # the goal here is not to reproduce the searched for object but to direct to the detailed view of it.
 
