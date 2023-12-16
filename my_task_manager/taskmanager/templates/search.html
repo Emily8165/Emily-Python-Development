@@ -1,9 +1,14 @@
 {% extends "base_layout.html" %}
 {% block content%}
-    <form method="GET" action="{% url 'search' pk=task.pk %}">
+    <form method="GET" action="{% url 'search' %}">
         {% csrf_token %}
-        <input type="text", name="lookup", value="Search task title">
+        <input type="text", name="lookup", value="{{ request.GET.lookup }}" placeholder="submit title here">
         <button type="submit">Submit</button>
     </form>
+    <ul>
+        {% for task in tasks %}
+            <li>{{ task.title }} - <a href="{% url 'detail' pk=task.pk %}">View Details</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 {% block table %}{% endblock %}
