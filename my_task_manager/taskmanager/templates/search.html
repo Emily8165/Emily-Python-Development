@@ -5,10 +5,28 @@
         <input type="text", name="lookup", value="{{ request.GET.lookup }}" placeholder="submit title here">
         <button type="submit">Submit</button>
     </form>
-    <ul>
-        {% for task in tasks %}
-            <li>{{ task.title }} - <a href="{% url 'detail' pk=task.pk %}">View Details</a></li>
-        {% endfor %}
-    </ul>
+    <br>
 {% endblock %}
-{% block table %}{% endblock %}
+{% block table %}
+    <button onclick="hide_func()">Click me</button>
+    <div id="hidden" class="hidden-element">
+        <table>
+            {% for task in tasks %}
+            <tr>
+            <th>{{ task.title }}</th>
+            <td><a href="{% url 'detail' pk=task.pk %}">View</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script>
+        function hide_func() {
+            var x = document.getElementById("hidden");
+            if (x.style.display == "none"){
+                x.style.display = "block";
+            } else {
+                x.style.display = "none"
+            }
+        }
+    </script>
+{% endblock %}
