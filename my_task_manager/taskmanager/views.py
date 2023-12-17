@@ -84,13 +84,19 @@ class SearchView(generic.ListView):
     context_object_name = "tasks"
     form_class = TaskForm
 
-    def get_queryset(self) -> QuerySet[Any]:
-        lookup_param = self.request.GET.get("lookup", "")
+    def get_queryset(
+        self,
+    ) -> QuerySet[Any]:  # this retirives the objects from the list view.
+        lookup_param = self.request.GET.get(
+            "lookup", ""
+        )  # this retireves the specific data from the query set. The look up is a paramiter set in the GET function.
         # Filter tasks based on the search parameter
-        matching_tasks = Task.objects.filter(title__icontains=lookup_param)
+        matching_tasks = Task.objects.filter(
+            title__icontains=lookup_param
+        )  # this compares the data to all object in the model and filters out any that aren't define in the look up paraiter.
         return matching_tasks
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):  # this returns the data as a list view.
         # Call the parent get method to handle the ListView logic
         response = super().get(request, *args, **kwargs)
         return response

@@ -3,12 +3,11 @@
     <form method="GET" action="{% url 'search' %}">
         {% csrf_token %}
         <input type="text", name="lookup", value="{{ request.GET.lookup }}" placeholder="submit title here">
-        <button type="submit">Submit</button>
+        <button type="submit", onclick="hide_func(); return false;">Submit</button>
     </form>
     <br>
 {% endblock %}
 {% block table %}
-    <button onclick="hide_func()">Click me</button>
     <div id="hidden" class="hidden-element">
         <table>
             {% for task in tasks %}

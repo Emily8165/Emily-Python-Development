@@ -536,6 +536,8 @@ ADDING_TESTING:
   - test_models.py
   - test_views.py
   - test_forms.py
+- unit testing is for testing small parts of a project. It also allows you to automate the testing a fair bit. 
+- name files as test_<test>.py it is standard naming convetions. 
+- you need to import unittest and the model you want to test. Make sure your testing files are in the same directories as the files you want to test. 
 
-  
 """

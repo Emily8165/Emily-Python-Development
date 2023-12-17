@@ -8,9 +8,9 @@
     {% block content %}
         {% block logins %}
             {% if user.is_authenticated %}
-                <p>You're logged in, click here to <a href='accounts/logout/'>logout</a></p>
+                <p>You're logged in, click here to <a href="{% url 'log_out' %}">logout</a></p>
             {% else %}
-                <p>You're logged out, click here to <a href="accounts/login/">login</a></p>
+                <p>You're logged out, click here to <a href="{% url 'login' %}">login</a></p>
             {% endif %}
         {% endblock%}
     {% endblock %}
