@@ -10,6 +10,7 @@ class TaskForm(forms.ModelForm):
         ("Open", "Open"),
         ("In_Progress", "In_Progress"),
         ("Closed", "Closed"),
+        ("Deleted", "Deleted"),
     ]
     # define fields:
     title = forms.CharField(max_length=255)

@@ -486,12 +486,28 @@ DJANGO_ADMIN:
 DJANGO_DELETE_HISTORY:
 - The pathway I am taking with this is to send a copy of the task to another model before deleting it. 
 - To make it more fun here are the addtional requirements:
-  - send most recently deleted data to a recenlty_deleted_model
+  - send most recently deleted data to a DelTask
   - recenlty_deleted_model can only be 10 lines long and then it sends the data to a bigger SQL repo. 
   - SQL repo will act as a record for recording all tasks. 
   - Be able to call the SQL repo if need be. 
   
   Hit the wall with this one will return to it later. 
+
+  - OMG that was hard. 
+  - first you have to define the model in your models file. this will be a child model of the parent model. 
+  - then you will need to run the makemigrations command in the terminal. 
+    this will try to create the parent model again, however you will jsut need to delete this form teh midrations. 
+  - then run the make migrations command again. 
+  - finally make the migrate command and specific the migration before your final one. So if you have 3 migrations run 0002. 
+  - check to make sure the model has been created by running manage.py inspectdb and you will see the model. 
+
+  Next we need to make a view to see the deleted table.
+  - plan here is to create a view showing the DelTask model which will hold all tasks that have been created. 
+  - it will be a long list so we will need to add multiple pages. I think paginate 10 per page. 
+  
+  Next we need to exclude any records that are active. 
+  - Me thinks it would be good to put in some sort of colum to show if the work is closed then it can be deleted. 
+  - maybe worth adding in a date of closer colum as well on the detail view?
 
 FORM_FILTERS:
 - This is to make sure the add and update functions only let you update/add things in certain ways. ie text goes in a text field numbers in an int. 

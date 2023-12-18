@@ -7,6 +7,7 @@ urlpatterns = [
     path("", views.MainView.as_view(), name="main"),
     path("admin/", admin.site.urls, name="admin2"),
     path("view/", views.TaskListView.as_view(), name="view_tasks"),
+    path("view/view_history/", views.ViewHistory.as_view(), name="view_history"),
     path("view/detail/<pk>/", views.TaskDetailView.as_view(), name="detail"),
     path("view/create", views.TaskCreateView.as_view(), name="create"),
     path("view/delete/<pk>/", views.TaskDeleteView.as_view(), name="delete"),
