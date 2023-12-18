@@ -13,7 +13,8 @@
     <link rel="stylesheet" href={% static "mainstatic.css" %}>
     <ul>
         <li><a href="{% url 'main' %}">Home page</a></li>
-        <li><a href="/view">View</a></li>
+        <li><a href="{% url 'view_tasks' %}">View</a></li>
+        <li><a href="{% url 'view_history'%}">View History</a></p>
         {% if user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
@@ -31,17 +32,17 @@
         </body>
     {% endblock %}
 {% block table %}
-<h2>{{title}}</h2>
-<table>
-<tr>{% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}</tr>
-<tr>
-    <td class="left-align"><b>{{ task.id }}</b></td>
-    <td class="left-align">{{ task.title }}</td>
-    <td>{{ task.discr }}</td>
-    <td>{{ task.rag }}</td>
-    <td>{{ task.status }}</td>
-</tr>
-</table>
-<p><a href="/view">Back to view tasks</a></p>
+    <h2>{{title}}</h2>
+    <table>
+    <tr>{% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}</tr>
+    <tr>
+        <td class="left-align"><b>{{ task.id }}</b></td>
+        <td class="left-align">{{ task.title|capfirst }}</td>
+        <td>{{ task.discr|capfirst }}</td>
+        <td>{{ task.rag }}</td>
+        <td>{{ task.status }}</td>
+    </tr>
+    </table>
+    <p><a href="/view">Back to view tasks</a></p>
 {% endblock %}
 </html>

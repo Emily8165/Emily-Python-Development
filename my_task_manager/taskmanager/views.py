@@ -13,7 +13,7 @@ from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin
 
 from .forms import TaskForm
-from .models import Task
+from .models import DelTask, Task
 
 
 class ContextDataMixim:
@@ -37,6 +37,12 @@ class TaskListView(ContextDataMixim, generic.ListView):
     paginate_by = 10
     ordering = ["id"]
 
+    def filter_view(self, *args, **kwargs):
+        filter_order = Task.objects.all().order_by("title").values()
+        context = super(TaskListView, self).get_context_data(*args, **kwargs)
+        context["filter_order"] = filter_order
+        return context
+
 
 class TaskDetailView(ContextDataMixim, generic.DetailView):
     model = Task
@@ -54,6 +60,11 @@ class TaskDeleteView(ContextDataMixim, LoginRequiredMixin, generic.DeleteView):
     fields = ["title", "discr", "rag", "status"]
     success_url = "/view"
 
+    def copy(self):
+        model = DelTask
+
+        pass
+
 
 class TaskUpdateView(ContextDataMixim, LoginRequiredMixin, generic.UpdateView):
     model = Task
@@ -70,6 +81,11 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = TaskForm
     template_name = "add.html"
     success_url = "/view"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        DelTask.objects.create(task=form.instance)
+        return response
 
 
 class MainView(generic.TemplateView):
@@ -102,6 +118,15 @@ class SearchView(generic.ListView):
         return response
 
     # the goal here is not to reproduce the searched for object but to direct to the detailed view of it.
+
+
+class ViewHistory(ContextDataMixim, generic.ListView):
+    model = DelTask
+    title = "view_history"
+    template_name = "view_history.html"
+    context_object_name = "model"
+    paginate_by = 10
+    ordering = ["id"]
 
 
 def error_page(request):
