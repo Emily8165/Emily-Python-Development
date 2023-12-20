@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} {% load mytags %}
 <!DOCTYPE html>
 <html>
 {% block head %}
@@ -37,8 +37,8 @@
     <tr>{% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}</tr>
     <tr>
         <td class="left-align"><b>{{ task.id }}</b></td>
-        <td class="left-align">{{ task.title|capfirst }}</td>
-        <td>{{ task.discr|capfirst }}</td>
+        <td class="left-align">{{ task.title|capfirst|add_line_breaks:5|linebreaks }}</td>
+        <td>{{ task.discr|capfirst|add_line_breaks:5|linebreaks }}</td>
         <td>{{ task.rag }}</td>
         <td>{{ task.status }}</td>
     </tr>

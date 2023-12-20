@@ -60,11 +60,6 @@ class TaskDeleteView(ContextDataMixim, LoginRequiredMixin, generic.DeleteView):
     fields = ["title", "discr", "rag", "status"]
     success_url = "/view"
 
-    def copy(self):
-        model = DelTask
-
-        pass
-
 
 class TaskUpdateView(ContextDataMixim, LoginRequiredMixin, generic.UpdateView):
     model = Task
@@ -76,7 +71,7 @@ class TaskUpdateView(ContextDataMixim, LoginRequiredMixin, generic.UpdateView):
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Task
+    model = DelTask
     title = "Add"
     form_class = TaskForm
     template_name = "add.html"

@@ -14,7 +14,7 @@ class Task(models.Model):
 class DelTask(models.Model):
     task = models.OneToOneField(
         Task,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name="del_tasks",
     )
 

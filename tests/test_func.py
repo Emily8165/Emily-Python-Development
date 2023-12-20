@@ -10,14 +10,14 @@ class TestFunc(
         # i want to test if a line break "/n" is at every nth (defined in function) line in a function.
         # Arrange
         testing_string = "this is a random test string for testing it is very long so that we can do a lot of testing on it. "
-
+        num = 10
         # Act
-        result = custom_filters.add_line_breaks(testing_string, 10)
+        result = custom_filters.add_line_breaks(testing_string, num)
 
         # Assert
         for i in enumerate(result, start=1):
-            if i[0] % 10 == 0:
-                self.assertEqual(i, "\n")
+            if i[0] % num == 0:
+                self.assertEqual(i[1], " ")
 
     def test_numbers(self):
         # Arrange

@@ -556,4 +556,17 @@ ADDING_TESTING:
 - name files as test_<test>.py it is standard naming convetions. 
 - you need to import unittest and the model you want to test. Make sure your testing files are in the same directories as the files you want to test. 
 
+
+PAGINATION:
+- Pagination is where you list out how much of a model you see on any one page. 
+- it is standard in django and you can add it to your class based view by calling paginate_by = <num>
+- then you have some cool things you can add to your template to show what page you are in 
+  - 
+- useful link is here: https://docs.djangoproject.com/en/5.0/topics/pagination/
+
+
+SOFTDELETE:
+- active filed shows if something should appear or not in a model. 
+- you can then say if a task is active or not and then us that as a basis for determining if you can view it or not. 
+
 """

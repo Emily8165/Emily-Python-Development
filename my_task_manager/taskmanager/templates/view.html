@@ -20,7 +20,7 @@
         <p1><a href="create">Add new tasks</a></p1>
         {% endblock %}
         {% block table %}
-                <table>
+                <table align="center">
                 {% for field in fields %}<th>{{ field.verbose_name }}<input type="button" onclick=""></th>{% endfor %}
                 <th class=".left-align">Delete<input type="button"></th>
                 <th>Update<input type="button"></th>
@@ -29,8 +29,8 @@
                         <td>
                             <a href="{% url 'detail' task.id %}"><b>{{ task.id }}</b></a>
                         </td>
-                        <td>{{ task.title|capfirst|add_line_breaks:5 }}</td>
-                        <td>{{ task.discr|capfirst|add_line_breaks:5 }}</td>
+                        <td>{{ task.title|capfirst|add_line_breaks:5|linebreaks }}</td>
+                        <td>{{ task.discr|capfirst|add_line_breaks:5|linebreaks }}</td>
                         <td>{{ task.rag }}</td>
                         <td>{{ task.status }}</td>
                         <td><a href="{% url 'delete' task.id %}">delete</a></td>
