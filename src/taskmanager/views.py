@@ -4,13 +4,10 @@ from django.contrib import admin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.db.models.query import QuerySet
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponse
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
-from django.views.generic.base import View
-from django.views.generic.detail import SingleObjectMixin
 
 from .forms import TaskForm
 from .models import DelTask, Task
@@ -36,6 +33,9 @@ class TaskListView(ContextDataMixim, generic.ListView):
     context_object_name = "model"
     paginate_by = 10
     ordering = ["id"]
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Task.objects.all().filter(active=True)
 
     def filter_view(self, *args, **kwargs):
         filter_order = Task.objects.all().order_by("title").values()
