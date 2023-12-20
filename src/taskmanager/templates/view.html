@@ -29,8 +29,8 @@
                         <td>
                             <a href="{% url 'detail' task.id %}"><b>{{ task.id }}</b></a>
                         </td>
-                        <td>{{ task.title|capfirst|add_line_breaks:5 }}</td>
-                        <td>{{ task.discr|capfirst|add_line_breaks:5 }}</td>
+                        <td>{{ task.title|capfirst|add_line_breaks:5|linebreaks }}</td>
+                        <td>{{ task.discr|capfirst|add_line_breaks:5|linebreaks }}</td>
                         <td>{{ task.rag }}</td>
                         <td>{{ task.status }}</td>
                         <td><a href="{% url 'delete' task.id %}">delete</a></td>
@@ -39,7 +39,7 @@
                 {% endfor %}
             </table>
         <br>
-        <p><a href="{% url 'main' %}">Back to title page</p>
+        <p><a href="{% url 'main' %}">Back to title page</a></p>
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
