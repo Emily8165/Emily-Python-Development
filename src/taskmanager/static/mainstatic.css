@@ -36,6 +36,6 @@ h2 {
 .left-align {
     text-align: left;
 }
-.hidden-element {
+.hidden {
     display: none
 }
