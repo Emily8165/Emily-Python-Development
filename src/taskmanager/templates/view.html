@@ -2,26 +2,20 @@
 {% load static %} {% load mytags %}
 <!DOCTYPE html>
 <html>
-    {% block logins %}
-        {{ block.super }}
-    {% endblock %}
     <head>
-        <title>View</title>
         <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
-        <style>
-            p1{text-align: center;}
-        </style>
+        {% block title %}{{title}}{% endblock %}
     </head>
         {% block content %}
         <body>
-        {% block title%}<h1>View Tasks</h1>{% endblock %}
+        <h1>View Tasks</h1>
         <p>Welcome to views, this is where you can find all the tasks!</p>
         <p>and for more actions look below</p>
         <p1><a href="create">Add new tasks</a></p1>
         {% endblock %}
         {% block table %}
                 <table>
-                {% for field in fields %}<th>{{ field.verbose_name }}<input type="button" onclick=""></th>{% endfor %}
+                {% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}
                 <th class=".left-align">Delete<input type="button"></th>
                 <th>Update<input type="button"></th>
                 {% for task in model %}
@@ -33,12 +27,22 @@
                         <td>{{ task.discr|capfirst|add_line_breaks:5|linebreaks }}</td>
                         <td>{{ task.rag }}</td>
                         <td>{{ task.status }}</td>
+                        <td>{{ task.active }}</td>
                         <td><a href="{% url 'delete' task.id %}">delete</a></td>
                         <td><a href="{% url 'update' task.id %}">update</a></td>
                     </tr>
                 {% endfor %}
             </table>
         <br>
+            <p>Order by</p>
+                <ul>
+                    <li>Tea</li>
+                    <li>Milk</li>
+                    <li>Water</li>
+                    <li>Juice</li>
+                    <li>Beer</li>
+                </ul>
+                <br>
         <p><a href="{% url 'main' %}">Back to title page</a></p>
         <div class="pagination">
             <span class="step-links">
