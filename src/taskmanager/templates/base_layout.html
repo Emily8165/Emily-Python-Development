@@ -1,15 +1,16 @@
-{% load static %}
+{% load static %}{% load mytags %}
 <!DOCTYPE html>
 <html>
 {% block head %}
-<head>
+<head id="head_stuff">
     <style>
         body {
             background-color:aquamarine;
         }
+
     </style>
     <meta charset="urtf-8">
-    <title>{{text}}</title>
+    <title>{% block title %}{{title}}{% endblock %}</title>
     <link rel="stylesheet" href={% static "mainstatic.css" %}>
     <ul>
         <li><a href="{% url 'main' %}">Home page</a></li>
@@ -36,11 +37,12 @@
     <table>
     <tr>{% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}</tr>
     <tr>
-        <td class="left-align"><b>{{ task.id }}</b></td>
-        <td class="left-align">{{ task.title|capfirst }}</td>
-        <td>{{ task.discr|capfirst }}</td>
-        <td>{{ task.rag }}</td>
-        <td>{{ task.status }}</td>
+        <td><b>{{ task.id }}</b></td>
+        <td>{{ task.title|capfirst|add_line_breaks:5|linebreaks }}</td>
+        <td>{{ task.discr|capfirst|add_line_breaks:5|linebreaks }}</td>
+        <td>{{ task.rag|capfirst }}</td>
+        <td>{{ task.status|capfirst }}</td>
+        <td>{{ task.active|capfirst }}</td>
     </tr>
     </table>
     <p><a href="/view">Back to view tasks</a></p>
