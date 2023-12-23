@@ -8,7 +8,7 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/manage.py",
+            "program": "${workspaceFolder}/src/manage.py",
             "args": [
                 "runserver", 
                 "--noreload"
@@ -29,7 +29,7 @@
             "django": true,
             "justMyCode": true,
             "env": {
-                "DJANGO_SETTINGS_MODULE": "my_task_manager.settings"
+                "DJANGO_SETTINGS_MODULE": "task_manager.settings"
             }
         }
     ]

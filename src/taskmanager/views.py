@@ -40,7 +40,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
 
     def filter_view(self, *args, **kwargs):
         filter_order = Task.objects.all().order_by("title").values()
-        print("filter_order:", filter_order)
+        print(filter_order)
         context = super(TaskListView, self).get_context_data(*args, **kwargs)
         context["filter_order"] = filter_order
         return context
