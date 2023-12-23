@@ -12,10 +12,10 @@
     <meta charset="urtf-8">
     <title>{% block title %}{{title}}{% endblock %}</title>
     <link rel="stylesheet" href={% static "mainstatic.css" %}>
-    <ul>
+    <ul class="top">
         <li><a href="{% url 'main' %}">Home page</a></li>
         <li><a href="{% url 'view_tasks' %}">View</a></li>
-        <li><a href="{% url 'view_history'%}">View History</a></p>
+        <li><a href="{% url 'view_history'%}">View History</a></li>
         {% if user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
