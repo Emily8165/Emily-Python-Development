@@ -4,10 +4,7 @@ table, th, td {
 table.center {
     margin-left: auto;
 }
-p {
-    line-height: 1;
-}
-ul {
+.top {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -15,46 +12,21 @@ ul {
     background-color: yellow;
 }
 
-li {
-    float: left;
-}
-
-
-li a {
+.top li a {
     display: block;
     color: black;
     text-align: left;
     padding: 14px 16px;
     text-decoration: none;
+    float: left;
 }
-h1, body {
-    text-align: left;
-}
-h2 {
-    text-align: left;
-    size: 1;
-}
+
+
 .left-align {
     text-align: left;
 }
-.hidden {
-    display: none
-}
-.sidenav {
-    height: 100%;
-    /* Full-height: remove this if you want "auto" height */
-    width: 160px;
-    /* Set the width of the sidebar */
-    position: fixed;
-    /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1;
-    /* Stay on top */
-    top: 0;
-    /* Stay at the top */
-    left: 0;
-    background-color: #111;
-    /* Black */
-    overflow-x: hidden;
-    /* Disable horizontal scroll */
-    padding-top: 20px;
+.sidenav{
+    background-color: blanchedalmond;
+    list-style-type: disc;
+    color: black;
 }
