@@ -3,7 +3,15 @@ table, th, td {
 }
 table.center {
     margin-left: auto;
+    margin-right: auto;
 }
+
+.main {
+        margin-left: 140px;
+        font-size: 15px;
+        padding: 0px 10px;
+    }
+
 .top {
     list-style-type: none;
     margin: 0;
@@ -21,12 +29,43 @@ table.center {
     float: left;
 }
 
-
-.left-align {
-    text-align: left;
-}
-.sidenav{
+.sidenav {
     background-color: blanchedalmond;
-    list-style-type: disc;
+    list-style-type: none;
     color: black;
+    width: 130px;
+    position: absolute; /* this allows for floating or fixed text */
+    z-index: 1;
+    top: 60px;
+    left: 10px;
+    overflow-x: hidden;
+    padding: 8px 0;
 }
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    list-style-type: none;
+    text-decoration: none; /* this lets you define if a texted it hyper linked or not */
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.pagination-container {
+    text-align: center;
+}
+
