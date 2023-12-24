@@ -12,18 +12,17 @@
         <h1>View Tasks</h1>
         <p>Welcome to views, this is where you can find all the tasks!</p>
         <p>and for more actions look below</p>
-        <p1><a href="create">Add new tasks</a></p1>
+        <p><a href="create">Add new tasks</a></p>
             <div class="sidenav">
                 <p>Order by</p>
-                <ul>
                 {% for field in fields %}
-                <li><a href="/view">{{ field.verbose_name }}</a></li>
+                <p><a href="/view">{{ field.verbose_name }}</a></p>
                 {% endfor %}
-                </ul>
-                <br>
             </div>
         <br>
-        <p>{{ filter_order }}</p>
+        {% for i in filter_order %}
+            <p>{{i.title}}</p>
+        {% endfor %}
     </body>
     </div>
 {% endblock %}

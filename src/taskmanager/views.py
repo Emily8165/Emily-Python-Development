@@ -38,9 +38,8 @@ class TaskListView(ContextDataMixim, generic.ListView):
     def get_queryset(self) -> QuerySet[Any]:
         return Task.objects.all().filter(active=True)
 
-    def filter_view(self, *args, **kwargs):
+    def get_context_data(self, *args, **kwargs: Any) -> dict[str, Any]:
         filter_order = Task.objects.all().order_by("title").values()
-        print(filter_order)
         context = super(TaskListView, self).get_context_data(*args, **kwargs)
         context["filter_order"] = filter_order
         return context
@@ -61,11 +60,6 @@ class TaskDeleteView(ContextDataMixim, LoginRequiredMixin, generic.DeleteView):
     context_object_name = "task"
     fields = ["title", "discr", "rag", "status"]
     success_url = "/view"
-
-    def copy(self):
-        model = DelTask
-
-        pass
 
 
 class TaskUpdateView(ContextDataMixim, LoginRequiredMixin, generic.UpdateView):
