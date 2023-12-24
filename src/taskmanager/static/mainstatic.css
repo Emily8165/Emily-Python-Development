@@ -31,24 +31,28 @@ table.center {
 
 .sidenav {
     background-color: blanchedalmond;
-    list-style-type: none;
-    color: black;
+    color: #818181;
     width: 130px;
     position: absolute; /* this allows for floating or fixed text */
     z-index: 1;
     top: 60px;
     left: 10px;
     overflow-x: hidden;
-    padding: 8px 0;
+    font-size: 25px;
 }
 
 .sidenav a {
     padding: 6px 8px 6px 16px;
     list-style-type: none;
     text-decoration: none; /* this lets you define if a texted it hyper linked or not */
-    font-size: 25px;
+    font-size: 18px;
     color: #818181;
     display: block;
+    line-height: 0;
+}
+
+.sidenav ul {
+    list-style-type: none;
 }
 
 .sidenav a:hover {
