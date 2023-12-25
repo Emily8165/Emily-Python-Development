@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.db.models.query import QuerySet
@@ -43,6 +44,11 @@ class TaskListView(ContextDataMixim, generic.ListView):
         context = super(TaskListView, self).get_context_data(*args, **kwargs)
         context["filter_order"] = filter_order
         return context
+
+    def get_user_model(self):
+        user = get_user_model()
+        users = user.objects.all()
+        return users
 
 
 class TaskDetailView(ContextDataMixim, generic.DetailView):

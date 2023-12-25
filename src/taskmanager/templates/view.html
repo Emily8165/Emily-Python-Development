@@ -16,7 +16,11 @@
             <div class="sidenav">
                 <p>Order by</p>
                 {% for field in fields %}
-                <p><a href="/view">{{ field.verbose_name }}</a></p>
+                <ul><a href="/view">{{ field.verbose_name }}</a></ul>
+                {% endfor %}
+                <p>Users</p>
+                {% for user in users %}
+                <ul>greg{{users.verbose_name}}</ul>
                 {% endfor %}
             </div>
         <br>
