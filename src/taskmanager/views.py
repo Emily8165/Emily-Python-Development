@@ -1,5 +1,6 @@
 from typing import Any
 
+from django import template
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,6 +12,8 @@ from django.template import loader
 from django.urls import reverse
 from django.views import generic
 
+register = template.Library()
+
 from .forms import TaskForm
 from .models import DelTask, Task
 
@@ -21,6 +24,7 @@ class ContextDataMixim:
         context["fields"] = Task._meta.fields
         context["title"] = self.title
         context["user"] = User.objects.all()
+        context["filter"] = Task.objects.order_by(**kwargs)
         return context
 
 
@@ -39,12 +43,18 @@ class TaskListView(ContextDataMixim, generic.ListView):
     ordering = ["id"]
 
     def get_queryset(self) -> QuerySet[Any]:
-        return Task.objects.all().filter(active=True)
+        initial_order = self.request.GET.get("order")  #
+        default_order = (
+            "title"
+            if initial_order not in [f.name for f in Task._meta.get_fields()]
+            else initial_order
+        )
+        order_by = self.request.GET.get("order_by", default_order)
+        return Task.objects.all().order_by(order_by)
 
-    def get_context_data(self, *args, **kwargs: Any) -> dict[str, Any]:
-        filter_order = Task.objects.all().order_by("status").values()
-        context = super(TaskListView, self).get_context_data(*args, **kwargs)
-        context["filter_order"] = filter_order
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["order_by"] = self.request.GET.get("order_by")
         return context
 
 

@@ -14,3 +14,8 @@ def add_line_breaks(inputted, line_break_num):
             result.append("\n")
     result = " ".join(result)
     return result
+
+
+@register.filter
+def in_category(things, category):
+    return things.filter(category=category)

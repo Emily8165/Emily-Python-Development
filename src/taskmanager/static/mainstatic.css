@@ -42,7 +42,7 @@ table.center {
 }
 
 .sidenav a {
-    list-style-type: square;
+    list-style-type: none;
     text-decoration: none; /* this lets you define if a texted it hyper linked or not */
     font-size: 18px;
     color: #818181;
@@ -51,7 +51,7 @@ table.center {
 }
 
 .sidenav ul {
-    list-style-type: square;
+    list-style-type: none;
 }
 
 .sidenav a:hover {

@@ -14,20 +14,21 @@
         <p>and for more actions look below</p>
         <p><a href="create">Add new tasks</a></p>
             <div class="sidenav">
-                <p>Order by</p>
-                {% for field in fields %}
-                <ul><a href="/view">{{ field.verbose_name }}</a></ul>
-                {% endfor %}
+                <form id="order_by" method="GET">
+                    <label for="order">Order by:</lable>
+                        <select id="order" name="order">
+                            {% for field in fields %}
+                                <option value={{field.verbose_name}} {% if orber_by == field.name %}selected{% endif %}>{{field.verbose_name}}</option>
+                            {% endfor %}
+                        <input type="submit" value="Order">
+                        
+                    </form>
                 <p>Users</p>
                 {% for i in user %}
                     <ul><a href={% url "main" %}>{{i}}</a></ul>
                 {% endfor %}
             </div>
         <br>
-        {% for i in filter_order %}
-            <p>{{i.title}}</p>
-        {% endfor %}
-        
     </body>
     </div>
 {% endblock %}
