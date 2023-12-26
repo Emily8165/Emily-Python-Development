@@ -19,14 +19,15 @@
                 <ul><a href="/view">{{ field.verbose_name }}</a></ul>
                 {% endfor %}
                 <p>Users</p>
-                {% for user in users %}
-                <ul>greg{{users.verbose_name}}</ul>
+                {% for i in user %}
+                    <ul><a href={% url "main" %}>{{i}}</a></ul>
                 {% endfor %}
             </div>
         <br>
         {% for i in filter_order %}
             <p>{{i.title}}</p>
         {% endfor %}
+        
     </body>
     </div>
 {% endblock %}

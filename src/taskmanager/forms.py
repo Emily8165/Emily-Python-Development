@@ -12,11 +12,13 @@ class TaskForm(forms.ModelForm):
         ("Closed", "Closed"),
         ("Deleted", "Deleted"),
     ]
+    active_choices = [(True, "True"), (False, "False")]
     # define fields:
     title = forms.CharField(max_length=255)
     discr = forms.CharField(max_length=255)
     rag = forms.ChoiceField(choices=rag_choices)
     status = forms.ChoiceField(choices=status_choices)
+    active = forms.BooleanField(required=False)
 
     class Meta:
         model = Task  # Specify the model associated with this form

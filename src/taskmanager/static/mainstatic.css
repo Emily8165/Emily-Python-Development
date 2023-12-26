@@ -45,7 +45,7 @@ table.center {
     list-style-type: square;
     text-decoration: none; /* this lets you define if a texted it hyper linked or not */
     font-size: 18px;
-    color: black;
+    color: #818181;
     display: block;
     line-height: 0;
 }
