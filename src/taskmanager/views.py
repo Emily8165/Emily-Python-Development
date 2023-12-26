@@ -3,6 +3,7 @@ from typing import Any
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
@@ -19,6 +20,7 @@ class ContextDataMixim:
         context = super().get_context_data(**kwargs)
         context["fields"] = Task._meta.fields
         context["title"] = self.title
+        context["user"] = User.objects.all()
         return context
 
 
@@ -40,15 +42,10 @@ class TaskListView(ContextDataMixim, generic.ListView):
         return Task.objects.all().filter(active=True)
 
     def get_context_data(self, *args, **kwargs: Any) -> dict[str, Any]:
-        filter_order = Task.objects.all().order_by("title").values()
+        filter_order = Task.objects.all().order_by("status").values()
         context = super(TaskListView, self).get_context_data(*args, **kwargs)
         context["filter_order"] = filter_order
         return context
-
-    def get_user_model(self):
-        user = get_user_model()
-        users = user.objects.all()
-        return users
 
 
 class TaskDetailView(ContextDataMixim, generic.DetailView):

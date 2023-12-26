@@ -6,7 +6,7 @@ class Task(models.Model):
     discr = models.CharField(max_length=255)
     rag = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField()
 
     def __str__(self):
         return f"{self.title}"
