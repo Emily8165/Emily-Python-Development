@@ -15,14 +15,19 @@
         <p><a href="create">Add new tasks</a></p>
             <div class="sidenav">
                 <form id="order_by" method="GET">
-                    <label for="order">Order by:</lable>
-                        <select id="order" name="order">
-                            {% for field in fields %}
-                                <option value={{field.verbose_name}} {% if orber_by == field.name %}selected{% endif %}>{{field.verbose_name}}</option>
-                            {% endfor %}
-                        <input type="submit" value="Order">
-                        
-                    </form>
+                    <label for="order_by">Order by:</label>
+                    {% for field in fields %}
+                        <br>
+                        <input type="radio" id="{{ field.name }}" name="order_by" value="{{ field.name }}" onchange="submitForm()">
+                        <label for="{{ field.name }}">{{ field.verbose_name }}</label>
+                    {% endfor %}
+                </form>
+                <script>
+                    function submitForm() {
+                        // JavaScript logic to submit the form
+                        document.getElementById("order_by").submit();
+                    }
+                </script>
                 <p>Users</p>
                 {% for i in user %}
                     <ul><a href={% url "main" %}>{{i}}</a></ul>
@@ -53,4 +58,5 @@
     {% endfor %}
 </table>
 {% endblock %}
+
 </html>
