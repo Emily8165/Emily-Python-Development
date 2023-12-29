@@ -63,7 +63,6 @@ class TaskDetailView(ContextDataMixim, generic.DetailView):
     title = "Detailed"
     template_name = "task_detail.html"
     context_object_name = "task"
-    fields = ["title", "discr", "rag", "status"]
 
 
 class TaskDeleteView(ContextDataMixim, LoginRequiredMixin, generic.DeleteView):
@@ -136,6 +135,14 @@ class ViewHistory(ContextDataMixim, generic.ListView):
     context_object_name = "model"
     paginate_by = 10
     ordering = ["id"]
+
+
+class UserView(ContextDataMixim, generic.ListView):
+    model = Task
+    title = "user_view"
+    template_name = "user_actions.html"
+    context_object_name = "task"
+    fields = ["title", "discr", "rag", "status"]
 
 
 def error_page(request):
