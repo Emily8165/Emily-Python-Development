@@ -13,5 +13,6 @@ urlpatterns = [
     path("view/delete/<pk>/", views.TaskDeleteView.as_view(), name="delete"),
     path("view/update/<pk>/", views.TaskUpdateView.as_view(), name="update"),
     path("view/search/", views.SearchView.as_view(), name="search"),
+    path("view/user/<i>", views.UserView.as_view(), name="user_view"),
     path("errorpage/", views.error_page, name="error_page"),
 ]
