@@ -29,8 +29,8 @@
                     }
                 </script>
                 <p>Users</p>
-                {% for i in user %}
-                    <ul><a href={% url 'user_view' i %}>{{i}}</a></ul>
+                {% for use in user %}
+                    <ul><a href={% url 'user_view' use %}>{{use}}</a></ul>
                 {% endfor %}
             </div>
         <br>
@@ -45,7 +45,7 @@
     {% for task in model %}
         <tr>
             <td>
-                <a href="{% url 'detail' %}"><b>{{ task.id }}</b></a>
+                <a href="{% url 'detail' task.id %}"><b>{{ task.id }}</b></a>
             </td>
             <td>{{ task.title|capfirst|add_line_breaks:5|linebreaks }}</td>
             <td>{{ task.discr|capfirst|add_line_breaks:5|linebreaks }}</td>

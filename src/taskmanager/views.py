@@ -6,8 +6,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
@@ -137,12 +138,44 @@ class ViewHistory(ContextDataMixim, generic.ListView):
     ordering = ["id"]
 
 
-class UserView(ContextDataMixim, generic.ListView):
-    model = Task
-    title = "user_view"
+class UserView(generic.DetailView):
+    model = User
+    title = "User view"
     template_name = "user_actions.html"
-    context_object_name = "task"
-    fields = ["title", "discr", "rag", "status"]
+    context_object_name = "specified_user"
+
+    def get_object(
+        self, queryset: QuerySet[Any] | None = ...
+    ) -> Model:  # this method gets a specific object
+        # as specified by what is being passed over to the view by the URL paramiters.
+        # in this case 'i' is being sent over the url so it is the object that is being picked up by the method.
+        specified_user = self.kwargs.get(
+            "i"
+        )  # this specifies the request and the data attributed to the object and attaches it to the item specified_user.
+        return User.objects.filter(
+            username=specified_user
+        ).first()  # this searches for the object in the model and filters out all others and returns the user.
+
+    def get_context_data(
+        self, **kwargs: Any
+    ) -> dict[
+        str, Any
+    ]:  # this holds data for the template. we are using a specific method here instead of the contextdatamixim as the context data mixim doesn't work with detailviews
+        context = super().get_context_data(**kwargs)
+        context[
+            "title"
+        ] = (
+            self.title
+        )  # it holds data as a dictionary to be called hence why we have context["data"] = information saved in the "data".
+        context["fields"] = Task._meta.fields
+        return context
+
+    def get(
+        self, request: HttpRequest, *args: Any, **kwargs: Any
+    ) -> (
+        HttpResponse
+    ):  # this handles https responses and returns all other data above in the template
+        return super().get(request, *args, **kwargs)
 
 
 def error_page(request):
