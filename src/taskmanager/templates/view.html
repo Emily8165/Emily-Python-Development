@@ -39,7 +39,11 @@
 {% endblock %}
 {% block table %}
 <table class="center">
-    {% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}
+    {% for field in fields %}
+        {% if field.verbose_name != 'created on' and field.verbose_name != 'update last' %}
+        <th>{{ field.verbose_name }}</th>
+        {% endif %}
+    {% endfor %}
     <th>Delete</th>
     <th>Update</th>
     {% for task in model %}
