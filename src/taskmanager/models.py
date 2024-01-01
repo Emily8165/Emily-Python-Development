@@ -1,4 +1,9 @@
+from django.contrib.auth.models import User
 from django.db import models
+
+
+def default_user_function():
+    return User.objects.first()
 
 
 class Task(models.Model):
@@ -6,7 +11,9 @@ class Task(models.Model):
     discr = models.CharField(max_length=255)
     rag = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
-    active = models.BooleanField()
+    active = models.BooleanField(default=True)
+    created_on = models.DateField(auto_now_add=True)
+    update_last = models.DateField(auto_now=True)
 
     def __str__(self):
         return f"{self.title}"
