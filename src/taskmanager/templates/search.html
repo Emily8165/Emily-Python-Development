@@ -1,16 +1,16 @@
-{% extends "base_layout.html" %}
+{# https://learndjango.com/tutorials/django-search-tutorial{% extends "base_layout.html" %}#}
+{% extends 'base_layout.html'%}
 {% block content%}
     <h1>Search Page</h1>
     <p>type in your search phrase here</p>
-    <form method="GET" action="{% url 'search' %}">
+    <form action="{% url 'search' %}" method="GET">
         {% csrf_token %}
         <input type="text" name="lookup" value="{{ request.GET.lookup }}" placeholder="submit title here">
-        <button type="submit" onclick="hide_func(event)">Submit</button>
     </form>
     <br>
 {% endblock %}
 {% block table %}
-    <div id="hidden" style="display: block;">
+    <div style="display: block;">
         <table>
             {% for task in tasks %}
             <tr>
@@ -20,15 +20,4 @@
             {% endfor %} 
         </table>
     </div>
-    <script>
-        function hide_func(event) {
-            event.preventDefault();
-            var x = document.getElementById("hidden");
-            if (x.style.display == "none"){
-                x.style.display = "block";
-            } else {
-                x.style.display = "none"
-            }
-        }
-    </script>
 {% endblock %}

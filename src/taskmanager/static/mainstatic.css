@@ -18,15 +18,20 @@ table.center {
     padding: 0;
     overflow: hidden;
     background-color: yellow;
+    display: inline;
 }
 
 .top li a {
-    display: block;
+    display: inline;
     color: black;
     text-align: left;
     padding: 14px 16px;
     text-decoration: none;
     float: left;
+}
+
+.top li {
+    display: inline;
 }
 
 .sidenav {
