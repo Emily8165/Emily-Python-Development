@@ -6,9 +6,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Q
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
@@ -25,7 +27,12 @@ class ContextDataMixim:
         context["fields"] = Task._meta.fields
         context["title"] = self.title
         context["user"] = User.objects.all()
-        context["filter"] = Task.objects.order_by(**kwargs)
+        order_by_param = self.request.GET.get("order_by")
+        if order_by_param:
+            context["filter"] = Task.objects.order_by(order_by_param)
+        else:
+            context["filter"] = Task.objects.all()
+
         return context
 
 
@@ -109,17 +116,24 @@ class SearchView(generic.ListView):
     context_object_name = "tasks"
     form_class = TaskForm
 
-    def get_queryset(
-        self,
-    ) -> QuerySet[Any]:  # this retirives the objects from the list view.
-        lookup_param = self.request.GET.get(
-            "lookup", ""
-        )  # this retireves the specific data from the query set. The look up is a paramiter set in the GET function.
-        # Filter tasks based on the search parameter
-        matching_tasks = Task.objects.filter(
-            title__icontains=lookup_param
-        )  # this compares the data to all object in the model and filters out any that aren't define in the look up paraiter.
-        return matching_tasks
+    def get_queryset(self):
+        query = self.request.GET.get("lookup", "")
+        object_list = Task.objects.filter(Q(title__icontains=query))
+        return object_list
+
+    """
+        def get_queryset(
+            self,
+        ) -> QuerySet[Any]:  # this retirives the objects from the list view.
+            lookup_param = self.request.GET.get(
+                "lookup", ""
+            )  # this retireves the specific data from the query set. The look up is a paramiter set in the GET function.
+            # Filter tasks based on the search parameter
+            matching_tasks = Task.objects.filter(
+                title__icontains=lookup_param
+            )  # this compares the data to all object in the model and filters out any that aren't define in the look up paraiter.
+            return matching_tasks
+    """
 
     def get(self, request, *args, **kwargs):  # this returns the data as a list view.
         # Call the parent get method to handle the ListView logic

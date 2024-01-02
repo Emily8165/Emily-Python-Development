@@ -12,17 +12,23 @@
     <meta charset="urtf-8">
     <title>{% block title %}{{title}}{% endblock %}</title>
     <link rel="stylesheet" href={% static "mainstatic.css" %}>
-    <ul class="top">
+    <ul class="top" style:"display:flex;">
         <li><a href="{% url 'main' %}">Home page</a></li>
         <li><a href="{% url 'view_tasks' %}">View</a></li>
         <li><a href="{% url 'view_history'%}">View History</a></li>
-        <li><a href="{% url 'search' %}">Search</a></li>
         {% if user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
-            <li><a href="">Logged in as {{user}}<a/></li>
+            <li><a href="">Logged in as {{user}}</a></li>
         {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
+        <li><a>
+            <form action="{% url 'search' %}" method="GET">
+                {% csrf_token %}
+                <input type="text" name="lookup" value="{{ request.GET.lookup }}" placeholder="Search">
+            </form>
+        </a>
+        </li>
     </ul>
 <div id="logins">
 </div>
@@ -46,6 +52,8 @@
         <td>{{ task.rag|capfirst }}</td>
         <td>{{ task.status|capfirst }}</td>
         <td>{{ task.active|capfirst }}</td>
+        <td>{{ task.created_on}}</td>
+        <td>{{ task.update_last }}</td>
     </tr>
     </table>
     <p><a href="/view">Back to view tasks</a></p>
