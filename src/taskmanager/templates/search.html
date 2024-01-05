@@ -1,6 +1,7 @@
 {# https://learndjango.com/tutorials/django-search-tutorial{% extends "base_layout.html" %}#}
 {% extends 'base_layout.html'%}
 {% block content%}
+<div class="main">
     <h1>Search Page</h1>
     <p>type in your search phrase here</p>
     <form action="{% url 'search' %}" method="GET">
@@ -8,10 +9,10 @@
         <input type="text" name="lookup" value="{{ request.GET.lookup }}" placeholder="submit title here">
     </form>
     <br>
+</div>
 {% endblock %}
 {% block table %}
-    <div style="display: block;">
-        <table>
+        <table class="center">
             {% for task in tasks %}
             <tr>
             <th>{{ task.title }}</th>
@@ -19,5 +20,4 @@
             </tr>
             {% endfor %} 
         </table>
-    </div>
 {% endblock %}

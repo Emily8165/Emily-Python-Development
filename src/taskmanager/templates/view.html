@@ -4,7 +4,6 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'mainstatic.css' %}">
-        {% block title %}{{title}}{% endblock %}
     </head>
         {% block content %}
         <div class="main">
@@ -16,10 +15,11 @@
             <div class="sidenav">
                 <form id="order_by" method="GET">
                     <label for="order_by">Order by:</label>
-                    {% for field in fields %}
+                    {% for field in fields %}{% if field.name != 'created_on' and field.name != 'update_last' %}
                         <br>
                         <input type="radio" id="{{ field.name }}" name="order_by" value="{{ field.name }}" onchange="submitForm()">
                         <label for="{{ field.name }}">{{ field.verbose_name }}</label>
+                    {% endif %}
                     {% endfor %}
                 </form>
                 <script>
