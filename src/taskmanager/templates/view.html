@@ -34,6 +34,20 @@
                 {% endfor %}
             </div>
         <br>
+        <div class="right-sidenav">
+            <p1>Which colums do you want to see in the tables?</p1>
+            <form id="colum_filter" method="GET">
+            <ul>
+                {% for field in fields %}
+                    <li>
+                        <input type="checkbox" id="{{ field.name }}" name="order_by" value="{{ field.name }}">
+                        <label for="{{field.name}}">{{field.verbose_name}}</lable>
+                    </li>
+                {% endfor %}
+            </ul>
+            <p>Make Colum Changes<input type="submit"></p>
+        </form>
+        </div>
     </body>
     </div>
 {% endblock %}

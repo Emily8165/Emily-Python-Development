@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
@@ -121,20 +121,6 @@ class SearchView(generic.ListView):
         object_list = Task.objects.filter(Q(title__icontains=query))
         return object_list
 
-    """
-        def get_queryset(
-            self,
-        ) -> QuerySet[Any]:  # this retirives the objects from the list view.
-            lookup_param = self.request.GET.get(
-                "lookup", ""
-            )  # this retireves the specific data from the query set. The look up is a paramiter set in the GET function.
-            # Filter tasks based on the search parameter
-            matching_tasks = Task.objects.filter(
-                title__icontains=lookup_param
-            )  # this compares the data to all object in the model and filters out any that aren't define in the look up paraiter.
-            return matching_tasks
-    """
-
     def get(self, request, *args, **kwargs):  # this returns the data as a list view.
         # Call the parent get method to handle the ListView logic
         response = super().get(request, *args, **kwargs)
@@ -190,6 +176,18 @@ class UserView(generic.DetailView):
         HttpResponse
     ):  # this handles https responses and returns all other data above in the template
         return super().get(request, *args, **kwargs)
+
+
+class SettingsView(ContextDataMixim, generic.TemplateView):
+    title = "Task Settings"
+    template_name = "settings.html"
+
+    def get(self, request, *args, **kwargs):
+        requested = request.GET.get("colum_filter")
+        default_field = "id"
+        filter_condition = {requested or default_field: False}
+        field_filter = Task.objects.exclude(**filter_condition)
+        return render(request, "settings.html", {"tasks": field_filter})
 
 
 def error_page(request):
