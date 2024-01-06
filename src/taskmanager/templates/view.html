@@ -40,7 +40,7 @@
             <ul>
                 {% for field in fields %}
                     <li>
-                        <input type="checkbox" id="{{ field.name }}" name="order_by" value="{{ field.name }}">
+                        <input type="checkbox" id="{{ field.name }}" name="colum_filter" value="{{ field.name }}">
                         <label for="{{field.name}}">{{field.verbose_name}}</lable>
                     </li>
                 {% endfor %}

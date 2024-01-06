@@ -556,4 +556,56 @@ ADDING_TESTING:
 - name files as test_<test>.py it is standard naming convetions. 
 - you need to import unittest and the model you want to test. Make sure your testing files are in the same directories as the files you want to test. 
 
+
+DJANGO_REST:
+- this is used for building out APIs that can be used for distripting data to other apps and websites. 
+- installing is just 
+      - pip install djangorestframework
+      - add 'rest_framework' to list of installed apps 
+
+
+
+STATUS_CODES:
+- whilst not exclusive to django, status codes are used to show the status of a HTTPs reponse or command. 
+    - 100 - 199: these are informaiton responses
+      - 100 continue, this is an interim response that will tell the clinet to continue the response or if the reponse is finished
+      they should ignore the message. 
+      - 101 switching protocals, this is for upgrades and indicates when the client is switching protocals from one server to another. 
+      - 102 processing, this indicates that the request has been received and is being processed. 
+      - 103 early hits, this is mainly related to links and lets the user pre-load resource prior to connencting with the server. 
+    - 200 - 299: sucessful responses
+      - 200 ok, reqeust has succeeded and the transport request has been completed. 
+      - 201 created, this code is displaid as a result of a successful put or post request. 
+      - 202 accepted, reqeust has been received but not acted upon yet. this is often used when the serve needs batches of data
+      to act apon. 
+      - 203 Non-authoritative information, this is like the 200 but it instead using a copy of the original data. meaning it 
+      may not be exactly the same data with all the meta's as well. 
+      - 204 no content, there is no content in this request however there are header titles. data can be casched and added to 
+      these headers later on. 
+      - 205 reset content, this command tells the user agent to reset the request once it has been sent. 
+      - 206 parcial content, this occurs when only some of the headers in the transport are sent across. 
+      - 207 multi-status, this means that multiple status codes might be needed for multiple stages in the request. 
+      - 208 Already Reported, this means the data has already been posted. It stops data being reported numberous times automatically
+      like in a while loop for example. 
+    - 300 - 399: redirection
+      - 300 muliple choices, there is more then one response option so the user needs to choose the correct one. 
+      - 301 moved perminantly, the url reqeust source has been changed perminantly
+      - 302 found, this means the URI has been changed temporeriliy and might change in the future, 
+      therefore clinet should use this one until told otherwise. 
+      - 303 see other, the server sent this response directly to teh client and request another URI with a new get reqeust. 
+      - 304 not-modified, this is used for casching and allows users to use items that have prevously be sent so they don't have to resend stuff
+      - 307 temporery redirect, 
+      - 308 perminant redirect, 
+    - 400 - 499: error messages
+      - 400 bad request, this is for if there is an error client side. 
+      - 401 unauthorised, this is for when the reqeust could not be proccessed as the client doesn't ahve permission. 
+      - 402 payment required, this is a pay wall. 
+      - 403 forbidden, this is for when a client doesn't have access to the information but does have access to the server so the server knows who they are. 
+      - 404 not found, the server cannot find the requested resource.
+      - 405 method not allowed, the request could not be proccessed as the method is restricted such as not having delete permission. 
+    - 500 - 599: server side errors:
+    
+
+
+
 """
