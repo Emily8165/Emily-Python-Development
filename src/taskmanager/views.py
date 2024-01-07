@@ -32,7 +32,9 @@ class ContextDataMixim:
             context["filter"] = Task.objects.order_by(order_by_param)
         else:
             context["filter"] = Task.objects.all()
-
+        context["status_choices"] = TaskForm.status_choices
+        context["active_choices"] = TaskForm.active_choices
+        context["field_form_type"] = TaskForm().form_type()
         return context
 
 
@@ -50,6 +52,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
     paginate_by = 10
     ordering = ["id"]
 
+<<<<<<< HEAD
     def options(self):
         input_type = self.request.GET.get("input_type")
         if input_type == "order_by" or input_type == "colum_filter":
@@ -58,6 +61,16 @@ class TaskListView(ContextDataMixim, generic.ListView):
             return self.error_page()
 
     def get_object_queryset(self) -> QuerySet[Any]:
+=======
+    # def options(self):
+    #     input_type = self.request.GET.get("input_type")
+    #     if input_type == "order_by" or input_type == "colum_filter":
+    #         return self.error_page()
+    #     else:
+    #         return self.error_page()
+
+    def get_queryset(self) -> QuerySet[Any]:
+>>>>>>> 3772466 (I started to do some more filter work and need to get back to a good starting point.)
         initial_order = self.request.GET.get("order")
         default_order = (
             "title"
@@ -72,6 +85,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
         context["order_by"] = self.request.GET.get("order_by")
         return context
 
+<<<<<<< HEAD
     def get_filter_queryset(self, *args, **kwargs) -> QuerySet[Any]:
         filters_requested = self.request.GET.get("colum_filter")
         default_filter = "id"
@@ -79,6 +93,15 @@ class TaskListView(ContextDataMixim, generic.ListView):
             {filters_requested: True} if filters_requested else {default_filter: True}
         )
         return Task.objects.all().exclude(**filters_applied)
+=======
+    # def get_filter_queryset(self, *args, **kwargs) -> QuerySet[Any]:
+    #     filters_requested = self.request.GET.get("colum_filter")
+    #     default_filter = "id"
+    #     filters_applied = (
+    #         {filters_requested: True} if filters_requested else {default_filter: True}
+    #     )
+    #     return Task.objects.all().exclude(**filters_applied)
+>>>>>>> 3772466 (I started to do some more filter work and need to get back to a good starting point.)
 
     def error_page(self):
         return render(self.request, "errorpage.html")
