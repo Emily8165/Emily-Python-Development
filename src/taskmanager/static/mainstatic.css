@@ -29,6 +29,25 @@ table.center {
     margin-right: auto;
 }
 /* side bars */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 .sidenav {
     background-color: blanchedalmond;
     color: #818181;
@@ -58,6 +77,40 @@ table.center {
 }
 
 .sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.right-sidenav {
+    background-color: blanchedalmond;
+    color: #818181;
+    width: 130px;
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    left: auto;
+    right: 10px;
+    overflow-x: hidden;
+    font-size: 25px;
+    text-align: left;
+}
+
+.right-sidenav a {
+    list-style-type: none;
+    text-decoration: none;
+    /* this lets you define if a texted it hyper linked or not */
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    line-height: 0;
+    padding-right: 0px;
+}
+
+.right-sidenav ul {
+    list-style-type: none;
+    padding-right: 0px;
+}
+
+.right-sidenav a:hover {
     color: #f1f1f1;
 }
 

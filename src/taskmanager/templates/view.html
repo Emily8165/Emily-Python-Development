@@ -33,6 +33,34 @@
                     <ul><a href={% url 'user_view' use %}>{{use}}</a></ul>
                 {% endfor %}
             </div>
+            <div class="right-sidenav">
+                <form id="filter_colum" method="GET">
+                    <label for="filter_colum">Filter colums:</label>
+                    {% for field in fields %}
+                        <br>
+                        <input type="checkbox" id="{{ field.name }}" name="filter_colum">
+                        <label for="{{ field.name }}">{{ field.verbose_name }}</label>
+                    {% endfor %}
+                    <br>
+                    <input type="submit"> 
+                    <p>---------------</p>
+                <form id="filter_input_option" method="GET">
+                    <label for="filter_input_option">Filter data you wish to see</lable>
+                        {% for field in fields %}
+                            <br>{{ field.verbose_name }}
+                            <select name="{{ field.name }}" id="{{ field.name }}">
+                                {% for choice in status_choices %}
+                                    {% if field.name == "rag" %}
+                                        <option value="{{ choice.0 }}">{{ choice.0 }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        {% endfor %}
+                    <br><input type="submit">
+                </form>
+
+
+            </div>
         <br>
     </body>
     </div>

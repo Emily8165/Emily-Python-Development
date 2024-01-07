@@ -32,7 +32,9 @@ class ContextDataMixim:
             context["filter"] = Task.objects.order_by(order_by_param)
         else:
             context["filter"] = Task.objects.all()
-
+        context["status_choices"] = TaskForm.status_choices
+        context["active_choices"] = TaskForm.active_choices
+        context["field_form_type"] = TaskForm().form_type()
         return context
 
 
@@ -50,8 +52,15 @@ class TaskListView(ContextDataMixim, generic.ListView):
     paginate_by = 10
     ordering = ["id"]
 
+    # def options(self):
+    #     input_type = self.request.GET.get("input_type")
+    #     if input_type == "order_by" or input_type == "colum_filter":
+    #         return self.error_page()
+    #     else:
+    #         return self.error_page()
+
     def get_queryset(self) -> QuerySet[Any]:
-        initial_order = self.request.GET.get("order")  #
+        initial_order = self.request.GET.get("order")
         default_order = (
             "title"
             if initial_order not in [f.name for f in Task._meta.get_fields()]
@@ -64,6 +73,17 @@ class TaskListView(ContextDataMixim, generic.ListView):
         context = super().get_context_data(**kwargs)
         context["order_by"] = self.request.GET.get("order_by")
         return context
+
+    # def get_filter_queryset(self, *args, **kwargs) -> QuerySet[Any]:
+    #     filters_requested = self.request.GET.get("colum_filter")
+    #     default_filter = "id"
+    #     filters_applied = (
+    #         {filters_requested: True} if filters_requested else {default_filter: True}
+    #     )
+    #     return Task.objects.all().exclude(**filters_applied)
+
+    def error_page(self):
+        return render(self.request, "errorpage.html")
 
 
 class TaskDetailView(ContextDataMixim, generic.DetailView):
@@ -158,29 +178,13 @@ class UserView(generic.DetailView):
     template_name = "user_actions.html"
     context_object_name = "specified_user"
 
-    def get_object(
-        self, queryset: QuerySet[Any] | None = ...
-    ) -> Model:  # this method gets a specific object
-        # as specified by what is being passed over to the view by the URL paramiters.
-        # in this case 'i' is being sent over the url so it is the object that is being picked up by the method.
-        specified_user = self.kwargs.get(
-            "i"
-        )  # this specifies the request and the data attributed to the object and attaches it to the item specified_user.
-        return User.objects.filter(
-            username=specified_user
-        ).first()  # this searches for the object in the model and filters out all others and returns the user.
+    def get_object(self, queryset: QuerySet[Any] | None = ...) -> Model:
+        specified_user = self.kwargs.get("i")
+        return User.objects.filter(username=specified_user).first()
 
-    def get_context_data(
-        self, **kwargs: Any
-    ) -> dict[
-        str, Any
-    ]:  # this holds data for the template. we are using a specific method here instead of the contextdatamixim as the context data mixim doesn't work with detailviews
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context[
-            "title"
-        ] = (
-            self.title
-        )  # it holds data as a dictionary to be called hence why we have context["data"] = information saved in the "data".
+        context["title"] = self.title
         context["fields"] = Task._meta.fields
         return context
 
