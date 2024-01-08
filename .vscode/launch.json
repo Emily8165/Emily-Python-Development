@@ -22,7 +22,7 @@
             "name": "Python: Django Emily",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/my_task_manager/manage.py",
+            "program": "${workspaceFolder}/src/manage.py",
             "args": [
                 "runserver"
             ],

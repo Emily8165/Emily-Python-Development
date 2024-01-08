@@ -1,0 +1,19 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+<div class="main">
+    <h1>Settings</h1>
+</div>
+<p1>Which colums do you want to see in the tables?</p1>
+    <form id="colum_filter" method="GET">
+        <ul>
+            {% for field in fields %}
+                <li>
+                    <input type="checkbox" id="{{ field.name }}" name="colum_filter" value="{{ field.name }}">
+                    <label for="{{field.name}}">{{field.verbose_name}} Click to make active</lable>
+                </li>
+            {% endfor %}
+        </ul>
+    <p>Make Colum Changes<input type="submit"></p>
+{% endblock %}
+{% block table %}{% endblock %}
+{% block pagin %}{% endblock %}

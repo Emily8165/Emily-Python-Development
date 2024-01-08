@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
@@ -52,13 +52,6 @@ class TaskListView(ContextDataMixim, generic.ListView):
     paginate_by = 10
     ordering = ["id"]
 
-    # def options(self):
-    #     input_type = self.request.GET.get("input_type")
-    #     if input_type == "order_by" or input_type == "colum_filter":
-    #         return self.error_page()
-    #     else:
-    #         return self.error_page()
-
     def get_queryset(self) -> QuerySet[Any]:
         initial_order = self.request.GET.get("order")
         default_order = (
@@ -73,14 +66,6 @@ class TaskListView(ContextDataMixim, generic.ListView):
         context = super().get_context_data(**kwargs)
         context["order_by"] = self.request.GET.get("order_by")
         return context
-
-    # def get_filter_queryset(self, *args, **kwargs) -> QuerySet[Any]:
-    #     filters_requested = self.request.GET.get("colum_filter")
-    #     default_filter = "id"
-    #     filters_applied = (
-    #         {filters_requested: True} if filters_requested else {default_filter: True}
-    #     )
-    #     return Task.objects.all().exclude(**filters_applied)
 
     def error_page(self):
         return render(self.request, "errorpage.html")
@@ -141,20 +126,6 @@ class SearchView(generic.ListView):
         object_list = Task.objects.filter(Q(title__icontains=query))
         return object_list
 
-    """
-        def get_queryset(
-            self,
-        ) -> QuerySet[Any]:  # this retirives the objects from the list view.
-            lookup_param = self.request.GET.get(
-                "lookup", ""
-            )  # this retireves the specific data from the query set. The look up is a paramiter set in the GET function.
-            # Filter tasks based on the search parameter
-            matching_tasks = Task.objects.filter(
-                title__icontains=lookup_param
-            )  # this compares the data to all object in the model and filters out any that aren't define in the look up paraiter.
-            return matching_tasks
-    """
-
     def get(self, request, *args, **kwargs):  # this returns the data as a list view.
         # Call the parent get method to handle the ListView logic
         response = super().get(request, *args, **kwargs)
@@ -188,12 +159,13 @@ class UserView(generic.DetailView):
         context["fields"] = Task._meta.fields
         return context
 
-    def get(
-        self, request: HttpRequest, *args: Any, **kwargs: Any
-    ) -> (
-        HttpResponse
-    ):  # this handles https responses and returns all other data above in the template
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         return super().get(request, *args, **kwargs)
+
+
+class SettingsView(ContextDataMixim, generic.TemplateView):
+    title = "Task Settings"
+    template_name = "settings.html"
 
 
 def error_page(request):
