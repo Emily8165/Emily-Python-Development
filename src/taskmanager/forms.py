@@ -5,14 +5,16 @@ from taskmanager.models import Task
 
 class TaskForm(forms.ModelForm):
     # define choices:
-    rag_choices = [("Red", "Red"), ("Amber", "Amber"), ("Green", "Green")]
+
+    rag_choices = [("Red", "rag"), ("Amber", "rag"), ("Green", "rag")]
     status_choices = [
-        ("Open", "Open"),
-        ("In_Progress", "In_Progress"),
-        ("Closed", "Closed"),
-        ("Deleted", "Deleted"),
+        ("Open", "status"),
+        ("In_Progress", "status"),
+        ("Closed", "status"),
+        ("Deleted", "status"),
     ]
-    active_choices = [(True, "True"), (False, "False")]
+    active_choices = [(True, "active"), (False, "active")]
+    all_choices = rag_choices + status_choices + active_choices
     # define fields:
     title = forms.CharField(max_length=255)
     discr = forms.CharField(max_length=255)
@@ -29,7 +31,7 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ["title", "discr", "rag", "status"]
+        fields = ["title", "discr", "rag", "status", "active"]
 
 
 class TaskDelForm(forms.ModelForm):

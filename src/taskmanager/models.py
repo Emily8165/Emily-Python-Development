@@ -6,6 +6,10 @@ def default_user_function():
     return User.objects.first()
 
 
+class Project(models.Model):
+    project_name = models.CharField(max_length=100)
+
+
 class Task(models.Model):
     title = models.CharField(max_length=255)
     discr = models.CharField(max_length=255)
@@ -14,6 +18,7 @@ class Task(models.Model):
     active = models.BooleanField(default=True)
     created_on = models.DateField(auto_now_add=True)
     update_last = models.DateField(auto_now=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.title}"

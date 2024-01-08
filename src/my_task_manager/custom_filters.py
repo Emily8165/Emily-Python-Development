@@ -1,4 +1,7 @@
+import django_filters
 from django import template
+
+from taskmanager.models import Task
 
 register = template.Library()
 
@@ -16,6 +19,15 @@ def add_line_breaks(inputted, line_break_num):
     return result
 
 
-@register.filter
-def in_category(things, category):
-    return things.filter(category=category)
+class TaskFilter(django_filters.FilterSet):
+    id = django_filters.RangeFilter()
+
+    class Meta:
+        model = Task
+        fields = {
+            "title": ["icontains"],
+            "discr": ["icontains"],
+            "rag": ["exact"],
+            "status": ["exact"],
+            "active": ["exact"],
+        }
