@@ -15,7 +15,7 @@
             <div class="sidenav">
                 <form id="order_by" method="GET">
                     <label for="order_by">Order by:</label>
-                    {% for field in fields %}{% if field.name != 'created_on' and field.name != 'update_last' %}
+                    {% for field in fields %}{% if field.name != 'created_on' and field.name != 'update_last' and field.name != 'project' %}
                         <br>
                         <input type="radio" id="{{ field.name }}" name="order_by" value="{{ field.name }}" onchange="submitForm()">
                         <label for="{{ field.name }}">{{ field.verbose_name }}</label>
@@ -33,7 +33,7 @@
                     <ul><a href={% url 'user_view' use %}>{{use}}</a></ul>
                 {% endfor %}
             </div>
-            <div class="right-sidenav">
+            <div class="table-filter">
                 <form id="filter_colum" method="GET">
                     <label for="filter_colum">Filter colums:</label>
                     {% for field in fields %}
@@ -43,46 +43,35 @@
                     {% endfor %}
                     <br>
                     <input type="submit"> 
-                    <p>---------------</p>
+                </div>
+                <div class="data-filter">
                 <form id="filter_input_option" method="GET">
                     <label for="filter_input_option">Filter data you wish to see</lable>
                         {% for field in fields %}
-                            <br>{{ field.verbose_name }}
-                            <select name="{{ field.name }}" id="{{ field.name }}">
-                                {% for choice in status_choices %}
-                                    {% if field.name == "rag" %}
+                            <br>
+                            {{ field.verbose_name }}
+                            <select name="filter_input_option" id="{{ field.name }}">
+                                {% for choice in all_choices %}
+                                    <p>{{choice}}</p>
+                                    {% if field.name == choice.1 %}
                                         <option value="{{ choice.0 }}">{{ choice.0 }}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
                         {% endfor %}
-                    <br><input type="submit">
+                    <br>
+                    <input type="hidden" name="input_value" value="filter_input_option">
+                    <input type="submit" value="Submit">
                 </form>
-
-
             </div>
         <br>
-        <div class="right-sidenav">
-            <p1>Which colums do you want to see in the tables?</p1>
-            <form id="colum_filter" method="GET">
-            <ul>
-                {% for field in fields %}
-                    <li>
-                        <input type="checkbox" id="{{ field.name }}" name="colum_filter" value="{{ field.name }}">
-                        <label for="{{field.name}}">{{field.verbose_name}}</lable>
-                    </li>
-                {% endfor %}
-            </ul>
-            <p>Make Colum Changes<input type="submit"></p>
-        </form>
-        </div>
     </body>
     </div>
 {% endblock %}
 {% block table %}
 <table class="center">
     {% for field in fields %}
-        {% if field.verbose_name != 'created on' and field.verbose_name != 'update last' %}
+        {% if field.verbose_name != 'created on' and field.verbose_name != 'update last' and field.verbose_name != "project" %}
         <th>{{ field.verbose_name }}</th>
         {% endif %}
     {% endfor %}

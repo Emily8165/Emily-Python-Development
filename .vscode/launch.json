@@ -28,9 +28,6 @@
             ],
             "django": true,
             "justMyCode": true,
-            "env": {
-                "DJANGO_SETTINGS_MODULE": "task_manager.settings"
-            }
         }
     ]
 }

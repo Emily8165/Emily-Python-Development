@@ -9,13 +9,16 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
-from django.http import HttpRequest, HttpResponse
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
+from django_filters import FilterSet
 
 register = template.Library()
+
+from my_task_manager.custom_filters import TaskFilter
 
 from .forms import TaskForm
 from .models import DelTask, Task
@@ -32,8 +35,6 @@ class ContextDataMixim:
             context["filter"] = Task.objects.order_by(order_by_param)
         else:
             context["filter"] = Task.objects.all()
-        context["status_choices"] = TaskForm.status_choices
-        context["active_choices"] = TaskForm.active_choices
         context["field_form_type"] = TaskForm().form_type()
         return context
 
@@ -60,11 +61,16 @@ class TaskListView(ContextDataMixim, generic.ListView):
             else initial_order
         )
         order_by = self.request.GET.get("order_by", default_order)
-        return Task.objects.all().order_by(order_by)
+        filter_by = self.request.GET.get("filter_input_option")
+        filter_args = {filter_by: True} if filter_by else {}
+        filter_colums = self.request.GET.get("filter_colum")  # this bit isnt working.
+        colum_args = None  # find a way to say these are the colums you want to exclude.
+        return Task.objects.filter().filter(**filter_args).order_by(order_by)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["order_by"] = self.request.GET.get("order_by")
+        context["all_choices"] = TaskForm.all_choices
         return context
 
     def error_page(self):
