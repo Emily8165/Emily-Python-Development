@@ -14,7 +14,7 @@
         <p><a href="create">Add new tasks</a></p>
             <div class="sidenav">
                 <form id="order_by" method="GET">
-                    <label for="order_by">Order by:</label>
+                    <label for="order_by"><b>Order by:</b></label>
                     {% for field in fields %}{% if field.name != 'created_on' and field.name != 'update_last' and field.name != 'project' %}
                         <br>
                         <input type="radio" id="{{ field.name }}" name="order_by" value="{{ field.name }}" onchange="submitForm()">
@@ -28,40 +28,38 @@
                         document.getElementById("order_by").submit();
                     }
                 </script>
-                <p>Users</p>
+                <p1><b>Users:</b><p1>
                 {% for use in user %}
                     <ul><a href={% url 'user_view' use %}>{{use}}</a></ul>
                 {% endfor %}
-            </div>
-            <div class="table-filter">
-                <form id="filter_colum" method="GET">
-                    <label for="filter_colum">Filter colums:</label>
-                    {% for field in fields %}
+                <br>
+                <form id="filter_fields" method="GET">
+                    <lable for="filter_fields"><b>Filter out specific fields</b></lable>
+                        {% for field in fields %}
                         <br>
-                        <input type="checkbox" id="{{ field.name }}" name="filter_colum">
-                        <label for="{{ field.name }}">{{ field.verbose_name }}</label>
-                    {% endfor %}
-                    <br>
-                    <input type="submit"> 
-                </div>
-                <div class="data-filter">
+                            <input type="checkbox" id="{{field.name}}" name="{{field.name}}">
+                            <lable for="field.name">{{field.name}}</lable>
+                        {% endfor %}
+                    <br><input type="submit" name="colum" value="submit"><br>
+                </form>
+                <br>
                 <form id="filter_input_option" method="GET">
-                    <label for="filter_input_option">Filter data you wish to see</lable>
+                    <label for="filter_input_option"><b>Filter data you wish to see</b></lable>
                         {% for field in fields %}
                             <br>
-                            {{ field.verbose_name }}
-                            <select name="filter_input_option" id="{{ field.name }}">
-                                {% for choice in all_choices %}
-                                    <p>{{choice}}</p>
-                                    {% if field.name == choice.1 %}
-                                        <option value="{{ choice.0 }}">{{ choice.0 }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
+                            {{field.name}}
+                                <select name="{{field.name}}">
+                                    {% for choice in all_choices %}
+                                        {% if field.name == choice.1 %}
+                                            <option value="{{ choice.0 }}">{{ choice.0 }}</option>
+                                            
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <input type="hidden" name="field" value="{{ field.name }}">
                         {% endfor %}
-                    <br>
-                    <input type="hidden" name="input_value" value="filter_input_option">
-                    <input type="submit" value="Submit">
+                <br>
+                <input type="submit" value="Submit">
                 </form>
             </div>
         <br>

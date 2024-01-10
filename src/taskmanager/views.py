@@ -61,11 +61,21 @@ class TaskListView(ContextDataMixim, generic.ListView):
             else initial_order
         )
         order_by = self.request.GET.get("order_by", default_order)
-        filter_by = self.request.GET.get("filter_input_option")
-        filter_args = {filter_by: True} if filter_by else {}
-        filter_colums = self.request.GET.get("filter_colum")  # this bit isnt working.
-        colum_args = None  # find a way to say these are the colums you want to exclude.
-        return Task.objects.filter().filter(**filter_args).order_by(order_by)
+        colum_name = self.request.GET.get("colum")
+        colum_value = self.request.GET.get(colum_name)
+        field_name = self.request.GET.get("field")
+        field_value = self.request.GET.get(field_name)
+        filter_args = (
+            Q(**{f"{field_name}__exact": field_value})
+            if field_name and field_value
+            else Q()
+        )
+        colum_args = (
+            Q(**{f"{colum_name}__exact": colum_value})
+            if colum_name and colum_value
+            else Q()
+        )
+        return Task.objects.exclude(colum_args).filter(filter_args).order_by(order_by)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
