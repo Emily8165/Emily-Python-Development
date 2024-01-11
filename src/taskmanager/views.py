@@ -18,8 +18,6 @@ from django_filters import FilterSet
 
 register = template.Library()
 
-from my_task_manager.custom_filters import TaskFilter
-
 from .forms import TaskForm
 from .models import DelTask, Task
 
@@ -75,7 +73,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
             if colum_name and colum_value
             else Q()
         )
-        return Task.objects.exclude(rag="Red").filter(filter_args).order_by(order_by)
+        return Task.objects.exclude().filter(filter_args).order_by(order_by)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

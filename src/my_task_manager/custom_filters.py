@@ -19,15 +19,6 @@ def add_line_breaks(inputted, line_break_num):
     return result
 
 
-class TaskFilter(django_filters.FilterSet):
-    id = django_filters.RangeFilter()
-
-    class Meta:
-        model = Task
-        fields = {
-            "title": ["icontains"],
-            "discr": ["icontains"],
-            "rag": ["exact"],
-            "status": ["exact"],
-            "active": ["exact"],
-        }
+@register.filter(name="field_display")
+def field_display(task, field_name):
+    return getattr(task, field_name, "")
