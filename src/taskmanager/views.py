@@ -18,8 +18,6 @@ from django_filters import FilterSet
 
 register = template.Library()
 
-from my_task_manager.custom_filters import TaskFilter
-
 from .forms import TaskForm
 from .models import DelTask, Task
 
@@ -52,8 +50,10 @@ class TaskListView(ContextDataMixim, generic.ListView):
     context_object_name = "model"
     paginate_by = 10
     ordering = ["id"]
+    fields = Task._meta.fields
 
     def get_queryset(self) -> QuerySet[Any]:
+        queryset = super().get_queryset()
         initial_order = self.request.GET.get("order")
         default_order = (
             "title"
@@ -61,21 +61,26 @@ class TaskListView(ContextDataMixim, generic.ListView):
             else initial_order
         )
         order_by = self.request.GET.get("order_by", default_order)
-        colum_name = self.request.GET.get("colum")
-        colum_value = self.request.GET.get(colum_name)
-        field_name = self.request.GET.get("field")
-        field_value = self.request.GET.get(field_name)
-        filter_args = (
-            Q(**{f"{field_name}__exact": field_value})
-            if field_name and field_value
-            else Q()
-        )
-        colum_args = (
-            Q(**{f"{colum_name}__exact": colum_value})
-            if colum_name and colum_value
-            else Q()
-        )
-        return Task.objects.exclude(colum_args).filter(filter_args).order_by(order_by)
+        # --- filter data ---
+        filter_conditions = []
+        for param, value in self.request.GET.items():
+            if param.startswith("field_") and value != "":
+                field_name = param[len("field_") :]
+                filter_conditions.append(Q(**{f"{field_name}__exact": value}))
+        for condition in filter_conditions:
+            queryset = queryset.filter(condition)
+            # --- filter colums ---
+        excluded_fields = []
+        for param, value in self.request.GET.items():
+            if param.startswith("exclude_field_") and value:
+                field_name = param[len("exclude_field_") :]
+                excluded_fields.append(field_name)
+
+        # Exclude fields from the queryset using defer
+        if excluded_fields:
+            queryset = queryset.defer(*excluded_fields)
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

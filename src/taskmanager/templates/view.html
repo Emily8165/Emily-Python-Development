@@ -34,32 +34,36 @@
                 {% endfor %}
                 <br>
                 <form id="filter_fields" method="GET">
-                    <lable for="filter_fields"><b>Filter out specific fields</b></lable>
-                        {% for field in fields %}
+                    <label for="filter_fields"><b>Filter out specific fields</b></label>
+                    {% for field in fields %}
                         <br>
-                            <input type="checkbox" id="{{field.name}}" name="{{field.name}}">
-                            <lable for="field.name">{{field.name}}</lable>
-                        {% endfor %}
-                    <br><input type="submit" name="colum" value="submit"><br>
+                        <input type="checkbox" id="{{ field.name }}" name="{{ field.name }}">
+                        <label for="{{ field.name }}">{{ field.name }}</label>
+                    {% endfor %}
+                    <br>
+                    <input type="submit" value="Submit">
                 </form>
                 <br>
                 <form id="filter_input_option" method="GET">
-                    <label for="filter_input_option"><b>Filter data you wish to see</b></lable>
-                        {% for field in fields %}
+                    <label for="filter_input_option"><b>Filter data you wish to see</b></label>
+                    {% for field in fields %}
+                        {% if field.name == "rag" or field.name == "status" %}
                             <br>
-                            {{field.name}}
-                                <select name="{{field.name}}">
-                                    {% for choice in all_choices %}
-                                        {% if field.name == choice.1 %}
-                                            <option value="{{ choice.0 }}">{{ choice.0 }}</option>
-                                            
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                                <input type="hidden" name="field" value="{{ field.name }}">
-                        {% endfor %}
-                <br>
-                <input type="submit" value="Submit">
+                            <label for="{{ field.name }}">{{ field.name }}</label>
+                            <select name="{{ field.name }}">
+                                <option disabled selected value> -- select an option -- </option>
+                                {% for choice in all_choices %}
+                                    {% if field.name == choice.1 %}
+                                        <option value="{{ choice.0 }}">{{ choice.0 }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <!-- Use a dynamic name for the hidden input field -->
+                            <input type="hidden" name="field_{{ field.name }}" value="{{field.name}}">
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+                    <input type="submit" value="Submit">
                 </form>
             </div>
         <br>
@@ -69,22 +73,19 @@
 {% block table %}
 <table class="center">
     {% for field in fields %}
-        {% if field.verbose_name != 'created on' and field.verbose_name != 'update last' and field.verbose_name != "project" %}
-        <th>{{ field.verbose_name }}</th>
+        {% if field.verbose_name != 'created on' and field.name != 'update last' and field.name != 'project' %}
+            <th>{{ field.verbose_name }}</th>
         {% endif %}
     {% endfor %}
     <th>Delete</th>
     <th>Update</th>
     {% for task in model %}
         <tr>
-            <td>
-                <a href="{% url 'detail' task.id %}"><b>{{ task.id }}</b></a>
-            </td>
-            <td>{{ task.title|capfirst|add_line_breaks:5|linebreaks }}</td>
-            <td>{{ task.discr|capfirst|add_line_breaks:5|linebreaks }}</td>
-            <td>{{ task.rag }}</td>
-            <td>{{ task.status }}</td>
-            <td>{{ task.active }}</td>
+            {% for field in fields %}
+                {% if field.verbose_name != 'created on' and field.name != 'update last' and field.name != 'project' %}
+                    <td>{{ task|field_display:field.name|capfirst|add_line_breaks:5|linebreaks }}</td>
+                {% endif %}
+            {% endfor %}
             <td><a href="{% url 'delete' task.id %}">delete</a></td>
             <td><a href="{% url 'update' task.id %}">update</a></td>
         </tr>
