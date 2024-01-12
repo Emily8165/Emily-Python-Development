@@ -34,18 +34,16 @@
                     <ul><a href={% url 'user_view' use %}>{{use}}</a></ul>
                 {% endfor %}
                 <br>
-                    <form id="filter_fields" method="GET">
+
+                <form id="filter_fields" method="GET">
                     <label for="filter_fields"><b>Filter out specific fields</b></label>
                     {% for field in fields %}
-                    {% if field.name != 'created_on' and field.name != 'update_last' and field.name != "project"%}
                         <br>
                         <input type="checkbox" id="{{ field.name }}" name="{{ field.name }}">
                         <label for="{{ field.name }}">{{ field.name }}</label>
-                    {% endif %}
                     {% endfor %}
                     <br>
                     <input type="submit" value="Submit">
-                </form>
                 </form>
                 <br>
                 <form id="filter_input_option" method="GET">
@@ -68,7 +66,6 @@
                     <br>
                     <input type="submit" value="Submit">
                 </form>
-                </form>
             </div>
         <br>
     </body>
@@ -77,22 +74,22 @@
 {% block table %}
 <table class="center">
     {% for field in fields %}
-        {% if field.verbose_name != 'created on' and field.verbose_name != 'update last' and field.verbose_name != "project" %}
-        <th>{{ field.verbose_name }}</th>
+        {% if field.verbose_name != 'created on' and field.name != 'update last' and field.name != 'project' %}
+            <th>{{ field.verbose_name }}</th>
         {% endif %}
     {% endfor %}
     <th>Delete</th>
     <th>Update</th>
     {% for task in model %}
         <tr>
-        {% for field in fields %}
-            {% if field.verbose_name != 'created on' and field.name != 'update last' and field.name != 'project' %}
-                <td>{{ task|field_display:field.name|capfirst|add_line_breaks:5|linebreaks }}</td>
-            {% endif %}
-        {% endfor %}
-        <td><a href="{% url 'delete' task.id %}">delete</a></td>
-        <td><a href="{% url 'update' task.id %}">update</a></td>
-    </tr>
+            {% for field in fields %}
+                {% if field.verbose_name != 'created on' and field.name != 'update last' and field.name != 'project' %}
+                    <td>{{ task|field_display:field.name|capfirst|add_line_breaks:5|linebreaks }}</td>
+                {% endif %}
+            {% endfor %}
+            <td><a href="{% url 'delete' task.id %}">delete</a></td>
+            <td><a href="{% url 'update' task.id %}">update</a></td>
+        </tr>
     {% endfor %}
 </table>
 {% endblock %}

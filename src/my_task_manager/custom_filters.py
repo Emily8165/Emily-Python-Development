@@ -1,7 +1,4 @@
-import django_filters
 from django import template
-
-from taskmanager.models import Task
 
 register = template.Library()
 
