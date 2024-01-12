@@ -84,7 +84,11 @@
         <tr>
             {% for field in fields %}
                 {% if field.verbose_name != 'created on' and field.name != 'update last' and field.name != 'project' %}
-                    <td>{{ task|field_display:field.name|capfirst|add_line_breaks:5|linebreaks }}</td>
+                    {% if field.name == "id" %}
+                        <td><a href="{% url 'detail' task.id %}">{{ task.id }}</a></td>
+                    {% else %}
+                        <td>{{ task|field_display:field.name|capfirst|add_line_breaks:5|linebreaks }}</td>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
             <td><a href="{% url 'delete' task.id %}">delete</a></td>
@@ -92,6 +96,7 @@
         </tr>
     {% endfor %}
 </table>
+
 {% endblock %}
 
 </html>
