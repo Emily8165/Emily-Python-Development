@@ -9,7 +9,9 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import Http404, HttpRequest
+from django.http import HttpResponse
+from django.http import HttpResponse as HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse
@@ -28,6 +30,8 @@ class ContextDataMixim:
         context["fields"] = Task._meta.fields
         context["title"] = self.title
         context["user"] = User.objects.all()
+        context["groups"] = Group.objects.all()
+        context["permissions"] = Permission.objects.all()
         order_by_param = self.request.GET.get("order_by")
         if order_by_param:
             context["filter"] = Task.objects.order_by(order_by_param)
@@ -62,14 +66,10 @@ class TaskListView(ContextDataMixim, generic.ListView):
         )
         order_by = self.request.GET.get("order_by", default_order)
         # --- filter data ---
-        filter_conditions = []
-        for param, value in self.request.GET.items():
-            if param.startswith("field_") and value != "":
-                field_name = param[len("field_") :]
-                filter_conditions.append(Q(**{f"{field_name}__exact": value}))
-        for condition in filter_conditions:
-            queryset = queryset.filter(condition)
-            # --- filter colums ---
+        for param in self.request.GET.items():
+            queryset = Task.objects.filter(Q(**{f"{param[0]}": f"{param[1]}"}))
+        return queryset.order_by(order_by)
+        # --- filter colums ---
         excluded_fields = []
         for param, value in self.request.GET.items():
             if param.startswith("exclude_field_") and value:
@@ -79,8 +79,6 @@ class TaskListView(ContextDataMixim, generic.ListView):
         # Exclude fields from the queryset using defer
         if excluded_fields:
             queryset = queryset.defer(*excluded_fields)
-
-        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -195,6 +193,31 @@ class UserView(generic.DetailView):
 class SettingsView(ContextDataMixim, generic.TemplateView):
     title = "Task Settings"
     template_name = "settings.html"
+
+
+class OrgChartView(ContextDataMixim, generic.TemplateView):
+    model = User
+    title = "Orginisation Chart"
+    template_name = "org_chart.html"
+    context_object_name = "object"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        users = User.objects.all()
+        groups = Group.objects.all()
+        permissions = Permission.objects.all()
+        user_groups = {}
+        for user in users:
+            user_groups[user] = user.groups.all()
+        context = {
+            "users": users,
+            "groups": groups,
+            "user_groups": user_groups,
+            "permissions": permissions,
+        }
+        return context
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().get(request, *args, **kwargs)
 
 
 def error_page(request):

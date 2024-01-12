@@ -1,0 +1,21 @@
+{% extends "base_layout.html" %}
+{% block content %}
+    <p>This is where you will be able to see all the groups and permisions levels people have<br>
+    if you have admin access you will be able to set peoples permissions from here</p>
+{% endblock %}
+{% block table %}
+
+<table class="center">
+    <th>User</th>
+    <th>Group</th>
+    <th>Permissions</th>
+    {% for use in user %}
+        <tr><td>{{use}}</td></tr>
+    {% endfor %}
+    {% for group in groups %}
+        <tr><td>{{group}}</td></tr>
+    {% endfor %}
+    {% for permission in permissions %}
+        <tr><td>{{permission}}</td></tr>
+    {% endfor %}
+{% endblock%}

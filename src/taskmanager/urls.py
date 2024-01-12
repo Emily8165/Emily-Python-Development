@@ -16,4 +16,5 @@ urlpatterns = [
     path("view/user/<i>", views.UserView.as_view(), name="user_view"),
     path("errorpage/", views.error_page, name="error_page"),
     path("view/settings/", views.SettingsView.as_view(), name="settings"),
+    path("view/org_chart", views.OrgChartView.as_view(), name="org"),
 ]
