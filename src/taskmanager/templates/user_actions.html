@@ -1,10 +1,28 @@
 {% extends "base_layout.html" %}
 {% block content %}
     <div class="main">
-        <h1>Username: {{ specified_user }}</h1>
+        <h1>Username: {{ specified_user.user }}</h1>
         <div>
     <div class="sidenav">
-        <p>See permissions</p>
-        <p>See groups</p>
+    <lable for="{{user_group}}">See groups</lable>
+    <ul>
+        {% if specified_user.user_group%}
+        {% for group in specified_user.user_group%}
+            <li>{{ group.name }}</li>
+        {% endfor %}
+        {% else %}
+            <p>No groups yet</p>
+        {% endif %}
+    </ul>
+    <lable for="{{permission}}">See permisions </lable>
+    <ul>
+        {% if specified_user.permissions %}
+        {% for permission in specified_user.permissions%}
+            <li>{{ permission.name }}</li>
+        {% endfor %}
+        {% else %}
+        <p>No permissions yet</p>
+        {% endif %}
+    </ul>
     </div>
 {% endblock %}

@@ -20,6 +20,9 @@ class Task(models.Model):
     update_last = models.DateField(auto_now=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
+    class Meta:
+        permissions = (("can_close_tasks", "can mark tasks as closed"),)
+
     def __str__(self):
         return f"{self.title}"
 

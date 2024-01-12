@@ -4,7 +4,7 @@ from django import template
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, Permission, User
 from django.db import models
 from django.db.models import Q
 from django.db.models.base import Model as Model
@@ -172,7 +172,15 @@ class UserView(generic.DetailView):
 
     def get_object(self, queryset: QuerySet[Any] | None = ...) -> Model:
         specified_user = self.kwargs.get("i")
-        return User.objects.filter(username=specified_user).first()
+        user = get_object_or_404(User, username=specified_user)
+        user_group = user.groups.all()
+        permissions = user.user_permissions.all()
+        ob = {
+            "user": user,
+            "user_group": user_group,
+            "permissions": permissions,
+        }
+        return ob
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

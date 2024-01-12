@@ -40,7 +40,7 @@
 
 {% block table %}
     <h2>{{title}}</h2>
-    <table>
+    <table class="center">
     <tr>{% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}</tr>
     <tr>
         <td><b>{{ task.id }}</b></td>
