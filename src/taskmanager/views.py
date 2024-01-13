@@ -66,19 +66,15 @@ class TaskListView(ContextDataMixim, generic.ListView):
         )
         order_by = self.request.GET.get("order_by", default_order)
         # --- filter data ---
-        for param in self.request.GET.items():
-            queryset = Task.objects.filter(Q(**{f"{param[0]}": f"{param[1]}"}))
-        return queryset.order_by(order_by)
-        # --- filter colums ---
-        excluded_fields = []
-        for param, value in self.request.GET.items():
-            if param.startswith("exclude_field_") and value:
-                field_name = param[len("exclude_field_") :]
-                excluded_fields.append(field_name)
+        if self.request.GET.items() == None:
+            return Task.objects.all()
+        else:
+            for param in self.request.GET.items():
+                queryset = Task.objects.filter(Q(**{f"{param[0]}": f"{param[1]}"}))
 
-        # Exclude fields from the queryset using defer
-        if excluded_fields:
-            queryset = queryset.defer(*excluded_fields)
+        # --- filter colums ---
+
+        return queryset.order_by(order_by)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
