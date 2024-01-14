@@ -27,7 +27,6 @@ from .models import DelTask, Task
 class ContextDataMixim:
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["fields"] = Task._meta.fields
         context["title"] = self.title
         context["user"] = User.objects.all()
         context["groups"] = Group.objects.all()
@@ -67,12 +66,17 @@ class TaskListView(ContextDataMixim, generic.ListView):
         order_by = self.request.GET.get("order_by", default_order)
         # --- filter data ---
         if self.request.GET.items() == None:
-            return Task.objects.all()
+            queryset = Task.objects.all()
         else:
             for param in self.request.GET.items():
                 queryset = Task.objects.filter(Q(**{f"{param[0]}": f"{param[1]}"}))
 
         # --- filter colums ---
+        true_fields = [field.name for field in Task._meta.get_fields()]
+        fields = []
+        for field, on in self.request.GET.items():
+            if field in true_fields:
+                fields.append(field)
 
         return queryset.order_by(order_by)
 
@@ -80,6 +84,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
         context = super().get_context_data(**kwargs)
         context["order_by"] = self.request.GET.get("order_by")
         context["all_choices"] = TaskForm.all_choices
+        context["fields"] = self.fields
         return context
 
     def error_page(self):
