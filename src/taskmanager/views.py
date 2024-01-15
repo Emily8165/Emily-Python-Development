@@ -72,19 +72,27 @@ class TaskListView(ContextDataMixim, generic.ListView):
                 queryset = Task.objects.filter(Q(**{f"{param[0]}": f"{param[1]}"}))
 
         # --- filter colums ---
-        true_fields = [field.name for field in Task._meta.get_fields()]
-        fields = []
-        for field, on in self.request.GET.items():
-            if field in true_fields:
-                fields.append(field)
-
+        true_fields = [
+            field.name for field in Task._meta.get_fields()
+        ]  # returns name of fields
+        fields = []  # collects names of fields from the query
+        for (
+            field,
+            on,
+        ) in (
+            self.request.GET.items()
+        ):  # iterates over the query to see what fields are in there.
+            if field in true_fields:  # these to see if fields are valid
+                fields.append(field)  # adds fields to fields.
         return queryset.order_by(order_by)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["order_by"] = self.request.GET.get("order_by")
         context["all_choices"] = TaskForm.all_choices
-        context["fields"] = self.fields
+        context[
+            "fields"
+        ] = self.fields  # passes fields to the front end to iterate over.
         return context
 
     def error_page(self):
@@ -173,7 +181,19 @@ class UserView(generic.DetailView):
         specified_user = self.kwargs.get("i")
         user = get_object_or_404(User, username=specified_user)
         user_group = user.groups.all()
-        permissions = user.user_permissions.all()
+        raw_permissions = user.user_permissions.all()
+        list_of_permission_names = []
+        x = [
+            list_of_permission_names.append(permissions.name)
+            for permissions in raw_permissions
+        ]
+        permissions = []
+        y = [
+            permissions.append(str(per).strip("Can add"))
+            for count, per in enumerate(list_of_permission_names)
+            if count % 4 == 0
+        ]
+
         ob = {
             "user": user,
             "user_group": user_group,
