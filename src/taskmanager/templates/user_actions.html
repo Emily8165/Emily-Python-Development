@@ -15,10 +15,10 @@
         {% endif %}
     </ul>
     <lable for="{{permission}}">See permisions </lable>
-    <ul>
+    <ul style="list-style-type:circle">
         {% if specified_user.permissions %}
         {% for permission in specified_user.permissions%}
-            <li>{{ permission.name }}</li>
+            <li>{{ permission }}</li>
         {% endfor %}
         {% else %}
         <p>No permissions yet</p>
