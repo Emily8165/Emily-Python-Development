@@ -27,15 +27,4 @@ class Task(models.Model):
         return f"{self.title}"
 
 
-class DelTask(models.Model):
-    task = models.OneToOneField(
-        Task,
-        on_delete=models.CASCADE,
-        related_name="del_tasks",
-    )
-
-    def __str__(self):
-        return f"{self.task.title}"
-
-
 # Create your models here.
