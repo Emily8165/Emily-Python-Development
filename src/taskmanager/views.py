@@ -21,7 +21,7 @@ from django_filters import FilterSet
 register = template.Library()
 
 from .forms import TaskForm
-from .models import DelTask, Task
+from .models import Task
 
 
 class ContextDataMixim:
@@ -53,46 +53,32 @@ class TaskListView(ContextDataMixim, generic.ListView):
     context_object_name = "model"
     paginate_by = 10
     ordering = ["id"]
-    fields = Task._meta.fields
+    fields = Task._meta.get_fields()
 
     def get_queryset(self) -> QuerySet[Any]:
         queryset = super().get_queryset()
-        initial_order = self.request.GET.get("order")
-        default_order = (
+        # --- order_by ---
+        new_order = self.request.GET.get("order_by")
+        default = (
             "title"
-            if initial_order not in [f.name for f in Task._meta.get_fields()]
-            else initial_order
+            if new_order not in [f.name for f in Task._meta.get_fields()]
+            else new_order
         )
-        order_by = self.request.GET.get("order_by", default_order)
         # --- filter data ---
-        if self.request.GET.items() == None:
-            queryset = Task.objects.all()
-        else:
-            for param in self.request.GET.items():
-                queryset = Task.objects.filter(Q(**{f"{param[0]}": f"{param[1]}"}))
+        if self.request.GET.get:
+            for param, value in self.request.GET.items():
+                if param == "order_by":
+                    continue
+                queryset = queryset.filter(Q(**{f"{param}": f"{value}"}))
 
-        # --- filter colums ---
-        true_fields = [
-            field.name for field in Task._meta.get_fields()
-        ]  # returns name of fields
-        fields = []  # collects names of fields from the query
-        for (
-            field,
-            on,
-        ) in (
-            self.request.GET.items()
-        ):  # iterates over the query to see what fields are in there.
-            if field in true_fields:  # these to see if fields are valid
-                fields.append(field)  # adds fields to fields.
-        return queryset.order_by(order_by)
+        # --- exclude colums ---
+
+        return queryset.order_by(default)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["order_by"] = self.request.GET.get("order_by")
         context["all_choices"] = TaskForm.all_choices
-        context[
-            "fields"
-        ] = self.fields  # passes fields to the front end to iterate over.
+        context["fields"] = Task._meta.get_fields()
         return context
 
     def error_page(self):
@@ -163,7 +149,7 @@ class SearchView(generic.ListView):
 
 
 class ViewHistory(ContextDataMixim, generic.ListView):
-    model = DelTask
+    model = Task
     title = "view_history"
     template_name = "view_history.html"
     context_object_name = "model"
