@@ -1,9 +1,5 @@
 /* Whole website */
-body {
-    background-color: aquamarine;
-    color: red;
-    /* Light Blue */
-}
+
 /* Header bar */
 .top ul {
         background-color: yellow;
@@ -152,4 +148,4 @@ table.center {
 .pagination-container {
     text-align: center;
 }
-
+body {background-color: aquamarine; }
