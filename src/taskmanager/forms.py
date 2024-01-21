@@ -6,7 +6,11 @@ from taskmanager.models import Task
 class TaskForm(forms.ModelForm):
     # define choices:
 
-    rag_choices = [("rag", "Red"), ("rag", "Amber"), ("rag", "Green")]
+    rag_choices = [
+        ("rag", "Red"),
+        ("rag", "Amber"),
+        ("rag", "Green"),
+    ]  # the second one is the one that is displayed.
     status_choices = [
         ("status", "Open"),
         ("status", "In_progress"),
