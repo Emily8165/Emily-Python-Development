@@ -7,15 +7,15 @@ class TaskForm(forms.ModelForm):
     # define choices:
 
     rag_choices = [
-        ("rag", "Red"),
-        ("rag", "Amber"),
-        ("rag", "Green"),
+        ("Red", "rag"),
+        ("Amber", "rag"),
+        ("Green", "rag"),
     ]  # the second one is the one that is displayed.
     status_choices = [
-        ("status", "Open"),
-        ("status", "In_progress"),
-        ("status", "Closed"),
-        ("status", "Deleted"),
+        ("Open", "status"),
+        ("In_progress", "status"),
+        ("Closed", "status"),
+        ("Deleted", "status"),
     ]
     active_choices = [(True, "active"), (False, "active")]
     all_choices = rag_choices + status_choices + active_choices

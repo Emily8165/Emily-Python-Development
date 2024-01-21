@@ -55,8 +55,12 @@
                             <select name="{{ field.name }}">
                                 <option disabled selected value> -- select an option -- </option>
                                 {% for choice in all_choices %}
-                                    {% if field.name == choice.0 %}
-                                        <option value="{{ choice.1 }}">{{ choice.1 }}</option>
+                                    {% if choice.1 == 'rag' and field.name == 'rag' %}
+                                        <option value="{{ choice.0 }}">{{choice.0}}</option>
+                                    {% elif choice.1 == 'status' and field.name == 'status'%}
+                                        <option value="{{choice.0}}">{{choice.0}}</option>
+                                    {% elif choice.1 == 'active' and field.name == 'active' %}
+                                        <option value="{{choice.0}}">{{choice.0}}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
