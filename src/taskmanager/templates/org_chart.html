@@ -6,16 +6,17 @@
 {% block table %}
 
 <table class="center">
-    <th>User</th>
-    <th>Group</th>
-    <th>Permissions</th>
-    {% for use in user %}
-        <tr><td>{{use}}</td></tr>
-    {% endfor %}
-    {% for group in groups %}
-        <tr><td>{{group}}</td></tr>
-    {% endfor %}
-    {% for permission in permissions %}
-        <tr><td>{{permission}}</td></tr>
-    {% endfor %}
+    <tr>
+        <th>User</th><th>Group</th><th>Permissions</th></tr>
+        {% for user in users %}
+        <tr><td>{{user}}</td></tr>
+        {% endfor %}
+        {% for group in groups %}
+        <td>{{group}}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+    
+</tr>
+</table>
 {% endblock%}

@@ -57,22 +57,17 @@ class TaskListView(ContextDataMixim, generic.ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         queryset = super().get_queryset()
-        # --- order_by ---
         new_order = self.request.GET.get("order_by")
         default = (
             "title"
             if new_order not in [f.name for f in Task._meta.get_fields()]
             else new_order
         )
-        # --- filter data ---
         if self.request.GET.get:
             for param, value in self.request.GET.items():
-                if param == "order_by":
+                if param == "order_by" or param == "page":
                     continue
                 queryset = queryset.filter(Q(**{f"{param}": f"{value}"}))
-
-        # --- exclude colums ---
-
         return queryset.order_by(default)
 
     def get_context_data(self, **kwargs):
@@ -119,7 +114,6 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        DelTask.objects.create(task=form.instance)
         return response
 
 
