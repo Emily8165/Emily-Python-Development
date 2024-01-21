@@ -41,17 +41,18 @@
 {% block table %}
     <h2>{{title}}</h2>
     <table class="center">
-    <tr>{% for field in fields %}<th>{{ field.verbose_name }}</th>{% endfor %}</tr>
-    <tr>
-        <td><b>{{ task.id }}</b></td>
-        <td>{{ task.title|capfirst|add_line_breaks:5|linebreaks }}</td>
-        <td>{{ task.discr|capfirst|add_line_breaks:5|linebreaks }}</td>
-        <td>{{ task.rag|capfirst }}</td>
-        <td>{{ task.status|capfirst }}</td>
-        <td>{{ task.active|capfirst }}</td>
-        <td>{{ task.created_on}}</td>
-        <td>{{ task.update_last }}</td>
-    </tr>
+        <tr>
+            {% for field in fields %}
+                <th>{{ field.verbose_name }}</th>
+            {% endfor %}
+        </tr>
+        {% for task in Tasks %}
+            <tr>
+                {% for field in fields %}
+                    <td>{{task|field_display:field.name}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </table>
     <p><a href="/view">Back to view tasks</a></p>
 {% endblock %}

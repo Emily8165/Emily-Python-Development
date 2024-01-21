@@ -55,8 +55,12 @@
                             <select name="{{ field.name }}">
                                 <option disabled selected value> -- select an option -- </option>
                                 {% for choice in all_choices %}
-                                    {% if field.name == choice.0 %}
-                                        <option value="{{ choice.1 }}">{{ choice.1 }}</option>
+                                    {% if choice.1 == 'rag' and field.name == 'rag' %}
+                                        <option value="{{ choice.0 }}">{{choice.0}}</option>
+                                    {% elif choice.1 == 'status' and field.name == 'status'%}
+                                        <option value="{{choice.0}}">{{choice.0}}</option>
+                                    {% elif choice.1 == 'active' and field.name == 'active' %}
+                                        <option value="{{choice.0}}">{{choice.0}}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
@@ -74,7 +78,7 @@
 {% block table %}
 <table class="center">
     {% for field in fields %}
-        {% if field.verbose_name != 'created on' and field.name != 'update last' and field.name != 'project' %}
+        {% if field.name != 'created_on' and field.name != 'update_last' and field.name != 'project' %}
             <th>{{ field.verbose_name|capfirst }}</th>
         {% endif %}
     {% endfor %}
@@ -82,15 +86,12 @@
     <th>Update</th>
     {% for task in model %}
         <tr>
-            {% for field in fields %}
-                {% if field.verbose_name != 'created on' and field.name != 'update last' and field.name != 'project' %}
-                    {% if field.name == "id" %}
-                        <td><a href="{% url 'detail' task.id %}">{{ task.id }}</a></td>
-                    {% else %}
-                        <td>{{ task|field_display:field.name|capfirst|add_line_breaks:5|linebreaks }}</td>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+            <td><a href="{% url 'detail' task.id %}">{{task.id}}</td></a>
+            <td>{{task.title |add_line_breaks:5|linebreaks}}</td>
+            <td>{{task.discr|add_line_breaks:5|linebreaks}}</td>
+            <td>{{task.rag}}</td>
+            <td>{{task.status}}</td>
+            <td>{{task.active}}</td>
             <td><a href="{% url 'delete' task.id %}">delete</a></td>
             <td><a href="{% url 'update' task.id %}">update</a></td>
         </tr>

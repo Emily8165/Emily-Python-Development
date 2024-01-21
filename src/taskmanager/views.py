@@ -28,9 +28,11 @@ class ContextDataMixim:
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["title"] = self.title
+        context["Tasks"] = Task.objects.all()
         context["user"] = User.objects.all()
         context["groups"] = Group.objects.all()
         context["permissions"] = Permission.objects.all()
+        context["fields"] = Task._meta.get_fields()
         order_by_param = self.request.GET.get("order_by")
         if order_by_param:
             context["filter"] = Task.objects.order_by(order_by_param)
