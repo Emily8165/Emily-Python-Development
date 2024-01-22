@@ -88,6 +88,15 @@ class TaskDetailView(ContextDataMixim, generic.DetailView):
     template_name = "task_detail.html"
     context_object_name = "task"
 
+    def get_object(self, queryset: QuerySet[Any] | None = ...) -> Model:
+        pk = self.kwargs.get("pk")
+        return get_object_or_404(Task, pk=pk)
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["Tasks"] = [self.get_object()]
+        return context
+
 
 class TaskDeleteView(ContextDataMixim, LoginRequiredMixin, generic.DeleteView):
     model = Task
