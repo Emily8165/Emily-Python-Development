@@ -15,11 +15,10 @@
             <div class="sidenav">
                 <form id="order_by" method="GET">
                     <label for="order_by"><b>Order by:</b></label>
-                    {% for field in fields %}{% if field.name != 'created_on' and field.name != 'update_last' and field.name != 'project' %}
+                    {% for field in versatile_fields %}
                         <br>
-                        <input type="radio" id="{{ field.name }}" name="order_by" value="{{ field.name }}" onchange="submitForm()">
-                        <label for="{{ field.name }}">{{ field.verbose_name }}</label>
-                    {% endif %}
+                        <input type="radio" id="{{ field }}" name="order_by" value="{{ field }}" onchange="submitForm()">
+                        <label for="{{ field }}">{{ field }}</label>
                     {% endfor %}
 
                 </form>
@@ -39,8 +38,8 @@
                     <label for="filter_fields"><b>Filter out specific fields</b></label>
                     {% for field in fields %}
                         <br>
-                        <input type="checkbox" id="{{ field.name }}" name="{{ field.name }}">
-                        <label for="{{ field.name }}">{{ field.name }}</label>
+                        <input type="checkbox" id="{{ field.name }}" name="{{field.name}}" checked="{{field.name}}">
+                        <label for="field">{{ field.name }}</label>
                     {% endfor %}
                     <br>
                     <input type="submit" value="Submit">
@@ -48,18 +47,18 @@
                 <br>
                 <form id="filter_input_option" method="GET">
                     <label for="filter_input_option"><b>Filter data you wish to see</b></label>
-                    {% for field in fields %}
-                        {% if field.name == "rag" or field.name == "status" %}
+                    {% for field in versatile_fields %}
+                    {% if field == 'rag' or field == 'status' or field == 'active' %}
                             <br>
-                            <label for="{{ field.name }}">{{ field.name }}</label>
-                            <select name="{{ field.name }}">
+                            <label for="{{ field }}">{{ field }}</label>
+                            <select name="{{ field }}">
                                 <option disabled selected value> -- select an option -- </option>
                                 {% for choice in all_choices %}
-                                    {% if choice.1 == 'rag' and field.name == 'rag' %}
-                                        <option value="{{ choice.0 }}">{{choice.0}}</option>
-                                    {% elif choice.1 == 'status' and field.name == 'status'%}
+                                    {% if choice.1 == 'rag' and field == 'rag' %}
                                         <option value="{{choice.0}}">{{choice.0}}</option>
-                                    {% elif choice.1 == 'active' and field.name == 'active' %}
+                                    {% elif choice.1 == 'status' and field == 'status' %}
+                                        <option value="{{choice.0}}">{{choice.0}}</option>
+                                    {% elif choice.1 == 'active' and field == 'active' %}
                                         <option value="{{choice.0}}">{{choice.0}}</option>
                                     {% endif %}
                                 {% endfor %}
@@ -77,23 +76,19 @@
 {% endblock %}
 {% block table %}
 <table class="center">
-    {% for field in fields %}
-        {% if field.name != 'created_on' and field.name != 'update_last' and field.name != 'project' %}
-            <th>{{ field.verbose_name|capfirst }}</th>
-        {% endif %}
+    {% for field in versatile_fields %}
+        <th>{{ field|capfirst }}</th>
     {% endfor %}
     <th>Delete</th>
     <th>Update</th>
+
     {% for task in model %}
         <tr>
-            <td><a href="{% url 'detail' task.id %}">{{task.id}}</td></a>
-            <td>{{task.title |add_line_breaks:5|linebreaks}}</td>
-            <td>{{task.discr|add_line_breaks:5|linebreaks}}</td>
-            <td>{{task.rag}}</td>
-            <td>{{task.status}}</td>
-            <td>{{task.active}}</td>
-            <td><a href="{% url 'delete' task.id %}">delete</a></td>
-            <td><a href="{% url 'update' task.id %}">update</a></td>
+            {% for field in versatile_fields %}
+                <td>{{ task|field_display:field|capfirst|add_line_breaks:5|linebreaks }}</td>
+            {% endfor %}
+            <td>Delete button</td>
+            <td>Update button</td>
         </tr>
     {% endfor %}
 </table>
