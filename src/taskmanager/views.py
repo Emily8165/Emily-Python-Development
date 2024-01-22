@@ -55,7 +55,13 @@ class TaskListView(ContextDataMixim, generic.ListView):
     context_object_name = "model"
     paginate_by = 10
     ordering = ["id"]
-    fields = Task._meta.get_fields()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        field_names = []
+        for i in range(len(Task._meta.get_fields())):
+            field_names.append(Task._meta.get_fields()[i].name)
+        self.versatile_fields = [field for field in field_names]
 
     def get_queryset(self) -> QuerySet[Any]:
         queryset = super().get_queryset()
@@ -67,6 +73,9 @@ class TaskListView(ContextDataMixim, generic.ListView):
         )
         if self.request.GET.get:
             for param, value in self.request.GET.items():
+                if value == "on":  # defines if a field is being filtered out
+                    "on" == True
+                    self.versatile_fields.remove(param)
                 if param == "order_by" or param == "page":
                     continue
                 queryset = queryset.filter(Q(**{f"{param}": f"{value}"}))
@@ -76,6 +85,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
         context = super().get_context_data(**kwargs)
         context["all_choices"] = TaskForm.all_choices
         context["fields"] = Task._meta.get_fields()
+        context["versatile_fields"] = self.versatile_fields  # fields to be returned
         return context
 
     def error_page(self):
@@ -114,6 +124,15 @@ class TaskUpdateView(ContextDataMixim, LoginRequiredMixin, generic.UpdateView):
     template_name = "update.html"
     context_object_name = "task"
     success_url = "/view"
+
+    def get_object(self, queryset: QuerySet[Any] | None = ...) -> Model:
+        pk = self.kwargs.get("pk")
+        return get_object_or_404(Task, pk=pk)
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["Tasks"] = [self.get_object()]
+        return context
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
