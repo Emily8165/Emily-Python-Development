@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
     dependencies = [
         (
             "taskmanager",
-            "0010_rename_owner_task_project.py",
+            "0012_task_slug",
         ),
     ]
     operations = [
@@ -55,5 +55,10 @@ class Migration(migrations.Migration):
             model_name="Task",
             old_name="project",
             new_name="Project",
+        ),
+        migrations.RenameField(
+            model_name="Task",
+            old_name="slug",
+            new_name="Slug",
         ),
     ]
