@@ -75,6 +75,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
                 if value == "on":
                     if self.clear_versatile_fields == False:
                         self.versatile_fields.clear()
+                        self.clear_versatile_fields = True
                     self.versatile_fields.append(param)
                 if param == "order_by" or param == "page" or value == "on":
                     continue
