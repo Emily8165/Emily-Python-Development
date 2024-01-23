@@ -58,10 +58,9 @@ class TaskListView(ContextDataMixim, generic.ListView):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        field_names = []
-        for i in range(len(Task._meta.get_fields())):
-            field_names.append(Task._meta.get_fields()[i].name)
-        self.versatile_fields = [field for field in field_names]
+        field_names = [field.name for field in Task._meta.get_fields()]
+        self.versatile_fields = field_names.copy()
+        self.clear_versatile_fields = False
 
     def get_queryset(self) -> QuerySet[Any]:
         queryset = super().get_queryset()
@@ -73,12 +72,15 @@ class TaskListView(ContextDataMixim, generic.ListView):
         )
         if self.request.GET.get:
             for param, value in self.request.GET.items():
-                if value == "on":  # defines if a field is being filtered out
-                    "on" == True
-                    self.versatile_fields.remove(param)
-                if param == "order_by" or param == "page":
+                if value == "on":
+                    if self.clear_versatile_fields == False:
+                        self.versatile_fields.clear()
+                    self.versatile_fields.append(param)
+                if param == "order_by" or param == "page" or value == "on":
                     continue
-                queryset = queryset.filter(Q(**{f"{param}": f"{value}"}))
+                else:
+                    queryset = queryset.filter(Q(**{f"{param}": f"{value}"}))
+
         return queryset.order_by(default)
 
     def get_context_data(self, **kwargs):
