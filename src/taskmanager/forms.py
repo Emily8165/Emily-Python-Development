@@ -1,30 +1,38 @@
 from django import forms
+from django.contrib.auth.models import User
 
 from taskmanager.models import Task
 
 
 class TaskForm(forms.ModelForm):
     # define choices:
-
+    user_names = [(i, i) for i in User.objects.all()]
     rag_choices = [
-        ("Red", "rag"),
-        ("Amber", "rag"),
-        ("Green", "rag"),
+        ("red", "Red"),
+        ("amber", "Amber"),
+        ("green", "Green"),
     ]  # the second one is the one that is displayed.
     status_choices = [
-        ("Open", "status"),
-        ("In_progress", "status"),
-        ("Closed", "status"),
-        ("Deleted", "status"),
+        ("open", "Open"),
+        ("in_progress", "In progress"),
+        ("closed", "Closed"),
+        ("deleted", "Deleted"),
     ]
-    active_choices = [(True, "active"), (False, "active")]
-    all_choices = rag_choices + status_choices + active_choices
+    active_choices = [(True, "active"), (False, "inactive")]
+    all_choices = (
+        {"rag": rag_choices},
+        {"status": status_choices},
+        {"active": active_choices},
+        {"user_names": user_names},
+    )
     # define fields:
     title = forms.CharField(max_length=255)
     discr = forms.CharField(max_length=255)
     rag = forms.ChoiceField(choices=rag_choices)
     status = forms.ChoiceField(choices=status_choices)
     active = forms.BooleanField(required=False)
+    the_latest = forms.CharField(max_length=255)
+    assignee = forms.ChoiceField(choices=user_names)
 
     def form_type(self):
         field_types = {}
@@ -35,7 +43,8 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ["title", "discr", "rag", "status", "active"]
+        fields = ["title", "discr", "rag", "status", "active", "the_latest", "assignee"]
+        # make sure you have the fields you want to be edited in the fields part or the update won't go through!
 
 
 class TaskDelForm(forms.ModelForm):

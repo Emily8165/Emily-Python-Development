@@ -22,12 +22,12 @@
         {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
-        <li><a>
-            <form action="{% url 'search' %}" method="GET">
-                {% csrf_token %}
-                <input type="text" name="lookup" value="{{ request.GET.lookup }}" placeholder="Search">
+        <li>
+            <form action="{% url 'view_tasks' %}" method="GET">
+                <input type="text" name="lookup" value="{{lookup}}" placeholder="search">
+                <input type="submit" value="submit">
             </form>
-        </a>
+        
         </li>
     </ul>
 </div>
@@ -39,7 +39,6 @@
 {% endblock %}
 
 {% block table %}
-    <h2>{{title}}</h2>
     <table class="center">
         <tr>
             {% for field in fields %}
@@ -49,12 +48,12 @@
         {% for task in Tasks %}
             <tr>
                 {% for field in fields %}
-                    <td>{{task|field_display:field.name}}</td>
+                    <td>{{task|field_display:field.name|add_line_breaks:5|linebreaks}}</td>
                 {% endfor %}
             </tr>
         {% endfor %}
     </table>
-    <p><a href="/view">Back to view tasks</a></p>
+    <p><a href="{% url 'view_tasks' %}">Back to view tasks</a></p>
 {% endblock %}
 
 {% block pagin %}

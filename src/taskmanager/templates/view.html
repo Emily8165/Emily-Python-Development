@@ -11,7 +11,7 @@
         <h1>View Tasks</h1>
         <p>Welcome to views, this is where you can find all the tasks!</p>
         <p>and for more actions look below</p>
-        <p><a href="create">Add new tasks</a></p>
+        <p><a href="{% url 'create' %}">Add new tasks</a></p>
             <div class="sidenav">
                 <form id="order_by" method="GET">
                     <label for="order_by"><b>Order by:</b></label>
@@ -53,14 +53,14 @@
                             <label for="{{ field }}">{{ field }}</label>
                             <select name="{{ field }}">
                                 <option disabled selected value> -- select an option -- </option>
-                                {% for choice in all_choices %}
-                                    {% if choice.1 == 'rag' and field == 'rag' %}
-                                        <option value="{{choice.0}}">{{choice.0}}</option>
-                                    {% elif choice.1 == 'status' and field == 'status' %}
-                                        <option value="{{choice.0}}">{{choice.0}}</option>
-                                    {% elif choice.1 == 'active' and field == 'active' %}
-                                        <option value="{{choice.0}}">{{choice.0}}</option>
-                                    {% endif %}
+                                {% for choice_dict in all_choices %}
+                                    {% for key, choices in choice_dict.items %}
+                                        {% if key == field %}
+                                            {% for choice in choices %}
+                                                <option>{{choice.0}}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
                                 {% endfor %}
                             </select>
                         {% endif %}
@@ -85,10 +85,14 @@
     {% for task in model %}
         <tr>
             {% for field in versatile_fields %}
+            {% if field == 'id' %}
+                <td><a href="{% url 'detail' pk=task.id %}">{{task.id}}</a></td>
+            {% else %}
                 <td>{{ task|field_display:field|capfirst|add_line_breaks:5|linebreaks }}</td>
+            {% endif %}
             {% endfor %}
-            <td>Delete button</td>
-            <td>Update button</td>
+            <td><a href="{% url 'delete' pk=task.id %}">Delete</a></td>
+            <td><a href="{% url 'update' pk=task.id %}">Update</a></td>
         </tr>
     {% endfor %}
 </table>

@@ -22,6 +22,8 @@ class Task(models.Model):
     update_last = models.DateField(auto_now=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     slug = models.SlugField(default="", null=False)
+    the_latest = models.CharField(max_length=255)
+    assignee = models.CharField(default="admin", max_length=255)
 
     class Meta:
         permissions = (("can_close_tasks", "can mark tasks as closed"),)

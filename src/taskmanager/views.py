@@ -1,3 +1,5 @@
+from functools import reduce
+from operator import or_
 from typing import Any
 
 from django import template
@@ -58,8 +60,8 @@ class TaskListView(ContextDataMixim, generic.ListView):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        field_names = [field.name for field in Task._meta.get_fields()]
-        self.versatile_fields = field_names.copy()
+        self.field_names = [field.name for field in Task._meta.get_fields()]
+        self.versatile_fields = self.field_names.copy()
         self.clear_versatile_fields = False
 
     def get_queryset(self) -> QuerySet[Any]:
@@ -72,12 +74,27 @@ class TaskListView(ContextDataMixim, generic.ListView):
         )
         if self.request.GET.get:
             for param, value in self.request.GET.items():
-                if value == "on":
+                if value == "on":  # for filtering fields
                     if self.clear_versatile_fields == False:
                         self.versatile_fields.clear()
                         self.clear_versatile_fields = True
                     self.versatile_fields.append(param)
-                if param == "order_by" or param == "page" or value == "on":
+                if param == "lookup":  # for searching
+                    keywords = value.split()
+                    search_filters = [
+                        Q(**{f"{field}__icontains": keyword})
+                        for keyword in keywords
+                        for field in self.field_names
+                        if field != "project"
+                    ]
+                    combined = reduce(or_, search_filters)
+                    queryset = queryset.filter(combined)
+                if param in [
+                    "order_by",
+                    "page",
+                    "on",
+                    "lookup",
+                ]:  # don't filter when these are sent thorugh.
                     continue
                 else:
                     queryset = queryset.filter(Q(**{f"{param}": f"{value}"}))
@@ -154,25 +171,6 @@ class MainView(generic.TemplateView):
     model = Task
     title = "Home"
     template_name = "main.html"
-
-
-class SearchView(generic.ListView):
-    model = Task
-    template_name = "search.html"
-    context_object_name = "tasks"
-    form_class = TaskForm
-
-    def get_queryset(self):
-        query = self.request.GET.get("lookup", "")
-        object_list = Task.objects.filter(Q(title__icontains=query))
-        return object_list
-
-    def get(self, request, *args, **kwargs):  # this returns the data as a list view.
-        # Call the parent get method to handle the ListView logic
-        response = super().get(request, *args, **kwargs)
-        return response
-
-    # the goal here is not to reproduce the searched for object but to direct to the detailed view of it.
 
 
 class ViewHistory(ContextDataMixim, generic.ListView):
