@@ -1,6 +1,6 @@
 {% extends "base_layout.html" %}
 {% block content %}
-<form method="post"> {% csrf_token %}
+<form method="post" action="{% url 'delete' pk=object.pk %}"> {% csrf_token %}
     <p>Are you sure you want to delete "{{task.id}}"?</p>
     <input type="submit" value="Delete">
 </form>

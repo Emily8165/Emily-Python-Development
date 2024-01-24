@@ -5,7 +5,8 @@ register = template.Library()
 
 @register.filter(name="add_line_breaks")
 def add_line_breaks(inputted, line_break_num):
-    words = inputted.split()
+    x = str(inputted)
+    words = x.split()
     result = []
 
     for i, word in enumerate(words, start=1):
