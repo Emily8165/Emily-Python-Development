@@ -604,8 +604,72 @@ STATUS_CODES:
       - 404 not found, the server cannot find the requested resource.
       - 405 method not allowed, the request could not be proccessed as the method is restricted such as not having delete permission. 
     - 500 - 599: server side errors:
-    
+     
+
+pytest_in_django:
+Testing is useful as you don't have to do irl live tests. 
+  - to start pytest you need to install it through pip using pip install pytest and then pip install pytest-django
+  - make a pytest.ini to do the initial configuration. 
+    SETTINGS
+    - point it to the settings in this it will be my_task_manager.settings. 
+      - put these in the ini file. 
+        [pytest]
+        DJANGO_SETTINGS_MODULE = my_app.settings
+        python_files = test.py test_*.py *_test.py
+      - make sure your data base is correct. it uses it's own in memory database. 
+      - plug in will default to this DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}} which is standard and fine. 
+      - you can also put in addopts = -p no:warnings to get rid of any warnings. 
+    FIXTRUES/HELPERS
+    - these are used for testing set up and tier down. 
+    - this is used for canning data that can be applied to mulitple tests. 
+    - side effects or a state taht we want to be in with the test. 
+    - this is an example of how to use fixtures to hold/can data: 
+    <-------------------->
+    import pytest
 
 
+class C:
+    def f(self):
+        return 1
+
+    def g(self):
+        return 2
+
+
+@pytest.fixture
+def c_instance(): # as you can see this fixture returns the C() class. 
+    return C()
+
+
+def test_f(): 
+    c = C() #without fixture we have two lines. 
+    assert c.f() == 1
+
+
+def test_g(c_instance): # with fixture we have one. and can pull this C() data iinto many different places. 
+    assert c_instance.g() == 2
+<-------------------->
+<-------------------->
+this is how to set up a test states, so modify the world to make it so all tests run from a similer thing. 
+@pytest.fixture
+def setup_teardown():
+    print("setup")
+    yield
+    print("teardown")
+
+
+def test_with_setup_teardown(setup_teardown):
+    print("in test")
+<-------------------->
+      - client - allows you to do http requests. 
+      - django_user_model - shortcut to user model. 
+      - db - you cannot touch the database so need to use this if you want tot do it. 
+  ONCE YOU HAVE REACHED THIS PART YOU CAN WRITE SOME TESTS   
+    CREATE_TESTS
+    - put the test folder in the same level as teh project and app. 
+  
+    RUNNING TESTS:
+    the -k expression runs sepcific tests. 
+    the -s is short cut for --capture=no
 
 """
