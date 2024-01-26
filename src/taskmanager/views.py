@@ -89,6 +89,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
                     ]
                     combined = reduce(or_, search_filters)
                     queryset = queryset.filter(combined)
+
                 if param in [
                     "order_by",
                     "page",
