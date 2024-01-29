@@ -25,7 +25,7 @@ class TestSearch:  # this tests that a search paramiter sent through exists.
         # Act
         client = Client()
         response = client.get(reverse("view_tasks"), {"lookup": "test_test"})
-        print(response.context["object_list"])
+        print(response.context)
         # Assert
         assert response.status_code == 200
         assert "test" in response.content.decode("utf-8")
@@ -48,7 +48,6 @@ class TestUser:
         client.force_login(user)
         response = client.get(reverse("view_tasks"))
         # assert
-
         print(user)
         print(user.email)
         print(user.password)

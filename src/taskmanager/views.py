@@ -61,7 +61,7 @@ class TaskListView(ContextDataMixim, generic.ListView):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.field_names = [field.name for field in Task._meta.get_fields()]
-        self.versatile_fields = self.field_names.copy()
+        self.versatile_fields = [self.field_names.copy()]
         self.clear_versatile_fields = False
 
     def get_queryset(self) -> QuerySet[Any]:
@@ -73,12 +73,15 @@ class TaskListView(ContextDataMixim, generic.ListView):
             else new_order
         )
         if self.request.GET.get:
+            listed = list(self.request.GET.items())
             for param, value in self.request.GET.items():
-                if value == "on":  # for filtering fields
-                    if self.clear_versatile_fields == False:
-                        self.versatile_fields.clear()
-                        self.clear_versatile_fields = True
-                    self.versatile_fields.append(param)
+                if value == "on":
+                    for key, item in listed:
+                        if self.clear_versatile_fields == False:
+                            self.versatile_fields.clear()
+                            self.clear_versatile_fields = True
+                        self.versatile_fields.append(key)
+                    break
                 if param == "lookup":  # for searching
                     keywords = value.split()
                     search_filters = [
