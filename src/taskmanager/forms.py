@@ -31,8 +31,6 @@ class TaskForm(forms.ModelForm):
     rag = forms.ChoiceField(choices=rag_choices)
     status = forms.ChoiceField(choices=status_choices)
     active = forms.BooleanField(required=False)
-    the_latest = forms.CharField(max_length=255)
-    assignee = forms.ChoiceField(choices=user_names)
 
     def form_type(self):
         field_types = {}
@@ -43,7 +41,7 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ["title", "discr", "rag", "status", "active", "the_latest", "assignee"]
+        fields = ["title", "discr", "rag", "status", "active"]
         # make sure you have the fields you want to be edited in the fields part or the update won't go through!
 
 
